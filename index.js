@@ -192,7 +192,7 @@ async function connectToWA() {
 ┗━━━━━━━━━━━━━━━━━━━━━━━━
 
 > © 𝐒𝐈𝐋𝐀 𝐌𝐃 | Crafted with precision`;
-    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/36vahk.png` }, caption: up })
+    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/i4aqjo.png` }, caption: up })
 
           const channelJid = "120363402325089913@newsletter"
           try {
