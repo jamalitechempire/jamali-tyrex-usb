@@ -35,7 +35,7 @@ ANTI_LINK: process.env.ANTI_LINK || "true",
 // 𝗺𝗮𝗸𝗲 𝘁𝗿𝘂𝗲/𝗳𝗮𝗹𝘀𝗲 𝗳𝗼𝗿 𝗮𝗻𝘁𝗶-𝗹𝗶𝗻𝗸 𝗶𝗻 𝗴𝗿𝗼𝘂𝗽𝘀
 MENTION_REPLY: process.env.MENTION_REPLY || "false",
 // 𝘁𝗿𝘂𝗲 𝗳𝗼𝗿 𝗮𝘂𝘁𝗼 𝘃𝗼𝗶𝗰𝗲 𝗿𝗲𝗽𝗹𝘆 𝘄𝗵𝗲𝗻 𝗺𝗲𝗻𝘁𝗶𝗼𝗻𝗲𝗱
-MENU_IMAGE_URL: process.env.MENU_IMAGE_URL || "https://files.catbox.moe/36vahk.png",
+MENU_IMAGE_URL: process.env.MENU_IMAGE_URL || "https://files.catbox.moe/i4aqjo.png",
 // 𝗰𝘂𝘀𝘁𝗼𝗺 𝗺𝗲𝗻𝘂 & 𝗺𝗲𝗻𝘁𝗶𝗼𝗻 𝗿𝗲𝗽𝗹𝘆 𝗶𝗺𝗮𝗴𝗲
 PREFIX: process.env.PREFIX || ".",
 // 𝗯𝗼𝘁 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝗽𝗿𝗲𝗳𝗶𝘅
