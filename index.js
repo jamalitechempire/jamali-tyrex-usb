@@ -905,7 +905,7 @@ conn.setStatus = status => {
 conn.serializeM = mek => sms(conn, mek, store);
 
 // ============ CLOSE THE connectToWA FUNCTION ============
-} // <-- HII INAFUNGA async function connectToWA() {
+async function connectToWA() {
 
 app.get("/", (req, res) => {
   res.send("┏━❑ 𝐒𝐈𝐋𝐀-𝐌𝐃 ━━━━━━━━━━━\n┃ ✅ Bot is running!\n┗━━━━━━━━━━━━━━━━━");
