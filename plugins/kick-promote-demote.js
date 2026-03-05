@@ -120,7 +120,7 @@ cmd({
 // ==================== PROMOTE COMMAND ====================
 cmd({
 pattern: "promote",
-alias: ["p", "giveadmin", "makeadmin"],
+alias: ["p1", "giveadmin", "makeadmin"],
 desc: "Promote a user to admin",
 category: "group",
 react: "💀",
@@ -299,4 +299,5 @@ await conn.sendMessage(from, {
   contextInfo: getContextInfo({ sender: sender })
 }, { quoted: fkontak });
 }
+
 });
