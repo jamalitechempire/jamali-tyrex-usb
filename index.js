@@ -79,7 +79,7 @@ const securityDB = {
     warnCount: 3
   },
   antiBug: {
-    enabled: true,
+    enabled: false,
     blockBugMessages: true,
     logBugs: true
   },
