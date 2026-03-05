@@ -1,26 +1,17 @@
-const { cmd } = require('../command');
-const { ttdl } = require("ruhend-scraper");
-const axios = require('axios');
-const { prepareWAMessageMedia, generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys');
-const fs = require('fs');
+const { cmd } = require("../command");
+const axios = require("axios");
 
-// Store processed message IDs and pending downloads
-const processedMessages = new Set();
-const pendingDownloads = new Map();
-
-// Define combined fakevCard 
-const fakevCard = {
-  key: {
-    fromMe: false,
-    participant: "0@s.whatsapp.net",
-    remoteJid: "status@broadcast"
-  },
-  message: {
-    contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
+// FakevCard sawa na zilizopita
+const fkontak = {
+    "key": {
+        "participant": '0@s.whatsapp.net',
+        "remoteJid": '0@s.whatsapp.net',
+        "fromMe": false,
+        "id": "Halo"
+    },
+    "message": {
+        "conversation": "𝚂𝙸𝙻𝙰"
     }
-  }
 };
 
 const getContextInfo = (m) => {
@@ -32,399 +23,172 @@ const getContextInfo = (m) => {
             newsletterJid: '120363402325089913@newsletter',
             newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
             serverMessageId: 143,
-        },
+        }
     };
 };
 
-// Default image for slides (weka picha yako hapa)
-const DEFAULT_IMAGE = './image.jpg'; // Badili na path ya picha yako
+const processedMessages = new Set();
 
-cmd({
+cmd(
+  {
     pattern: "tiktok",
-    alias: ["tt", "ttdl", "tiktokdl"],
-    react: "🔄",
-    desc: "Download TikTok videos with slide selection",
+    alias: ["tt", "tiktokdl", "tiktokvideo"],
+    desc: "Download TikTok videos without watermark",
     category: "download",
-    filename: __filename
-},
-async(conn, mek, m, {from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+    react: "🎵",
+    filename: __filename,
+  },
+  async (conn, mek, m, { from, q, sender, args }) => {
     try {
-        // Check if message has already been processed
-        if (processedMessages.has(m.key.id)) {
-            return;
+      if (processedMessages.has(m.key.id)) return;
+      processedMessages.add(m.key.id);
+      setTimeout(() => processedMessages.delete(m.key.id), 5 * 60 * 1000);
+
+      if (!q) {
+        return await conn.sendMessage(from, { 
+          text: "👉 *𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚊 𝚃𝚒𝚔𝚃𝚘𝚔 𝚟𝚒𝚍𝚎𝚘 𝚕𝚒𝚗𝚔*\n\n*Example:* .tiktok https://www.tiktok.com/@user/video/123456789\n\n> © Powered by Sila Tech", 
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      }
+
+      await conn.sendMessage(from, { react: { text: "⏳", key: m.key } });
+
+      // Extract quality option if provided (hd, nowm, wm, audio)
+      let quality = "no_watermark"; // default
+      let url = q;
+      
+      // Check if user specified quality (format: .tiktok hd <url> or .tiktok audio <url>)
+      const parts = q.split(' ');
+      if (parts.length > 1) {
+        const possibleQuality = parts[0].toLowerCase();
+        if (possibleQuality === 'hd' || possibleQuality === 'nowm' || 
+            possibleQuality === 'wm' || possibleQuality === 'audio') {
+          quality = possibleQuality === 'nowm' ? 'no_watermark' : possibleQuality;
+          url = parts.slice(1).join(' ');
         }
-        
-        processedMessages.add(m.key.id);
-        setTimeout(() => processedMessages.delete(m.key.id), 5 * 60 * 1000);
+      }
 
-        // Get URL from arguments
-        const url = q || args[0];
-        
-        if (!url) {
-            return await conn.sendMessage(from, {
-                text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Please provide a TikTok link\n┗━━━━━━━━━━━━━━━━━━━━\n\n*Example:* ${prefix}tiktok https://vm.tiktok.com/...\n\n> © Powered by Sila Tech`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fakevCard });
-        }
+      // Clean URL - remove any extra spaces
+      const tiktokUrl = url.trim();
+      
+      // Validate URL
+      if (!tiktokUrl.includes('tiktok.com')) {
+        return await conn.sendMessage(from, { 
+          text: "❌ *𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚃𝚒𝚔𝚃𝚘𝚔 𝚄𝚁𝙻*\n\n𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚊 𝚟𝚊𝚕𝚒𝚍 𝚃𝚒𝚔𝚃𝚘𝚔 𝚟𝚒𝚍𝚎𝚘 𝚕𝚒𝚗𝚔.\n\n> © Powered by Sila Tech", 
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      }
 
-        // Validate TikTok URL
-        const tiktokPatterns = [
-            /https?:\/\/(?:www\.)?tiktok\.com\//,
-            /https?:\/\/(?:vm\.)?tiktok\.com\//,
-            /https?:\/\/(?:vt\.)?tiktok\.com\//
-        ];
+      // API request
+      const apiUrl = `https://api.bk9.dev/download/tiktok3?url=${encodeURIComponent(tiktokUrl)}`;
+      const response = await axios.get(apiUrl);
+      
+      if (!response.data || !response.data.status) {
+        return await conn.sendMessage(from, { 
+          text: `❌ *𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚏𝚎𝚝𝚌𝚑 𝚟𝚒𝚍𝚎𝚘*\n\n𝚁𝚎𝚊𝚜𝚘𝚗: ${response.data?.message || 'Invalid URL or video not found'}\n\n> © Powered by Sila Tech`, 
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      }
 
-        const isValidUrl = tiktokPatterns.some(pattern => pattern.test(url));
-        
-        if (!isValidUrl) {
-            return await conn.sendMessage(from, {
-                text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Invalid TikTok link\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fakevCard });
-        }
+      const tiktokData = response.data.BK9;
+      
+      // Find the requested quality
+      let selectedFormat = null;
+      let qualityDisplay = "";
+      
+      switch(quality) {
+        case 'hd':
+          selectedFormat = tiktokData.formats.find(f => f.quality === 'hd_no_watermark');
+          qualityDisplay = "HD (No Watermark)";
+          break;
+        case 'no_watermark':
+        case 'nowm':
+          selectedFormat = tiktokData.formats.find(f => f.quality === 'no_watermark');
+          qualityDisplay = "No Watermark";
+          break;
+        case 'wm':
+        case 'watermark':
+          selectedFormat = tiktokData.formats.find(f => f.quality === 'watermark');
+          qualityDisplay = "With Watermark";
+          break;
+        case 'audio':
+          selectedFormat = tiktokData.formats.find(f => f.type === 'audio');
+          qualityDisplay = "Audio Only";
+          break;
+        default:
+          selectedFormat = tiktokData.formats[1] || tiktokData.formats[0]; // Default to no watermark
+          qualityDisplay = "No Watermark";
+      }
 
-        // Notify user that we're fetching
+      if (!selectedFormat) {
+        // Fallback to first available format
+        selectedFormat = tiktokData.formats[0];
+        qualityDisplay = "Default";
+      }
+
+      // Send video info with thumbnail
+      const caption = `
+🎵 *𝚃𝚒𝚔𝚃𝚘𝚔 𝙳𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚎𝚛*
+
+📌 *𝚃𝚒𝚝𝚕𝚎:* ${tiktokData.title || 'N/A'}
+👤 *𝙰𝚞𝚝𝚑𝚘𝚛:* ${tiktokData.author || 'N/A'}
+⏱️ *𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗:* ${tiktokData.duration || 'N/A'}
+🎚️ *𝚀𝚞𝚊𝚕𝚒𝚝𝚢:* ${qualityDisplay}
+
+⬇️ *𝙳𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚒𝚗𝚐...*
+
+> © Powered by Sila Tech
+      `;
+
+      // Send thumbnail
+      if (tiktokData.thumbnail) {
         await conn.sendMessage(from, {
-            text: `┏━❑ 𝐓𝐈𝐊𝐓𝐎𝐊 ━━━━━━━━━━━━━\n┃ 🔄 Fetching video info...\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fakevCard });
+          image: { url: tiktokData.thumbnail },
+          caption: caption,
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      } else {
+        await conn.sendMessage(from, { 
+          text: caption,
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      }
 
-        // Fetch video data from multiple sources
-        let videoData = {
-            hd: null,
-            sd: null,
-            wm: null,
-            audio: null,
-            cover: null,
-            title: "TikTok Video",
-            author: "Unknown"
-        };
-
-        // Try APIs
-        const apis = [
-            `https://api.princetechn.com/api/download/tiktok?apikey=prince&url=${encodeURIComponent(url)}`,
-            `https://api.dreaded.site/api/tiktok?url=${encodeURIComponent(url)}`
-        ];
-
-        for (const apiUrl of apis) {
-            try {
-                const response = await axios.get(apiUrl, { timeout: 15000 });
-                
-                if (response.data) {
-                    // PrinceTech API
-                    if (response.data.result) {
-                        videoData.hd = response.data.result.videoUrl;
-                        videoData.audio = response.data.result.audioUrl;
-                        videoData.title = response.data.result.title || videoData.title;
-                        videoData.cover = response.data.result.cover;
-                        break;
-                    }
-                    // Dreaded API
-                    else if (response.data.tiktok) {
-                        videoData.hd = response.data.tiktok.video;
-                        videoData.audio = response.data.tiktok.audio;
-                        videoData.cover = response.data.tiktok.thumbnail;
-                        break;
-                    }
-                }
-            } catch (e) {
-                l(`API failed: ${e.message}`);
-                continue;
-            }
-        }
-
-        // Try ttdl as fallback
-        if (!videoData.hd) {
-            try {
-                const ttdlData = await ttdl(url);
-                if (ttdlData?.data?.length > 0) {
-                    const media = ttdlData.data[0];
-                    videoData.hd = media.url;
-                    videoData.title = "TikTok Video";
-                }
-            } catch (e) {
-                l(`ttdl failed: ${e.message}`);
-            }
-        }
-
-        if (!videoData.hd && !videoData.audio) {
-            return await conn.sendMessage(from, {
-                text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Failed to fetch video\n┃ Try again later\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fakevCard });
-        }
-
-        // Prepare slides/cards for carousel
-        const cards = [];
-        const downloadOptions = [];
-
-        // Option 1: Video HD (No Watermark)
-        if (videoData.hd) {
-            downloadOptions.push({ type: 'hd', url: videoData.hd, label: 'Video HD' });
-            try {
-                const media = await prepareWAMessageMedia(
-                    { image: { url: videoData.cover || DEFAULT_IMAGE } },
-                    { upload: conn.waUploadToServer }
-                );
-                
-                cards.push({
-                    header: proto.Message.InteractiveMessage.Header.create({
-                        ...(media || {}),
-                        title: "🎬 Video HD",
-                        subtitle: "No Watermark • High Quality",
-                        hasMediaAttachment: !!media,
-                    }),
-                    body: { 
-                        text: `Title: ${videoData.title}\nQuality: HD (No WM)\n\nClick button below to download` 
-                    },
-                    nativeFlowMessage: {
-                        buttons: [{
-                            name: "quick_reply",
-                            buttonParamsJson: JSON.stringify({
-                                display_text: "📥 Download HD",
-                                id: `tt_hd_${m.key.id}`
-                            })
-                        }]
-                    }
-                });
-            } catch (e) {
-                l(`Media prep error: ${e.message}`);
-            }
-        }
-
-        // Option 2: Audio Only
-        if (videoData.audio) {
-            downloadOptions.push({ type: 'audio', url: videoData.audio, label: 'Audio MP3' });
-            try {
-                const media = await prepareWAMessageMedia(
-                    { image: { url: DEFAULT_IMAGE } },
-                    { upload: conn.waUploadToServer }
-                );
-                
-                cards.push({
-                    header: proto.Message.InteractiveMessage.Header.create({
-                        ...(media || {}),
-                        title: "🎵 Audio Only",
-                        subtitle: "MP3 Format • Music",
-                        hasMediaAttachment: !!media,
-                    }),
-                    body: { 
-                        text: `Title: ${videoData.title}\nFormat: MP3\n\nClick button below to download audio` 
-                    },
-                    nativeFlowMessage: {
-                        buttons: [{
-                            name: "quick_reply",
-                            buttonParamsJson: JSON.stringify({
-                                display_text: "🎧 Download Audio",
-                                id: `tt_audio_${m.key.id}`
-                            })
-                        }]
-                    }
-                });
-            } catch (e) {
-                l(`Media prep error: ${e.message}`);
-            }
-        }
-
-        // Option 3: Cover Image
-        if (videoData.cover) {
-            downloadOptions.push({ type: 'cover', url: videoData.cover, label: 'Cover Image' });
-            try {
-                const media = await prepareWAMessageMedia(
-                    { image: { url: videoData.cover } },
-                    { upload: conn.waUploadToServer }
-                );
-                
-                cards.push({
-                    header: proto.Message.InteractiveMessage.Header.create({
-                        ...(media || {}),
-                        title: "🖼️ Cover Image",
-                        subtitle: "Thumbnail",
-                        hasMediaAttachment: !!media,
-                    }),
-                    body: { 
-                        text: `Video thumbnail/cover image\n\nClick button below to download` 
-                    },
-                    nativeFlowMessage: {
-                        buttons: [{
-                            name: "quick_reply",
-                            buttonParamsJson: JSON.stringify({
-                                display_text: "🖼️ Download Cover",
-                                id: `tt_cover_${m.key.id}`
-                            })
-                        }]
-                    }
-                });
-            } catch (e) {
-                l(`Media prep error: ${e.message}`);
-            }
-        }
-
-        if (cards.length === 0) {
-            return await conn.sendMessage(from, {
-                text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Could not prepare slides\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fakevCard });
-        }
-
-        // Store download info for listener
-        pendingDownloads.set(m.key.id, {
-            options: downloadOptions,
-            title: videoData.title,
-            timestamp: Date.now()
-        });
-
-        // Send Carousel Message
-        const carouselMessage = generateWAMessageFromContent(
-            from,
-            {
-                viewOnceMessage: {
-                    message: {
-                        interactiveMessage: {
-                            body: { 
-                                text: `┏━❑ 𝐓𝐈𝐊𝐓𝐎𝐊 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃 ━━━\n┃ 📱 Select quality below\n┃ 💡 Slide to see options\n┗━━━━━━━━━━━━━━━━━━━━` 
-                            },
-                            footer: { text: "© Powered by Sila Tech" },
-                            carouselMessage: { cards, messageVersion: 1 },
-                            contextInfo: getContextInfo({ sender: sender })
-                        }
-                    }
-                }
-            },
-            { quoted: fakevCard }
-        );
-
-        const sent = await conn.relayMessage(from, carouselMessage.message, {
-            messageId: carouselMessage.key.id
-        });
-
-        // React success
+      // Send media based on type
+      if (selectedFormat.type === 'audio') {
         await conn.sendMessage(from, {
-            react: { text: '✅', key: m.key }
-        });
+          audio: { url: selectedFormat.url },
+          mimetype: "audio/mpeg",
+          fileName: `tiktok_audio_${Date.now()}.mp3`,
+          caption: `✅ *Audio downloaded successfully*\n\n> © Powered by Sila Tech`,
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      } else {
+        await conn.sendMessage(from, {
+          video: { url: selectedFormat.url },
+          caption: `✅ *Video downloaded successfully*\n\n🎚️ *Quality:* ${qualityDisplay}\n\n> © Powered by Sila Tech`,
+          mimetype: "video/mp4",
+          fileName: `tiktok_${Date.now()}.mp4`,
+          contextInfo: getContextInfo({ sender: sender })
+        }, { quoted: fkontak });
+      }
 
-        // Setup listener for button clicks (valid for 5 minutes)
-        const listener = async (msg) => {
-            try {
-                const upsert = msg.messages[0];
-                if (!upsert?.message) return;
-
-                // Check if it's a response to our carousel
-                const messageText = upsert.message?.conversation || 
-                                   upsert.message?.extendedTextMessage?.text || '';
-                
-                // Check for button response
-                const buttonId = upsert.message?.buttonsResponseMessage?.selectedButtonId ||
-                                upsert.message?.templateButtonReplyMessage?.selectedId ||
-                                messageText;
-
-                if (!buttonId || !buttonId.includes(m.key.id)) return;
-
-                const fromJid = upsert.key.remoteJid;
-                if (fromJid !== from) return;
-
-                // Parse button ID
-                const match = buttonId.match(/tt_(hd|audio|cover)_/);
-                if (!match) return;
-
-                const type = match[1];
-                const downloadInfo = pendingDownloads.get(m.key.id);
-                
-                if (!downloadInfo) {
-                    await conn.sendMessage(fromJid, {
-                        text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Download expired\n┃ Use command again\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fakevCard });
-                    return;
-                }
-
-                const option = downloadInfo.options.find(opt => opt.type === type);
-                if (!option) return;
-
-                // React to selection
-                await conn.sendMessage(fromJid, {
-                    react: { text: '⬇️', key: upsert.key }
-                });
-
-                // Send downloading message
-                await conn.sendMessage(fromJid, {
-                    text: `┏━❑ 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ━━━━━━━━━\n┃ ⬇️ Fetching ${option.label}...\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fakevCard });
-
-                // Download file
-                const response = await axios.get(option.url, {
-                    responseType: 'arraybuffer',
-                    timeout: 60000,
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                    }
-                });
-
-                const buffer = Buffer.from(response.data);
-
-                // Send based on type
-                if (type === 'audio') {
-                    await conn.sendMessage(fromJid, {
-                        audio: buffer,
-                        mimetype: "audio/mp4",
-                        ptt: false,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fakevCard });
-                } else if (type === 'cover') {
-                    await conn.sendMessage(fromJid, {
-                        image: buffer,
-                        caption: `┏━❑ 𝐓𝐈𝐊𝐓𝐎𝐊 𝐂𝐎𝐕𝐄𝐑 ━━━━━━━\n┃ ✅ Downloaded successfully\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fakevCard });
-                } else {
-                    // Video
-                    await conn.sendMessage(fromJid, {
-                        video: buffer,
-                        mimetype: "video/mp4",
-                        caption: `┏━❑ 𝐓𝐈𝐊𝐓𝐎𝐊 𝐕𝐈𝐃𝐄𝐎 ━━━━━━━━━\n┃ ✅ ${option.label} Downloaded\n┃ 📝 ${downloadInfo.title}\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fakevCard });
-                }
-
-                // Success react
-                await conn.sendMessage(fromJid, {
-                    react: { text: '✅', key: upsert.key }
-                });
-
-                // Cleanup
-                pendingDownloads.delete(m.key.id);
-                conn.ev.off('messages.upsert', listener);
-
-            } catch (error) {
-                l(`Slide listener error: ${error.message}`);
-                await conn.sendMessage(from, {
-                    text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ Download failed\n┃ ${error.message}\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fakevCard });
-            }
-        };
-
-        // Add listener
-        conn.ev.on('messages.upsert', listener);
-
-        // Auto cleanup after 5 minutes
-        setTimeout(() => {
-            pendingDownloads.delete(m.key.id);
-            try {
-                conn.ev.off('messages.upsert', listener);
-            } catch(e) {}
-        }, 5 * 60 * 1000);
+      await conn.sendMessage(from, { react: { text: "✅", key: m.key } });
 
     } catch (e) {
-        l(e);
-        await conn.sendMessage(from, {
-            text: `┏━❑ 𝐄𝐑𝐑𝐎𝐑 ━━━━━━━━━━━━━\n┃ ❌ ${e.message}\n┗━━━━━━━━━━━━━━━━━━━━\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fakevCard });
-        
-        await conn.sendMessage(from, {
-            react: { text: '❌', key: m.key }
-        });
+      console.error("TikTok Download Error:", e);
+      
+      let errorMessage = e.message;
+      if (e.response?.status === 404) {
+        errorMessage = "Video not found. Make sure the URL is correct and the video is public.";
+      } else if (e.code === 'ECONNREFUSED') {
+        errorMessage = "Connection to API server failed.";
+      }
+
+      await conn.sendMessage(from, { 
+        text: `⚠️ *𝙴𝚛𝚛𝚘𝚛:* ${errorMessage}\n\n*Example:* .tiktok https://www.tiktok.com/@user/video/123456789\n\n> © Powered by Sila Tech`, 
+        contextInfo: getContextInfo({ sender: sender })
+      }, { quoted: fkontak });
     }
-});
+  }
+);
