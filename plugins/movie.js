@@ -1,7 +1,6 @@
 const { cmd } = require('../command');
-const axios = require('axios');
 
-// FakevCard sawa na zilizopita
+// FakevCard
 const fkontak = {
     "key": {
         "participant": '0@s.whatsapp.net',
@@ -10,7 +9,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
+        "conversation": "𝐒𝐈𝐋𝐀 𝐌𝐃"
     }
 };
 
@@ -21,148 +20,275 @@ const getContextInfo = (m) => {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
             newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
             serverMessageId: 143,
-        }
+        },
     };
 };
 
-// ======== YOUR API KEY ========
-const SRIHUB_API = "dew_5H5Dbuh4v7NbkNRmI0Ns2u2ZK240aNnJ9lnYQXR9";
-
-// ======== SIMPLE CACHE ========
-global.movie_cache = global.movie_cache || {};
-
-// ================= MOVIE SEARCH =================
+// ============ MOVIE COMMAND ============
 cmd({
     pattern: "movie",
-    desc: "Search & download movies",
-    category: "media",
+    alias: ["movies", "swahiliflix", "filamu"],
     react: "🎬",
+    desc: "Swahiliflix movie service information",
+    category: "info",
     filename: __filename
-}, async (conn, mek, m, { from, args, reply, sender }) => {
-    try {
-        const query = args.join(" ").trim();
-        if (!query) {
-            return await conn.sendMessage(from, { 
-                text: "🎬 *𝚄𝚜𝚊𝚐𝚎:* `.movie venom`\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
-        }
+},
+async(conn, mek, m, {from, sender, pushname, reply}) => {
+try{
+    const movieInfo = `┏━❑ *SWAHILIFLIX MOVIES* ━━━━━━━━━
+┃ 
+┃ 👋 *Habari ${pushname || 'Mjumbe'}!*
+┃ 
+┃ ╔══════════════════════╗
+┃      *1. SISI NI NANI?*
+┃ ╚══════════════════════╝
+┃ 🔹 Jina letu ni *Swahiliflix*
+┃ 🔹 Tunapatikana *Tanzania*
+┃ 
+┃ ╔══════════════════════╗
+┃     *2. TUNAHUSIKA NA NINI?*
+┃ ╚══════════════════════╝
+┃ 🔹 Tunahusika na utoaji wa huduma bora 
+┃    za movie za aina zote zilizotafsiriwa 
+┃    kwa lugha ya *Kiswahili*
+┃ 
+┃ ╔══════════════════════╗
+┃    *3. TUNATOAJE HUDUMA YETU?*
+┃ ╚══════════════════════╝
+┃ 🔹 Huduma yetu ya movie tunaitoa kupitia 
+┃    *App yetu maalum* ya Swahiliflix
+┃ 🔹 *Sio WhatsApp* - tofauti na huduma 
+┃    nyingi ulizozoea
+┃ 
+┃ ╔══════════════════════╗
+┃  *4. MAELEKEZO YA KUTUMIA APP*
+┃ ╚══════════════════════╝
+┃ 👇 *Bonyeza hapa kupata maelekezo:*
+┃ 📹 *Video Guide:*
+┃ https://drive.google.com/file/d/1faQ6MgvyezWJSO_XPANmLMtHsu0yorI5/view
+┃ 
+┃ ╔══════════════════════╗
+┃  *5. MAMBO MUHIMU YA KUFAHAMU*
+┃ ╚══════════════════════╝
+┃ 🔹 *Season zote* kuanzia *Episode 1 – 8* 
+┃    ni *BURE (OFA)* - mtu yeyote anaweza 
+┃    kuangalia
+┃ 🔹 Kuanzia *Episode 9* hadi mwisho, 
+┃    zimefungwa na zinafunguliwa kwa 
+┃    *wanachama waliojiunga* tu
+┃ 🔹 *Single movies* zote zimefungwa na 
+┃    zinapatikana kwa *waliojiunga* tu
+┃ 🔹 Ili kuangalia movie kwenye app, 
+┃    lazima uwe na *MB (data)*
+┃ 🔹 Unaweza *kudownload movie* kwa 
+┃    matumizi ya *offline*
+┃ 
+┃ ╔══════════════════════╗
+┃    *6. GHARAMA ZA KUJIUNGA*
+┃ ╚══════════════════════╝
+┃ 💰 *Mwezi 1*  ━  *4,000 TZS*
+┃ 💰 *Miezi 2*  ━  *8,000 TZS*
+┃ 💰 *Miezi 3*  ━  *12,000 TZS*
+┃ 
+┃ ╔══════════════════════╗
+┃   *7. FAIDA ZA MTEJA ANAPOJIUNGA*
+┃ ╚══════════════════════╝
+┃ ✅ *Unafunguliwa movie zote* 
+┃    zilizopo ndani ya app
+┃ ✅ Unapata huduma *bila usumbufu*
+┃ ✅ Unapata movie kwa *ubora wa 
+┃    hali ya juu*
+┃ 
+┃ ╔══════════════════════╗
+┃       *8. UWAMINIFU WETU*
+┃ ╚══════════════════════╝
+┃ 🔒 Huduma yetu ni *salama kwa 100%*
+┃ 🤝 Watoa huduma wetu wanajua maana 
+┃    halisi ya *uwaminifu, uaminifu* na 
+┃    *huduma bora kwa mteja*
+┃ 
+┃ ╔══════════════════════╗
+┃   *9. NJIA YA KUJIUNGA NA HUDUMA*
+┃ ╚══════════════════════╝
+┃ 👇 *Bonyeza hapa kujiunga:*
+┃ 🔗 https://wa.me/256756076875?text=%F0%9F%92%B3NIPE%20NAMBA%20NILIPIE%20HUDUMA%20YA%20MOVIE
+┃ 
+┃ ╔══════════════════════╗
+┃        *🌐 WEBSITE YETU*
+┃ ╚══════════════════════╝
+┃ 🔗 https://swahilimoviestudio01.blogspot.com
+┃ 
+┃ ════ *📲 Swahiliflix* ════
+┃ *Movie bora kwa Kiswahili*
+┃ *Kwa urahisi na uaminifu*
+┗━━━━━━━━━━━━━━━━━━━━
 
-        // --------------- SEARCH -------------------
-        const searchRes = await axios.get(
-            "https://api.srihub.store/movie/sinhalasub",
-            {
-                params: { apikey: SRIHUB_API, query },
-                timeout: 15000,
-                headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/json" }
-            }
-        );
+> © 𝐒𝐈𝐋𝐀 𝐌𝐃`;
 
-        if (!searchRes.data || searchRes.data.success !== true || !Array.isArray(searchRes.data.result) || searchRes.data.result.length === 0) {
-            return await conn.sendMessage(from, { 
-                text: "❌ 𝙼𝚘𝚟𝚒𝚎 𝚗𝚘𝚝 𝚏𝚘𝚞𝚗𝚍.\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
-        }
+    await conn.sendMessage(from, {
+        image: { url: 'https://files.catbox.moe/nryse9.jpg' }, // Replace with actual image URL
+        caption: movieInfo,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
 
-        const moviePageUrl = searchRes.data.result[0].link;
-
-        // --------------- DETAILS -------------------
-        const detailRes = await axios.get(
-            "https://api.srihub.store/movie/sinhalasubdl",
-            {
-                params: { apikey: SRIHUB_API, url: moviePageUrl },
-                timeout: 15000,
-                headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/json" }
-            }
-        );
-
-        if (!detailRes.data || detailRes.data.success !== true) {
-            return await conn.sendMessage(from, { 
-                text: "❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚏𝚎𝚝𝚌𝚑 𝚍𝚘𝚠𝚗𝚕𝚘𝚊𝚍 𝚕𝚒𝚗𝚔𝚜.\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
-        }
-
-        const movie = detailRes.data.result;
-        if (!movie || !Array.isArray(movie.downloads) || movie.downloads.length === 0) {
-            return await conn.sendMessage(from, { 
-                text: "❌ 𝙽𝚘 𝚍𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚊𝚋𝚕𝚎 𝚏𝚒𝚕𝚎𝚜 𝚏𝚘𝚞𝚗𝚍.\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
-        }
-
-        // --------------- AUTO SD 480P FIRST -------------------
-        movie.downloads.sort((a, b) => {
-            if (a.quality.includes("480")) return -1;
-            if (b.quality.includes("480")) return 1;
-            return 0;
-        });
-
-        // --------------- CACHE -------------------
-        global.movie_cache[from] = {
-            title: movie.title || "Movie",
-            downloads: movie.downloads
-        };
-
-        // --------------- MENU -------------------
-        let caption = `╭━━〔 🎬 *${movie.title}* 〕━━┈⊷\n┃\n`;
-        movie.downloads.forEach((d, i) => {
-            caption += `┃ ${i + 1} | ${d.quality} 📁\n`;
-        });
-        caption += `┃\n┃ 𝚁𝚎𝚙𝚕𝚢 𝚠𝚒𝚝𝚑 𝚊 𝚗𝚞𝚖𝚋𝚎𝚛 (1–${movie.downloads.length})\n┃\n╰━━━━━━━━━━━━━━━━━━┈⊷\n> © Powered by Sila Tech`;
-
-        await conn.sendMessage(from, { 
-            image: { url: movie.poster }, 
-            caption,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-
-    } catch (err) {
-        console.error("MOVIE ERROR:", err?.response?.data || err.message);
-        await conn.sendMessage(from, { 
-            text: "⚠️ 𝙼𝚘𝚟𝚒𝚎 𝚜𝚎𝚛𝚟𝚒𝚌𝚎 𝚎𝚛𝚛𝚘𝚛. 𝚃𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛.\n\n> © Powered by Sila Tech", 
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    }
+} catch (e) {
+    console.log(e);
+    reply(`❌ Error: ${e.message}`);
+}
 });
 
-// ================= QUALITY SELECTION =================
-cmd({ on: "text" }, async (conn, mek, m, { from, body, sender }) => {
-    try {
-        if (!global.movie_cache[from]) return;
-        if (body.startsWith(".") || body.startsWith("/")) return;
+// ============ SHORT VERSION ============
+cmd({
+    pattern: "moviehelp",
+    alias: ["movieinfo", "filamuhelp"],
+    react: "🎥",
+    desc: "Short movie service info",
+    category: "info",
+    filename: __filename
+},
+async(conn, mek, m, {from, sender, reply}) => {
+try{
+    const shortInfo = `┏━❑ *SWAHILIFLIX* ━━━━━━━━━
+┃ 
+┃ 🎬 *Movie Service Tanzania*
+┃ 
+┃ 💰 *PRICE:*
+┃ • Mwezi 1: 4,000 TZS
+┃ • Miezi 2: 8,000 TZS
+┃ • Miezi 3: 12,000 TZS
+┃ 
+┃ ✅ *BURE:* Season 1-8 (Ep 1-8)
+┃ 🔒 *Members:* Ep 9+ & Single movies
+┃ 
+┃ 📲 *App* (sio WhatsApp)
+┃ 
+┃ 👇 *JIUNGE:*
+┃ https://wa.me/256756076875?text=%F0%9F%92%B3NIPE%20NAMBA%20NILIPIE%20HUDUMA%20YA%20MOVIE
+┃ 
+┃ 🌐 *Website:*
+┃ https://swahilimoviestudio01.blogspot.com
+┃ 
+┃ 📹 *Maelekezo:*
+┃ https://drive.google.com/file/d/1faQ6MgvyezWJSO_XPANmLMtHsu0yorI5/view
+┃ 
+┗━━━━━━━━━━━━━━━━━━━━
 
-        const index = parseInt(body.trim()) - 1;
-        const cache = global.movie_cache[from];
+> *Movie bora kwa Kiswahili*`;
 
-        if (isNaN(index) || !cache.downloads[index]) return;
+    await conn.sendMessage(from, {
+        text: shortInfo,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
 
-        const selected = cache.downloads[index];
+} catch (e) {
+    console.log(e);
+}
+});
 
-        await conn.sendMessage(from, { react: { text: "📥", key: mek.key } });
+// ============ PRICE COMMAND ============
+cmd({
+    pattern: "movieprice",
+    alias: ["price", "bei"],
+    react: "💰",
+    desc: "Movie subscription prices",
+    category: "info",
+    filename: __filename
+},
+async(conn, mek, m, {from, sender, reply}) => {
+try{
+    const priceInfo = `┏━❑ *BEI ZA KUJIUNGA* ━━━━━━━━━
+┃ 
+┃ 💰 *Mwezi 1* ━ *4,000 TZS*
+┃ 💰 *Miezi 2* ━ *8,000 TZS*
+┃ 💰 *Miezi 3* ━ *12,000 TZS*
+┃ 
+┃ ✅ *BURE:* Season zote Episode 1-8
+┃ 🔒 *Members:* Episode 9+ na Single movies
+┃ 
+┃ 👇 *JIUNGE SASA:*
+┃ https://wa.me/256756076875?text=%F0%9F%92%B3NIPE%20NAMBA%20NILIPIE%20HUDUMA%20YA%20MOVIE
+┃ 
+┗━━━━━━━━━━━━━━━━━━━━
 
-        await conn.sendMessage(
-            from,
-            {
-                document: { url: selected.url },
-                mimetype: "video/mp4",
-                fileName: `${cache.title} (${selected.quality}).mp4`,
-                caption: `🎬 *${cache.title}*\n𝚀𝚞𝚊𝚕𝚒𝚝𝚢: ${selected.quality}\n\n> © Powered by Sila Tech`,
-                contextInfo: getContextInfo({ sender: sender })
-            },
-            { quoted: fkontak }
-        );
+> *Swahiliflix - Movie bora kwa Kiswahili*`;
 
-    } catch (e) {
-        console.error("Movie selection error:", e);
-        await conn.sendMessage(from, { 
-            text: "❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚜𝚎𝚗𝚍 𝚏𝚒𝚕𝚎.\n\n> © Powered by Sila Tech", 
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    } finally {
-        delete global.movie_cache[from];
-    }
+    await conn.sendMessage(from, {
+        text: priceInfo,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
+
+} catch (e) {
+    console.log(e);
+}
+});
+
+// ============ JOIN COMMAND ============
+cmd({
+    pattern: "moviejoin",
+    alias: ["joinmovie", "jisajili"],
+    react: "🔗",
+    desc: "Movie subscription link",
+    category: "info",
+    filename: __filename
+},
+async(conn, mek, m, {from, sender, reply}) => {
+try{
+    const joinInfo = `┏━❑ *JIUNGE NA SWAHILIFLIX* ━━━━━━━━━
+┃ 
+┃ 👇 *Bonyeza link hapa chini:*
+┃ 🔗 https://wa.me/256756076875?text=%F0%9F%92%B3NIPE%20NAMBA%20NILIPIE%20HUDUMA%20YA%20MOVIE
+┃ 
+┃ 💰 *Bei:* 4,000 TZS (Mwezi 1)
+┃ 
+┃ 📋 *Unapata:* Movie zote + Season kamili
+┃ 
+┗━━━━━━━━━━━━━━━━━━━━
+
+> *Kwa Kiswahili, kwa urahisi*`;
+
+    await conn.sendMessage(from, {
+        text: joinInfo,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
+
+} catch (e) {
+    console.log(e);
+}
+});
+
+// ============ GUIDE COMMAND ============
+cmd({
+    pattern: "movieguide",
+    alias: ["guide", "maelekezo"],
+    react: "📹",
+    desc: "Movie app guide",
+    category: "info",
+    filename: __filename
+},
+async(conn, mek, m, {from, sender, reply}) => {
+try{
+    const guideInfo = `┏━❑ *MAELEKEZO YA APP* ━━━━━━━━━
+┃ 
+┃ 👇 *Bonyeza hapa kuona video ya maelekezo:*
+┃ 📹 https://drive.google.com/file/d/1faQ6MgvyezWJSO_XPANmLMtHsu0yorI5/view
+┃ 
+┃ *Maelezo ya haraka:*
+┃ 🔹 Season 1-8 (Ep 1-8) ni *BURE*
+┃ 🔹 Ep 9+ na Single movies ni *Members only*
+┃ 🔹 Tumia *data* au *download* kwa offline
+┃ 
+┗━━━━━━━━━━━━━━━━━━━━
+
+> *Swahiliflix - Rahisi na bora*`;
+
+    await conn.sendMessage(from, {
+        text: guideInfo,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
+
+} catch (e) {
+    console.log(e);
+}
 });
