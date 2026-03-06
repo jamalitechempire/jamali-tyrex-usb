@@ -33,7 +33,7 @@ cmd({
   alias: ["flux", "imagine"],
   react: "🚀",
   desc: "Generate an image using AI.",
-  category: "main",
+  category: "ai",
   filename: __filename
 }, async (conn, mek, m, { q, reply, from, sender }) => {
   try {
@@ -82,7 +82,7 @@ cmd({
   alias: ["sdiffusion", "imagine2"],
   react: "🚀",
   desc: "Generate an image using AI.",
-  category: "main",
+  category: "ai",
   filename: __filename
 }, async (conn, mek, m, { q, reply, from, sender }) => {
   try {
@@ -131,7 +131,7 @@ cmd({
   alias: ["stability", "imagine3"],
   react: "🚀",
   desc: "Generate an image using AI.",
-  category: "main",
+  category: "ai",
   filename: __filename
 }, async (conn, mek, m, { q, reply, from, sender }) => {
   try {
@@ -173,4 +173,5 @@ cmd({
       contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
   }
+
 });
