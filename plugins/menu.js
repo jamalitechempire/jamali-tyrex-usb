@@ -8,8 +8,10 @@ const {
     getStickerAuthor,
     getStickerPack,
     getFormattedTime,
-    readSettings
-} = require('./settings'); // Adjust path based on where your settings file is
+    readSettings,
+    getBotName,
+    getMenuImage
+} = require('./settings'); // Adjust path
 
 // Define monospace function here to avoid import issues
 const monospace = (text) => `\`${text}\``;
@@ -39,13 +41,14 @@ cmd({
   desc: 'Show bot main menu with system info'
 }, async (conn, mek, m, { from, sender, pushName, reply }) => {
   try {
-    // Get settings
-    const settings = await readSettings();
+    // Get settings values
     const ownerName = await getOwnerName();
     const watermark = await getWatermark();
     const stickerAuthor = await getStickerAuthor();
     const stickerPack = await getStickerPack();
-    const formattedTime = await getFormattedTime('full');
+    const botName = await getBotName();
+    const menuImage = await getMenuImage();
+    const settings = await readSettings();
     
     const prefix = config.PREFIX || '.';
     const timeZone = settings.timezone || 'Africa/Dar_es_Salaam';
@@ -69,8 +72,8 @@ cmd({
       }
     }
 
-    // HEADER - Using settings
-    let menu = `┏━❑ *${settings.botName} MENU* ━━━━━━━━━
+    // HEADER - Original format with added owner name
+    let menu = `┏━❑ *𝐒𝐈𝐋𝐀-𝐌𝐃 𝐌𝐄𝐍𝐔* ━━━━━━━━━
 ┃ 🚀 𝙼𝚘𝚍𝚎: ${mode}
 ┃ ⚙️ 𝙿𝚛𝚎𝚏𝚒𝚡: ${prefix}
 ┃ 👤 𝚄𝚜𝚎𝚛: ${pushName || sender.split('@')[0]}
@@ -80,12 +83,11 @@ cmd({
 ┃ 📅 𝙳𝚊𝚝𝚎: ${date}
 ┃ 🕐 𝚃𝚒𝚖𝚎: ${time}
 ┃ 💾 𝚁𝙰𝙼: ${ram}
-┃ 🖼️ 𝚂𝚝𝚒𝚌𝚔𝚎𝚛: ${stickerAuthor} | ${stickerPack}
 ┗━━━━━━━━━━━━━━━━━━━━
 
 *📋 𝙰𝚅𝙰𝙸𝙻𝙰𝙱𝙻𝙴 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂*`;
 
-    // COMMAND LIST
+    // COMMAND LIST - Exactly as original
     for (const category in commandsByCategory) {
       menu += `\n\n┏━❑ *${category}* ━━━━━━━━━\n`;
       const sorted = commandsByCategory[category].sort();
@@ -95,25 +97,23 @@ cmd({
       menu += `┗━━━━━━━━━━━━━━━━━━━━`;
     }
 
+    // FOOTER - Original format with watermark instead of static text
     menu += `\n\n┏━━━━━━━━━━━━━━━━━━━━┓
 ┃ ${watermark}
 ┃ 𝚂𝚒𝚕𝚊 𝚃𝚎𝚌𝚑 🔧
 ┗━━━━━━━━━━━━━━━━━━━━┛`;
 
-    // Try simple image URL first
-    const imageUrl = config.MENU_IMAGE_URL || 'https://files.catbox.moe/36vahk.png';
-    
-    // Test 1: Send with image
+    // Send with menu image
     try {
       await conn.sendMessage(from, {
-        image: { url: imageUrl },
+        image: { url: menuImage },
         caption: menu,
       }, { quoted: mek });
       
     } catch (imageError) {
       console.log("Image error, sending text only:", imageError);
       
-      // Test 2: Send text only
+      // Fallback to text only
       await conn.sendMessage(from, {
         text: menu,
       }, { quoted: mek });
