@@ -26,10 +26,10 @@ const getContextInfo = (m) => {
     };
 };
 
-// LINK COMMAND
+// ============ LINK COMMAND ============
 cmd({
     pattern: "link",
-    alias: ["grouplink", "invite"],
+    alias: ["grouplink", "invite", "linkgroup"],
     react: "🔗",
     desc: "Get group invite link",
     category: "group",
@@ -56,6 +56,7 @@ try{
 ┃ 📌 *Group:* ${groupMetadata.subject}
 ┃ 🔗 *Link:* ${link}
 ┃ 👥 *Members:* ${groupMetadata.participants.length}
+┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
 ┗━━━━━━━━━━━━━━━━━━━━
 > © Powered by Sila Tech`,
         contextInfo: getContextInfo({ sender: sender })
@@ -70,10 +71,10 @@ try{
 }
 });
 
-// REVOKE COMMAND
+// ============ REVOKE COMMAND ============
 cmd({
     pattern: "revoke",
-    alias: ["resetlink", "newlink"],
+    alias: ["resetlink", "newlink", "revokelink"],
     react: "🔄",
     desc: "Revoke and reset group invite link",
     category: "group",
@@ -111,10 +112,11 @@ try{
     
     await conn.sendMessage(from, {
         text: `┏━❑ LINK REVOKED ━━━━━━━━━
-┃ ✅ Group link has been reset
+┃ ✅ Group link has been reset successfully
 ┃ 📌 *Group:* ${groupMetadata.subject}
 ┃ 🔗 *New Link:* ${newLink}
 ┃ 👥 *Members:* ${groupMetadata.participants.length}
+┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
 ┗━━━━━━━━━━━━━━━━━━━━
 > © Powered by Sila Tech`,
         contextInfo: getContextInfo({ sender: sender })
