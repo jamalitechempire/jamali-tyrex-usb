@@ -26,7 +26,7 @@ const getContextInfo = (m) => {
     };
 };
 
-// PROMOTE COMMAND
+// PROMOTE COMMAND (IMEREKEBISHWA)
 cmd({
     pattern: "promote",
     alias: ["admin", "makeadmin"],
@@ -35,7 +35,7 @@ cmd({
     category: "group",
     filename: __filename
 },
-async(conn, mek, m, {from, l, quoted, isGroup, sender, isAdmins, isBotAdmins, reply, participants, groupAdmins}) => {
+async(conn, mek, m, {from, l, quoted, isGroup, sender, isAdmins, isBotAdmins, reply, participants, groupAdmins, botNumber}) => {
 try{
     if (!isGroup) return await conn.sendMessage(from, {
         text: `❌ This command is only for groups\n\n> © Powered by Sila Tech`,
@@ -47,10 +47,11 @@ try{
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
-    if (!isBotAdmins) return await conn.sendMessage(from, {
-        text: `❌ Bot needs to be admin to promote members\n\n> © Powered by Sila Tech`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    // TOA CHECK YA BOT ADMIN KWA SASA (TUONE KAMA NDIO ISSUE)
+    // if (!isBotAdmins) return await conn.sendMessage(from, {
+    //     text: `❌ Bot needs to be admin to promote members\n\n> © Powered by Sila Tech`,
+    //     contextInfo: getContextInfo({ sender: sender })
+    // }, { quoted: fkontak });
     
     let usersToPromote = [];
     
@@ -99,7 +100,17 @@ try{
     
     // Promote each user
     for (let user of usersToPromote) {
-        await conn.groupParticipantsUpdate(from, [user], 'promote');
+        try {
+            await conn.groupParticipantsUpdate(from, [user], 'promote');
+            console.log(`Promoted: ${user}`);
+        } catch (promoteError) {
+            console.log(`Error promoting ${user}:`, promoteError);
+            await conn.sendMessage(from, {
+                text: `❌ Failed to promote @${user.split('@')[0]}: ${promoteError.message}`,
+                mentions: [user],
+                contextInfo: getContextInfo({ sender: sender })
+            }, { quoted: fkontak });
+        }
     }
     
     // Get usernames for mentioned users
@@ -123,22 +134,16 @@ try{
     }, { quoted: fkontak });
 
 } catch (e) {
-    if (e.message.includes('403') || e.message.includes('permission')) {
-        await conn.sendMessage(from, {
-            text: `❌ Bot needs to be admin to promote members\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    } else {
-        await conn.sendMessage(from, {
-            text: `❌ Failed to promote user(s)\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    }
+    console.log('PROMOTE ERROR:', e);
+    await conn.sendMessage(from, {
+        text: `❌ Failed to promote user(s). Error: ${e.message}\n\n> © Powered by Sila Tech`,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
     l(e);
 }
 });
 
-// DEMOTE COMMAND
+// DEMOTE COMMAND (IMEREKEBISHWA)
 cmd({
     pattern: "demote",
     alias: ["removeadmin", "unadmin"],
@@ -159,10 +164,11 @@ try{
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
-    if (!isBotAdmins) return await conn.sendMessage(from, {
-        text: `❌ Bot needs to be admin to demote members\n\n> © Powered by Sila Tech`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    // TOA CHECK YA BOT ADMIN KWA SASA (TUONE KAMA NDIO ISSUE)
+    // if (!isBotAdmins) return await conn.sendMessage(from, {
+    //     text: `❌ Bot needs to be admin to demote members\n\n> © Powered by Sila Tech`,
+    //     contextInfo: getContextInfo({ sender: sender })
+    // }, { quoted: fkontak });
     
     let usersToDemote = [];
     
@@ -214,7 +220,17 @@ try{
     
     // Demote each user
     for (let user of usersToDemote) {
-        await conn.groupParticipantsUpdate(from, [user], 'demote');
+        try {
+            await conn.groupParticipantsUpdate(from, [user], 'demote');
+            console.log(`Demoted: ${user}`);
+        } catch (demoteError) {
+            console.log(`Error demoting ${user}:`, demoteError);
+            await conn.sendMessage(from, {
+                text: `❌ Failed to demote @${user.split('@')[0]}: ${demoteError.message}`,
+                mentions: [user],
+                contextInfo: getContextInfo({ sender: sender })
+            }, { quoted: fkontak });
+        }
     }
     
     // Get usernames for mentioned users
@@ -238,17 +254,11 @@ try{
     }, { quoted: fkontak });
 
 } catch (e) {
-    if (e.message.includes('403') || e.message.includes('permission')) {
-        await conn.sendMessage(from, {
-            text: `❌ Bot needs to be admin to demote members\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    } else {
-        await conn.sendMessage(from, {
-            text: `❌ Failed to demote user(s)\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    }
+    console.log('DEMOTE ERROR:', e);
+    await conn.sendMessage(from, {
+        text: `❌ Failed to demote user(s). Error: ${e.message}\n\n> © Powered by Sila Tech`,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
     l(e);
 }
 });
