@@ -42,7 +42,7 @@ cmd({
     alias: ["china", "indonesia", "japan", "korea", "thailand", "chinese", "indo", "japanese", "korean", "thai"],
     react: "😍",
     desc: "Get random beauty image by country",
-    category: "random",
+    category: "wakubwa",
     filename: __filename
 },
 async(conn, mek, m, {from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
@@ -120,3 +120,4 @@ try{
     l(e);
 }
 });
+
