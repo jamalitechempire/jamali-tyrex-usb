@@ -20,7 +20,7 @@ const getContextInfo = (m) => {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
             newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
             serverMessageId: 143,
         },
     };
@@ -38,12 +38,12 @@ cmd({
 async(conn, mek, m, {from, l, isGroup, sender, isAdmins, isBotAdmins, reply}) => {
 try{
     if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ This command is only for groups\n\n> © Powered by Sila Tech`,
+        text: `❌ This command is only for groups`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
     if (!isAdmins && !isBotAdmins) return await conn.sendMessage(from, {
-        text: `❌ You need to be an admin to use this command\n\n> © Powered by Sila Tech`,
+        text: `❌ You need to be an admin to use this command`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
@@ -57,21 +57,20 @@ try{
 ┃ 🔗 *Link:* ${link}
 ┃ 👥 *Members:* ${groupMetadata.participants.length}
 ┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
-┗━━━━━━━━━━━━━━━━━━━━
-> © Powered by Sila Tech`,
+┗━━━━━━━━━━━━━━━━━━━━`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
 
 } catch (e) {
     await conn.sendMessage(from, {
-        text: `❌ Failed to get group link\n\n> © Powered by Sila Tech`,
+        text: `❌ Failed to get group link`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     l(e);
 }
 });
 
-// ============ REVOKE COMMAND ============
+// ============ REVOKE COMMAND (IMEREKEBISHWA KAMA PROMOTE/DEMOTE) ============
 cmd({
     pattern: "revoke",
     alias: ["resetlink", "newlink", "revokelink"],
@@ -80,26 +79,27 @@ cmd({
     category: "group",
     filename: __filename
 },
-async(conn, mek, m, {from, l, isGroup, sender, isAdmins, isBotAdmins, reply}) => {
+async(conn, mek, m, {from, l, isGroup, sender, isAdmins, reply}) => {
 try{
     if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ This command is only for groups\n\n> © Powered by Sila Tech`,
+        text: `❌ This command is only for groups`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
     if (!isAdmins) return await conn.sendMessage(from, {
-        text: `❌ You need to be an admin to revoke group link\n\n> © Powered by Sila Tech`,
+        text: `❌ You need to be an admin to revoke group link`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
-    if (!isBotAdmins) return await conn.sendMessage(from, {
-        text: `❌ Bot needs to be admin to revoke group link\n\n> © Powered by Sila Tech`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    // TOA CHECK YA BOT ADMIN (SAWA KAMA PROMOTE/DEMOTE)
+    // if (!isBotAdmins) return await conn.sendMessage(from, {
+    //     text: `❌ Bot needs to be admin to revoke group link`,
+    //     contextInfo: getContextInfo({ sender: sender })
+    // }, { quoted: fkontak });
     
     // Send processing message
     await conn.sendMessage(from, {
-        text: `⏳ Revoking group link...\n\n> © Powered by Sila Tech`,
+        text: `⏳ Revoking group link...`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
     
@@ -117,23 +117,16 @@ try{
 ┃ 🔗 *New Link:* ${newLink}
 ┃ 👥 *Members:* ${groupMetadata.participants.length}
 ┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
-┗━━━━━━━━━━━━━━━━━━━━
-> © Powered by Sila Tech`,
+┗━━━━━━━━━━━━━━━━━━━━`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fkontak });
 
 } catch (e) {
-    if (e.message.includes('403') || e.message.includes('permission')) {
-        await conn.sendMessage(from, {
-            text: `❌ Bot needs to be admin to revoke link\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    } else {
-        await conn.sendMessage(from, {
-            text: `❌ Failed to revoke group link\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-    }
+    console.log('REVOKE ERROR:', e);
+    await conn.sendMessage(from, {
+        text: `❌ Failed to revoke group link. Error: ${e.message}`,
+        contextInfo: getContextInfo({ sender: sender })
+    }, { quoted: fkontak });
     l(e);
 }
 });
