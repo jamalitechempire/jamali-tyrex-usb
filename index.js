@@ -51,7 +51,7 @@ const bodyparser = require('body-parser')
 const os = require('os')
 const Crypto = require('crypto')
 const path = require('path')
-const { handleAntiCall } = require('./plugins/setts2')
+const { handleAntiCall } = require('./plugins/settis2')
 const prefix = config.PREFIX
 
 // ============ OWNER CONFIGURATION ============
