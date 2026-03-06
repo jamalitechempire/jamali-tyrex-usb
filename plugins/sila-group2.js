@@ -122,7 +122,7 @@ try{
 
 // ============ 4. TAG ALL WITH MESSAGE ============
 cmd({
-    pattern: "tag",
+    pattern: "tag2",
     alias: ["mention", "mentall"],
     react: "📣",
     desc: "Tag all members with custom message",
@@ -267,7 +267,7 @@ try{
 
 // ============ 9. GROUP WELCOME ============
 cmd({
-    pattern: "welcome",
+    pattern: "welcome2",
     alias: ["setwelcome", "gcwelcome"],
     react: "👋",
     desc: "Set welcome message for new members",
@@ -298,7 +298,7 @@ try{
 
 // ============ 10. GROUP GOODBYE ============
 cmd({
-    pattern: "goodbye",
+    pattern: "goodbye2",
     alias: ["setgoodbye", "gcbye"],
     react: "👋",
     desc: "Set goodbye message for leaving members",
@@ -353,7 +353,7 @@ try{
 
 // ============ 12. ANTI FOREIGN ============
 cmd({
-    pattern: "antiforeign",
+    pattern: "antiforeign2",
     alias: ["antiforeigners", "antiforeignnumber"],
     react: "🚫",
     desc: "Block foreign numbers from joining",
@@ -409,7 +409,7 @@ try{
 
 // ============ 14. ANTI BAD WORDS ============
 cmd({
-    pattern: "antibadword",
+    pattern: "antibadword2",
     alias: ["antitoxic", "filterwords"],
     react: "🔞",
     desc: "Filter bad words in group",
@@ -441,8 +441,8 @@ try{
 
 // ============ 15. ANTI SPAM ============
 cmd({
-    pattern: "antispam",
-    alias: ["antispam"],
+    pattern: "antispam2",
+    alias: ["antispam2"],
     react: "⛔",
     desc: "Enable anti-spam protection",
     category: "group"
@@ -919,7 +919,7 @@ try{
 
 // ============ 34. ANTI POLL ============
 cmd({
-    pattern: "antipoll",
+    pattern: "antipoll2",
     alias: ["antipolls"],
     react: "📊",
     desc: "Block polls in group",
@@ -967,7 +967,7 @@ try{
 
 // ============ 36. ANTI TAGALL ============
 cmd({
-    pattern: "antitagall",
+    pattern: "antitagall2",
     alias: ["antitag"],
     react: "🚫",
     desc: "Block tagall messages",
