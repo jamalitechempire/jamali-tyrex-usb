@@ -2,6 +2,14 @@ const config = require('../config');
 const os = require('os');
 const moment = require('moment-timezone');
 const { cmd, commands } = require('../command');
+const { 
+    getOwnerName, 
+    getWatermark, 
+    getStickerAuthor,
+    getStickerPack,
+    getFormattedTime,
+    readSettings
+} = require('./settings'); // Adjust path based on where your settings file is
 
 // Define monospace function here to avoid import issues
 const monospace = (text) => `\`${text}\``;
@@ -31,8 +39,16 @@ cmd({
   desc: 'Show bot main menu with system info'
 }, async (conn, mek, m, { from, sender, pushName, reply }) => {
   try {
+    // Get settings
+    const settings = await readSettings();
+    const ownerName = await getOwnerName();
+    const watermark = await getWatermark();
+    const stickerAuthor = await getStickerAuthor();
+    const stickerPack = await getStickerPack();
+    const formattedTime = await getFormattedTime('full');
+    
     const prefix = config.PREFIX || '.';
-    const timeZone = 'Africa/Dar_es_Salaam';
+    const timeZone = settings.timezone || 'Africa/Dar_es_Salaam';
     const time = moment.tz(timeZone).format('hh:mm:ss A');
     const date = moment.tz(timeZone).format('DD/MM/YYYY');
     const uptime = formatUptime(process.uptime());
@@ -53,16 +69,18 @@ cmd({
       }
     }
 
-    // HEADER - Simple without monospace if causing issues
-    let menu = `┏━❑ *𝐒𝐈𝐋𝐀-𝐌𝐃 𝐌𝐄𝐍𝐔* ━━━━━━━━━
+    // HEADER - Using settings
+    let menu = `┏━❑ *${settings.botName} MENU* ━━━━━━━━━
 ┃ 🚀 𝙼𝚘𝚍𝚎: ${mode}
 ┃ ⚙️ 𝙿𝚛𝚎𝚏𝚒𝚡: ${prefix}
 ┃ 👤 𝚄𝚜𝚎𝚛: ${pushName || sender.split('@')[0]}
+┃ 👑 𝙾𝚠𝚗𝚎𝚛: ${ownerName}
 ┃ 📦 𝙿𝚕𝚞𝚐𝚒𝚗𝚜: ${totalCommands}
 ┃ ⏱️ 𝚄𝚙𝚝𝚒𝚖𝚎: ${uptime}
 ┃ 📅 𝙳𝚊𝚝𝚎: ${date}
 ┃ 🕐 𝚃𝚒𝚖𝚎: ${time}
 ┃ 💾 𝚁𝙰𝙼: ${ram}
+┃ 🖼️ 𝚂𝚝𝚒𝚌𝚔𝚎𝚛: ${stickerAuthor} | ${stickerPack}
 ┗━━━━━━━━━━━━━━━━━━━━
 
 *📋 𝙰𝚅𝙰𝙸𝙻𝙰𝙱𝙻𝙴 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂*`;
@@ -78,7 +96,7 @@ cmd({
     }
 
     menu += `\n\n┏━━━━━━━━━━━━━━━━━━━━┓
-┃ *𝐒𝐈𝐋𝐀-𝐌𝐃 𝐁𝐎𝐓* © 𝟸𝟶𝟸𝟺
+┃ ${watermark}
 ┃ 𝚂𝚒𝚕𝚊 𝚃𝚎𝚌𝚑 🔧
 ┗━━━━━━━━━━━━━━━━━━━━┛`;
 
