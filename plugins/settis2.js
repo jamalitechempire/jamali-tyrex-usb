@@ -48,7 +48,7 @@ const DEFAULT_SETTINGS = {
 
 // Default anticall settings
 const DEFAULT_ANTICALL = {
-    enabled: true,
+    enabled: false,
     message: "📵 *Anti-Call Activated*\n\nBot does not accept calls. Please use text messages only.\n\n> 𝐒𝐈𝐋𝐀 𝐌𝐃",
     action: "reject", // reject, block, ignore
     logCalls: true,
@@ -476,7 +476,7 @@ ${anticall.message}
 
 // ============ 7. TOGGLE ANTICALL ============
 cmd({
-    pattern: "anticall",
+    pattern: "anticall2",
     alias: ["toggleanticall", "setanticall"],
     react: "📵",
     desc: "Enable/disable anti-call feature",
