@@ -69,7 +69,7 @@ cmd({
         if (!q) return reply("❌ *Enter search query!*\nExample: .google what is bot");
         
         const api = await axios.get(`https://vapis.my.id/api/googlesearch?q=${encodeURIComponent(q)}`);
-        const results = api.data.result.slice(0, ,9);
+        const results = api.data.result.slice(0, 9);
         
         let msg = `🌐 *GOOGLE SEARCH RESULTS*\n\n`;
         results.forEach((item, i) => {
