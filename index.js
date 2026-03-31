@@ -154,28 +154,34 @@ if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
     console.log('❌ Please add your session to SESSION_ID in config.env or config.js')
     process.exit(1)
   }
+  
   const sessdata = config.SESSION_ID.replace("sila~", '').trim()
   if (!sessdata) {
     console.log('❌ SESSION_ID is empty after processing')
     process.exit(1)
   }
-  console.log('📥 Downloading session file...')
-  const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-  filer.download((err, data) => {
-    if (err) {
-      console.log('❌ Failed to download session:', err.message)
-      process.exit(1)
-    }
-    fs.writeFile(__dirname + '/sessions/creds.json', data, (writeErr) => {
-      if (writeErr) {
-        console.log('❌ Failed to save session:', writeErr.message)
-        process.exit(1)
-      }
-      console.log("✅ Session downloaded successfully")
-      console.log("🔄 Restarting bot with new session...")
-      process.exit(0)
-    })
-  })
+  
+  console.log('📥 Extracting session from base64 string...')
+  
+  try {
+    // Decode base64 to compressed buffer
+    const compressedBuffer = Buffer.from(sessdata, 'base64')
+    
+    // Decompress using zlib
+    const zlib = require('zlib')
+    const sessionBuffer = zlib.gunzipSync(compressedBuffer)
+    
+    // Write to creds.json
+    fs.writeFileSync(__dirname + '/sessions/creds.json', sessionBuffer)
+    
+    console.log("✅ Session extracted and saved successfully")
+    console.log(`📊 Session size: ${sessionBuffer.length} bytes`)
+    
+  } catch (err) {
+    console.log('❌ Failed to extract session:', err.message)
+    console.log('⚠️ Make sure you copied the FULL session string')
+    process.exit(1)
+  }
 }
 
 const express = require("express")
