@@ -96,7 +96,7 @@ const securityDB = {
     logBugs: true
   },
   antiSpam: {
-    enabled: true,
+    enabled: false,
     maxMessages: 5,
     timeWindow: 5000,
     action: 'warn',
@@ -104,7 +104,7 @@ const securityDB = {
     userMessages: new Map()
   },
   antiBan: {
-    enabled: true,
+    enabled: false,
     protectOwner: true,
     protectAdmins: true,
     protectBot: true,
