@@ -11,17 +11,16 @@ const {
     readSettings,
     getBotName,
     getMenuImage
-} = require('./settings'); // Adjust path
+} = require('./settings'); // Adjust path based on your structure
 
-// Define monospace function here to avoid import issues
-const monospace = (text) => `\`${text}\``;
-
+// Helper: format bytes
 const formatSize = (bytes) => {
   if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(1) + 'GB';
   if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + 'MB';
   return (bytes / 1024).toFixed(0) + 'KB';
 };
 
+// Helper: format uptime
 const formatUptime = (seconds) => {
   const d = Math.floor(seconds / (24 * 3600));
   seconds %= 24 * 3600;
@@ -32,22 +31,35 @@ const formatUptime = (seconds) => {
   return `${d}d ${h}h ${m}m ${s}s`;
 };
 
+// Context info with your newsletter JID
+const getContextInfo = (sender) => {
+    return {
+        mentionedJid: [sender],
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+            newsletterJid: '120363424973782944@newsletter', // Channel yako
+            newsletterName: `✨ TYREX MD ✨`,
+            serverMessageId: 143,
+        },
+    };
+};
+
 cmd({
   pattern: 'menu',
   alias: ['help', 'allmenu'],
   react: '📋',
   category: 'main',
   filename: __filename,
-  desc: 'Show bot main menu with system info'
+  desc: 'Show bot main menu with system info (TYREX MD style)'
 }, async (conn, mek, m, { from, sender, pushName, reply }) => {
   try {
-    // Get settings values
+    // Read settings
     const ownerName = await getOwnerName();
     const watermark = await getWatermark();
     const stickerAuthor = await getStickerAuthor();
     const stickerPack = await getStickerPack();
     const botName = await getBotName();
-    const menuImage = await getMenuImage();
     const settings = await readSettings();
     
     const prefix = config.PREFIX || '.';
@@ -58,9 +70,9 @@ cmd({
     const totalRam = os.totalmem();
     const usedRam = totalRam - os.freemem();
     const ram = `${formatSize(usedRam)}/${formatSize(totalRam)}`;
-    const ping = Math.floor(Math.random() * 50) + 10;
     const mode = config.MODE === 'public' ? 'PUBLIC' : 'PRIVATE';
     const totalCommands = commands.filter(a => a.pattern).length;
+    const ping = Math.floor(Math.random() * 50) + 10; // optional
 
     // Group commands by category
     const commandsByCategory = {};
@@ -72,50 +84,50 @@ cmd({
       }
     }
 
-    // HEADER - Original format with added owner name
-    let menu = `┏━❑ *𝐒𝐈𝐋𝐀-𝐌𝐃 𝐌𝐄𝐍𝐔* ━━━━━━━━━
-┃ 🚀 𝙼𝚘𝚍𝚎: ${mode}
-┃ ⚙️ 𝙿𝚛𝚎𝚏𝚒𝚡: ${prefix}
-┃ 👤 𝚄𝚜𝚎𝚛: ${pushName || sender.split('@')[0]}
-┃ 👑 𝙾𝚠𝚗𝚎𝚛: ${ownerName}
-┃ 📦 𝙿𝚕𝚞𝚐𝚒𝚗𝚜: ${totalCommands}
-┃ ⏱️ 𝚄𝚙𝚝𝚒𝚖𝚎: ${uptime}
-┃ 📅 𝙳𝚊𝚝𝚎: ${date}
-┃ 🕐 𝚃𝚒𝚖𝚎: ${time}
-┃ 💾 𝚁𝙰𝙼: ${ram}
-┗━━━━━━━━━━━━━━━━━━━━
+    // ========== TYREX MD HEADER ==========
+    let menu = `*╭┄┄┄🌸🌹 TYREX MD 🌹🌸┄┄┄⊷*
+*┃◆┬┄★ ★ ★ ★ ★ ★ ★ ★*
+*┃◆┊ ᴏᴡɴᴇʀ:* ${ownerName}
+*┃◆┊ ᴛᴇᴄʜ:* sɪʟᴀ
+*┃◆┊ ʙᴀɪʟᴇʏs:* ᴍᴜʟᴛɪ ᴅᴇᴠɪᴄᴇ
+*┃◆┊ ᴅᴀᴛᴇ:* ${date}
+*┃◆┊ ᴛʏᴘᴇ:* ɴᴏᴅᴇᴊs
+*┃◆┊ ʀᴜɴᴛɪᴍᴇ:* ${uptime}
+*┃◆┊ ᴘʀᴇғɪx:* ${prefix}
+*┃◆┊ ᴍᴏᴅᴇ:* ${mode}
+*┃◆┊ ʀᴀᴍ:* ${ram}
+*┃◆┊ ᴛᴏᴛᴀʟ ᴄᴏᴍᴍᴀɴᴅs:* ${totalCommands}
+*┃◆┊ sᴛᴀᴛᴜs:* *ᴏɴʟɪɴᴇ*
+*┃◆┴┄★ ★ ★ ★ ★ ★ ★ ★*
+*╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷*`;
 
-*📋 𝙰𝚅𝙰𝙸𝙻𝙰𝙱𝙻𝙴 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂*`;
-
-    // COMMAND LIST - Exactly as original
+    // ========== COMMAND SECTIONS ==========
     for (const category in commandsByCategory) {
-      menu += `\n\n┏━❑ *${category}* ━━━━━━━━━\n`;
+      menu += `\n*╭┈┈┄🌸🌹 ${category} 🌹🌸┄┄┄◈*`;
       const sorted = commandsByCategory[category].sort();
       for (const cmdName of sorted) {
-        menu += `┃ ⤷ ${prefix}${cmdName}\n`;
+        menu += `\n*┋▸ ${prefix}${cmdName}*`;
       }
-      menu += `┗━━━━━━━━━━━━━━━━━━━━`;
+      menu += `\n*╰┄┄┄┄┄┈┈┈┈┄┄┄◈*`;
     }
 
-    // FOOTER - Original format with watermark instead of static text
-    menu += `\n\n┏━━━━━━━━━━━━━━━━━━━━┓
-┃ ${watermark}
-┃ 𝚂𝚒𝚕𝚊 𝚃𝚎𝚌𝚑 🔧
-┗━━━━━━━━━━━━━━━━━━━━┛`;
+    // ========== FOOTER ==========
+    menu += `\n\n*> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 Tyrex Tech*`;
 
-    // Send with menu image
+    // ========== SEND WITH IMAGE (NEW URL) ==========
+    const menuImage = 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg'; // New image link
+    
     try {
       await conn.sendMessage(from, {
         image: { url: menuImage },
         caption: menu,
+        contextInfo: getContextInfo(sender) // Adds newsletter forwarding info
       }, { quoted: mek });
-      
     } catch (imageError) {
       console.log("Image error, sending text only:", imageError);
-      
-      // Fallback to text only
       await conn.sendMessage(from, {
         text: menu,
+        contextInfo: getContextInfo(sender)
       }, { quoted: mek });
     }
 
