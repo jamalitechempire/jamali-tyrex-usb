@@ -1,19 +1,8 @@
 const { cmd } = require('../command');
-const { getBotName } = require('./setbotname'); // Ikiwa ipo kwenye path yako
+const { getBotName } = require('./setbotname'); // Hakikisha path ni sahihi
 
-// Helper function (kama haipo, nakili hii)
-const getContextInfo = (sender) => {
-    return {
-        mentionedJid: [sender],
-        forwardingScore: 999,
-        isForwarded: true,
-        forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363424973782944@newsletter', // Badilisha na yako
-            newsletterName: `✨ 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 ✨`,
-            serverMessageId: 143,
-        },
-    };
-};
+// Ikiwa huna getBotName, unaweza kufafanua mwenyewe:
+// const getBotName = () => "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃";
 
 cmd({
     pattern: "about",
@@ -25,7 +14,7 @@ cmd({
 },
 async (conn, mek, m, { from, sender, reply }) => {
     try {
-        const botName = await getBotName(); // Au andika mwenyewe kama "TYREX MD"
+        const botName = await getBotName(); // Sasa inachukua jina lako halisi
         
         const info = `┏━❑ 𝐀𝐁𝐎𝐔𝐓 ${botName} ━━━━━━━━━
 ┃
@@ -37,13 +26,9 @@ async (conn, mek, m, { from, sender, reply }) => {
 ┃
 ┗━━━━━━━━━━━━━━━━━━━━`;
 
-        await conn.sendMessage(from, {
-            text: info,
-            contextInfo: getContextInfo(sender)
-        }, { quoted: mek }); // Tumia mek badala ya fkontak isiyojulikana
-
+        await conn.sendMessage(from, { text: info }, { quoted: mek });
     } catch (e) {
         console.log("About Error:", e);
-        reply("❌ Hitilafu wakati wa kupata taarifa za bot.");
+        reply("❌ Imeshindwa kupata taarifa za bot.");
     }
 });
