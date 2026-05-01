@@ -12,7 +12,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
+        "conversation": "𝚃𝚈𝚁𝙴𝚇"
     }
 };
 
@@ -53,7 +53,7 @@ cmd({
 async (conn, mek, m, { from, quoted, reply, isCreator, sender }) => {
     try {
         const ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃";
-        const formattedOwnerNumber = "2557628378557";
+        const formattedOwnerNumber = "255628378557";
         
         if (!isCreator) {
             return await conn.sendMessage(from, { 
@@ -110,7 +110,7 @@ async (conn, mek, m, { from, quoted, reply, isCreator, sender }) => {
 │  └─∘ 𝙳𝚎𝚟 𝙽𝚞𝚖𝚋𝚎𝚛: ${config.DEV}
 │
 ╰───『 *${config.DESCRIPTION}* 』───❏
-> © Powered by Sila Tech
+> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡
 `;
 
         await conn.sendMessage(
