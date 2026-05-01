@@ -1,6 +1,6 @@
 const { cmd } = require('../command');
 
-// Define combined fakevCard 
+// fakevCard ya bot yako
 const fakevCard = {
   key: {
     fromMe: false,
@@ -9,8 +9,8 @@ const fakevCard = {
   },
   message: {
     contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
+      displayName: "© 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃",
+      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐓𝐘𝐑𝐄𝐗-𝐓𝐄𝐂𝐇;\nTEL;type=CELL;type=VOICE;waid=255700000000:+255700000000\nEND:VCARD`
     }
   }
 };
@@ -18,41 +18,41 @@ const fakevCard = {
 cmd({
     pattern: "ping",
     alias: ["p"],
-    desc: "Check bot speed",
+    desc: "Angalia kasi ya bot",
     category: "main",
-    react: "🚀",
+    react: "⚡",
     filename: __filename
 },
 async (conn, mek, m, { from, sender, reply }) => {
     try {
         const start = Date.now();
         
-        // Send initial message
+        // Tuma ujumbe wa kwanza
         const initialMsg = await conn.sendMessage(from, 
-            { text: "𝐒𝐈𝐋𝐀-𝐌𝐃..." },
+            { text: "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃..." },
             { quoted: fakevCard }
         );
         
         const end = Date.now();
         const latency = end - start;
         
-        // Stylish ping response
+        // Majibu ya ping kwa style yako
         const text = 
 `┏━❑ 𝐏𝐎𝐍𝐆 ━━━━━━━━━━━━━━
 ┃ ⚡ ${latency} ms
-┃ 🚀 𝐒𝐈𝐋𝐀-𝐌𝐃 𝐁𝐎𝐓
+┃ 🚀 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 𝐁𝐎𝐓
 ┗━━━━━━━━━━━━━━━━━━━━━`;
         
-        // Edit the message
+        // Hariri ujumbe uliotumwa
         await conn.sendMessage(from, {
             text: text,
             edit: initialMsg.key,
             contextInfo: {
                 externalAdReply: {
-                    title: '𝐒𝐈𝐋𝐀-𝐌𝐃',
-                    body: '𝙿𝚘𝚠𝚎𝚛𝚎𝚍 𝚋𝚢 𝚂𝚒𝚕𝚊 𝚃𝚎𝚌𝚑',
-                    thumbnailUrl: 'https://files.catbox.moe/36vahk.png',
-                    sourceUrl: 'https://github.com/Sila-Md/SILA-MD',
+                    title: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
+                    body: '𝙿𝚘𝚠𝚎𝚛𝚎𝚍 𝚋𝚢 𝚃𝚢𝚛𝚎𝚡 𝚃𝚎𝚌𝚑',
+                    thumbnailUrl: 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg', // Badilisha na picha yako
+                    sourceUrl: 'https://github.com/tyrex-team/tyrex-md', // Badilisha na link yako
                     mediaType: 1
                 }
             }
@@ -60,5 +60,6 @@ async (conn, mek, m, { from, sender, reply }) => {
         
     } catch (e) {
         console.log("Ping Error:", e);
+        reply("❌ Hitilafu wakati wa ping");
     }
 });
