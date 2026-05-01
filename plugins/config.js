@@ -16,13 +16,13 @@ const fkontak = {
     }
 };
 
-const getContextInfo = (m, ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", formattedOwnerNumber = "255789661031") => {
+const getContextInfo = (m, ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", formattedOwnerNumber = "255628378557") => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
+            newsletterJid: '120363424973782944@newsletter',
             newsletterName: '© 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
@@ -31,7 +31,7 @@ const getContextInfo = (m, ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", formatte
             body: `📞 wa.me/${formattedOwnerNumber}`,
             mediaType: 1,
             previewType: 0,
-            thumbnailUrl: 'https://files.catbox.moe/98k75b.jpeg',
+            thumbnailUrl: 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg',
             sourceUrl: `https://wa.me/${formattedOwnerNumber}`,
             renderLargerThumbnail: false,
         }
@@ -57,7 +57,7 @@ async (conn, mek, m, { from, quoted, reply, isCreator, sender }) => {
         
         if (!isCreator) {
             return await conn.sendMessage(from, { 
-                text: "🚫 *𝙾𝚠𝚗𝚎𝚛 𝙾𝚗𝚕𝚢 𝙲𝚘𝚖𝚖𝚊𝚗𝚍!* 𝚈𝚘𝚞'𝚛𝚎 𝚗𝚘𝚝 𝚊𝚞𝚝𝚑𝚘𝚛𝚒𝚣𝚎𝚍 𝚝𝚘 𝚟𝚒𝚎𝚠 𝚋𝚘𝚝 𝚌𝚘𝚗𝚏𝚒𝚐𝚞𝚛𝚊𝚝𝚒𝚘𝚗𝚜.\n\n> © Powered by Sila Tech", 
+                text: "🚫 *𝙾𝚠𝚗𝚎𝚛 𝙾𝚗𝚕𝚢 𝙲𝚘𝚖𝚖𝚊𝚗𝚍!* 𝚈𝚘𝚞'𝚛𝚎 𝚗𝚘𝚝 𝚊𝚞𝚝𝚑𝚘𝚛𝚒𝚣𝚎𝚍 𝚝𝚘 𝚟𝚒𝚎𝚠 𝚋𝚘𝚝 𝚌𝚘𝚗𝚏𝚒𝚐𝚞𝚛𝚊𝚝𝚒𝚘𝚗𝚜.\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                 contextInfo: getContextInfo({ sender: sender }, ownerName, formattedOwnerNumber)
             }, { quoted: fkontak });
         }
@@ -126,8 +126,8 @@ async (conn, mek, m, { from, quoted, reply, isCreator, sender }) => {
     } catch (error) {
         console.error('Env command error:', error);
         await conn.sendMessage(from, { 
-            text: `❌ 𝙴𝚛𝚛𝚘𝚛 𝚍𝚒𝚜𝚙𝚕𝚊𝚢𝚒𝚗𝚐 𝚌𝚘𝚗𝚏𝚒𝚐: ${error.message}\n\n> © Powered by Sila Tech`, 
-            contextInfo: getContextInfo({ sender: sender }, "𝐒𝐈𝐋𝐀 𝐌𝐃", "255789661031")
+            text: `❌ 𝙴𝚛𝚛𝚘𝚛 𝚍𝚒𝚜𝚙𝚕𝚊𝚢𝚒𝚗𝚐 𝚌𝚘𝚗𝚏𝚒𝚐: ${error.message}\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`, 
+            contextInfo: getContextInfo({ sender: sender }, "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", "255628378557")
         }, { quoted: fkontak });
     }
 });
