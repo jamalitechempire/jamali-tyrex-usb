@@ -3,7 +3,7 @@ const config = require('../config');
 const os = require('os');
 const moment = require('moment-timezone');
 
-// Define combined fakevCard 
+// fakevCard ya bot yako
 const fakevCard = {
   key: {
     fromMe: false,
@@ -12,8 +12,8 @@ const fakevCard = {
   },
   message: {
     contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
+      displayName: "© 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃",
+      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐓𝐘𝐑𝐄𝐗-𝐓𝐄𝐂𝐇;\nTEL;type=CELL;type=VOICE;waid=255700000000:+255700000000\nEND:VCARD`
     }
   }
 };
@@ -29,8 +29,8 @@ const formatUptime = (seconds) => {
 };
 
 cmd({
-    pattern: "alive2",
-    desc: "Check if bot is alive and active",
+    pattern: "alive2",  // unaweza kubadilisha kuwa "alive" ukitaka
+    desc: "Angalia kama bot iko hai",
     category: "main",
     react: "💚",
     filename: __filename
@@ -45,18 +45,18 @@ async (conn, mek, m, { from, sender, reply, pushName }) => {
         const prefix = config.PREFIX || '.';
         
         const aliveMessage = 
-`┏━❑ 𝐒𝐈𝐋𝐀-𝐌𝐃 𝐁𝐎𝐓 ━━━━━━━━━
-┃ ✅ Status: ALIVE & ACTIVE
-┃ 👤 User: ${pushName || sender.split('@')[0]}
-┃ 🚀 Mode: ${mode}
-┃ 🔧 Prefix: ${prefix}
-┃ ⏱️ Uptime: ${uptime}
-┃ 📅 Date: ${date}
-┃ 🕐 Time: ${time}
-┃ 💚 Bot Health: 100%
+`┏━❑ 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 𝐁𝐎𝐓 ━━━━━━━━━
+┃ ✅ Hali: IKO HAI
+┃ 👤 Mtumiaji: ${pushName || sender.split('@')[0]}
+┃ 🚀 Modhi: ${mode}
+┃ 🔧 Kiambishi: ${prefix}
+┃ ⏱️ Muda wa kazi: ${uptime}
+┃ 📅 Tarehe: ${date}
+┃ 🕐 Saa: ${time}
+┃ 💚 Afya ya Bot: 100%
 ┗━━━━━━━━━━━━━━━━━━━━`;
         
-        // Create buttons for the menu
+        // Vifungo (buttons)
         const buttons = [
             { 
                 buttonId: `${prefix}menu`, 
@@ -80,45 +80,45 @@ async (conn, mek, m, { from, sender, reply, pushName }) => {
             }
         ];
         
-        const imageUrl = 'https://files.catbox.moe/36vahk.png';
+        // Badilisha URL na picha yako (nimeweka ile ya menu)
+        const imageUrl = 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg';
         
         try {
-            // Send image with buttons
+            // Tuma picha pamoja na vifungo
             await conn.sendMessage(from, 
                 { 
                     image: { url: imageUrl },
                     caption: aliveMessage,
-                    footer: '⬇️ Choose an option below ⬇️',
+                    footer: '📌 Bonyeza kitufe hapa chini',
                     buttons: buttons,
-                    headerType: 4 // 4 = IMAGE
+                    headerType: 4
                 },
                 { quoted: fakevCard }
             );
         } catch (imageError) {
-            console.log("Image with buttons error, trying text with buttons:", imageError);
+            console.log("Hitilafu ya picha na vifungo, inajaribu maandishi tu:", imageError);
             
             try {
-                // Try sending text with buttons
+                // Jaribu kutumia maandishi tu na vifungo
                 await conn.sendMessage(from, 
                     { 
                         text: aliveMessage,
-                        footer: '⬇️ Choose an option below ⬇️',
+                        footer: '📌 Bonyeza kitufe hapa chini',
                         buttons: buttons,
-                        headerType: 1 // 1 = TEXT
+                        headerType: 1
                     },
                     { quoted: fakevCard }
                 );
             } catch (buttonError) {
-                console.log("Button error, sending text only:", buttonError);
-                // Fallback to simple text
+                console.log("Hitilafu ya vifungo, inatuma maandishi tu:", buttonError);
                 await conn.sendMessage(from, 
-                    { text: aliveMessage + '\n\nUse: .menu | .owner | .ping | .help' },
+                    { text: aliveMessage + '\n\nTumia: .menu | .owner | .ping | .help' },
                     { quoted: fakevCard }
                 );
             }
         }
         
     } catch (e) {
-        reply("❌ Error: " + e.message);
+        reply("❌ Hitilafu: " + e.message);
     }
 });
