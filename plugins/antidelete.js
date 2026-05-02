@@ -1,4 +1,4 @@
-// 🌟 AntiDelete Command — Stylish Edition (Functionality Unchanged)
+// 🌟 AntiDelete Command — TYREX MD Edition
 const axios = require('axios');
 const config = require('../config');
 const { cmd, commands } = require('../command');
@@ -9,7 +9,7 @@ const {
     initializeAntiDeleteSettings
 } = require('../data/antidel');
 
-// FakevCard sawa na zilizopita
+// FakevCard ya TYREX MD
 const fkontak = {
     "key": {
         "participant": '0@s.whatsapp.net',
@@ -18,7 +18,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
+        "conversation": "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃"
     }
 };
 
@@ -28,8 +28,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter', // Newsletter yako
+            newsletterName: '✨ 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 ✨',
             serverMessageId: 143,
         },
     };
@@ -50,7 +50,7 @@ async (conn, mek, m, { from, reply, q, text, isCreator, fromMe, sender }) => {
     // 🔐 Owner-only access
     if (!isCreator) {
         return await conn.sendMessage(from, { 
-            text: "🚫 *𝚃𝚑𝚒𝚜 𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚒𝚜 𝚘𝚗𝚕𝚢 𝚊𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎 𝚝𝚘 𝚝𝚑𝚎 𝚋𝚘𝚝 𝚘𝚠𝚗𝚎𝚛.*\n\n> © Powered by Sila Tech", 
+            text: "🚫 *𝙰𝚖𝚛𝚒 𝚑𝚒𝚕𝚒 𝚒𝚗𝚊𝚝𝚞𝚖𝚒𝚔𝚊 𝚔𝚠𝚊 𝚖𝚖𝚒𝚕𝚒𝚔𝚒 𝚙𝚎𝚔𝚎.*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fkontak });
     }
@@ -60,86 +60,86 @@ async (conn, mek, m, { from, reply, q, text, isCreator, fromMe, sender }) => {
 
         switch (command) {
 
-            // 🔴 Turn OFF AntiDelete everywhere
+            // 🔴 ZIMA AntiDelete kila mahali
             case "on":
                 await setAnti("gc", false);
                 await setAnti("dm", false);
                 return await conn.sendMessage(from, { 
-                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍*\n\n_𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝𝚜 & 𝙳𝚒𝚛𝚎𝚌𝚝 𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜 𝚊𝚛𝚎 𝚗𝚘𝚠 𝙾𝙵𝙵._\n\n> © Powered by Sila Tech", 
+                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙸𝙼𝙴𝚉𝚆𝙰*\n\n_𝙼𝚊𝚔𝚊𝚗𝚍𝚒𝚜𝚑𝚒 𝚗𝚊 𝙳𝙼 𝚣𝚒𝚖𝚎𝚠𝚊 𝙾𝙵𝙵._\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
 
-            // 🔕 Disable AntiDelete for Group Chats
+            // 🔕 Zima AntiDelete kwa makundi
             case "off gc":
                 await setAnti("gc", false);
                 return await conn.sendMessage(from, { 
-                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝𝚜 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝚍𝚒𝚜𝚊𝚋𝚕𝚎𝚍.*\n\n> © Powered by Sila Tech", 
+                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙺𝚠𝚊 𝙼𝚊𝚔𝚞𝚗𝚍𝚒 𝚉𝚒𝚖𝚎𝚠𝚊.*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
 
-            // 🔕 Disable AntiDelete for DMs
+            // 🔕 Zima AntiDelete kwa DM
             case "off dm":
                 await setAnti("dm", false);
                 return await conn.sendMessage(from, { 
-                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚏𝚘𝚛 𝙳𝚒𝚛𝚎𝚌𝚝 𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝚍𝚒𝚜𝚊𝚋𝚕𝚎𝚍.*\n\n> © Powered by Sila Tech", 
+                    text: "❌ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙺𝚠𝚊 𝙳𝙼 𝚉𝚒𝚖𝚎𝚠𝚊.*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
 
-            // 🔁 Toggle Group Chat AntiDelete
+            // 🔁 Geuza hali ya kundi
             case "set gc": {
                 const gcStatus = await getAnti("gc");
                 await setAnti("gc", !gcStatus);
                 return await conn.sendMessage(from, { 
-                    text: `🔄 *𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎* 𝚒𝚜 𝚗𝚘𝚠 *${!gcStatus ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌"}*\n\n> © Powered by Sila Tech`, 
+                    text: `🔄 *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙼𝚊𝚔𝚞𝚗𝚍𝚒* 𝚜𝚊𝚜𝚊 𝚒𝚖𝚎𝚠𝚊 *${!gcStatus ? "𝙸𝙼𝙴𝚆𝙰 ✅" : "𝙸𝙼𝙴𝚉𝚆𝙰 ❌"}*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`, 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
             }
 
-            // 🔁 Toggle DM AntiDelete
+            // 🔁 Geuza hali ya DM
             case "set dm": {
                 const dmStatus = await getAnti("dm");
                 await setAnti("dm", !dmStatus);
                 return await conn.sendMessage(from, { 
-                    text: `🔄 *𝙳𝙼 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎* 𝚒𝚜 𝚗𝚘𝚠 *${!dmStatus ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌"}*\n\n> © Powered by Sila Tech`, 
+                    text: `🔄 *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙳𝙼* 𝚜𝚊𝚜𝚊 𝚒𝚖𝚎𝚠𝚊 *${!dmStatus ? "𝙸𝙼𝙴𝚆𝙰 ✅" : "𝙸𝙼𝙴𝚉𝚆𝙰 ❌"}*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`, 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
             }
 
-            // ✅ Enable AntiDelete everywhere
+            // ✅ Washa AntiDelete kila mahali
             case "set all":
                 await setAnti("gc", true);
                 await setAnti("dm", true);
                 return await conn.sendMessage(from, { 
-                    text: "✅ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝚎𝚗𝚊𝚋𝚕𝚎𝚍 𝚏𝚘𝚛 𝙰𝙻𝙻 𝚌𝚑𝚊𝚝𝚜.*\n\n> © Powered by Sila Tech", 
+                    text: "✅ *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙸𝙼𝙴𝚆𝙰 𝙺𝚆𝙰 𝙼𝙰𝙷𝙰𝙻𝙸 𝚈𝙾𝚃𝙴.*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
 
-            // 📊 Show current status
+            // 📊 Onyesha hali ya sasa
             case "status": {
                 const currentDmStatus = await getAnti("dm");
                 const currentGcStatus = await getAnti("gc");
 
                 return await conn.sendMessage(from, { 
-                    text: "📊 *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚂𝚝𝚊𝚝𝚞𝚜*\n\n" +
-                          `• *𝙳𝚒𝚛𝚎𝚌𝚝 𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜:* ${currentDmStatus ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌"}\n` +
-                          `• *𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝𝚜:* ${currentGcStatus ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌"}\n\n` +
-                          "> © Powered by Sila Tech", 
+                    text: "📊 *𝙷𝙰𝙻𝙸 𝚈𝙰 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎*\n\n" +
+                          `• *𝙳𝙼:* ${currentDmStatus ? "𝙸𝙼𝙴𝚆𝙰 ✅" : "𝙸𝙼𝙴𝚉𝚆𝙰 ❌"}\n` +
+                          `• *𝙼𝙰𝙺𝚄𝙽𝙳𝙸:* ${currentGcStatus ? "𝙸𝙼𝙴𝚆𝙰 ✅" : "𝙸𝙼𝙴𝚉𝚆𝙰 ❌"}\n\n` +
+                          "> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
             }
 
-            // 📖 Help Menu
+            // 📖 Msaada
             default:
                 return await conn.sendMessage(from, { 
-                    text: "📖 *𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝙶𝚞𝚒𝚍𝚎*\n\n" +
-                          "• `.antidelete on` — 𝙳𝚒𝚜𝚊𝚋𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚏𝚘𝚛 𝚊𝚕𝚕 𝚌𝚑𝚊𝚝𝚜\n" +
-                          "• `.antidelete off gc` — 𝙳𝚒𝚜𝚊𝚋𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚒𝚗 𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝𝚜\n" +
-                          "• `.antidelete off dm` — 𝙳𝚒𝚜𝚊𝚋𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚒𝚗 𝙳𝚒𝚛𝚎𝚌𝚝 𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜\n" +
-                          "• `.antidelete set gc` — 𝚃𝚘𝚐𝚐𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝙲𝚑𝚊𝚝𝚜\n" +
-                          "• `.antidelete set dm` — 𝚃𝚘𝚐𝚐𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚏𝚘𝚛 𝙳𝚒𝚛𝚎𝚌𝚝 𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜\n" +
-                          "• `.antidelete set all` — 𝙴𝚗𝚊𝚋𝚕𝚎 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚎𝚟𝚎𝚛𝚢𝚠𝚑𝚎𝚛𝚎\n" +
-                          "• `.antidelete status` — 𝚅𝚒𝚎𝚠 𝚌𝚞𝚛𝚛𝚎𝚗𝚝 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚜𝚝𝚊𝚝𝚞𝚜\n\n" +
-                          "> © Powered by Sila Tech", 
+                    text: "📖 *𝙼𝚊𝚎𝚕𝚎𝚣𝚎𝚘 𝚢𝚊 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎*\n\n" +
+                          "• `.antidelete on` — 𝙸𝚖𝚊 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚔𝚠𝚊 𝚖𝚊𝚑𝚊𝚕𝚒 𝚢𝚘𝚝𝚎\n" +
+                          "• `.antidelete off gc` — 𝙸𝚖𝚊 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚔𝚠𝚊 𝚖𝚊𝚔𝚞𝚗𝚍𝚒 𝚝𝚞\n" +
+                          "• `.antidelete off dm` — 𝙸𝚖𝚊 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚔𝚠𝚊 𝙳𝙼\n" +
+                          "• `.antidelete set gc` — 𝙶𝚎𝚞𝚣𝚊 𝚑𝚊𝚕𝚒 𝚢𝚊 𝚖𝚊𝚔𝚞𝚗𝚍𝚒\n" +
+                          "• `.antidelete set dm` — 𝙶𝚎𝚞𝚣𝚊 𝚑𝚊𝚕𝚒 𝚢𝚊 𝙳𝙼\n" +
+                          "• `.antidelete set all` — 𝚆𝚊𝚜𝚑𝚊 𝙰𝚗𝚝𝚒𝙳𝚎𝚕𝚎𝚝𝚎 𝚙𝚊𝚗𝚓𝚊 𝚖𝚘𝚓𝚊\n" +
+                          "• `.antidelete status` — 𝙰𝚗𝚐𝚊𝚕𝚒𝚊 𝚑𝚊𝚕𝚒 𝚢𝚊 𝚜𝚊𝚜𝚊\n\n" +
+                          "> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
                     contextInfo: getContextInfo({ sender: sender })
                 }, { quoted: fkontak });
         }
@@ -147,7 +147,7 @@ async (conn, mek, m, { from, reply, q, text, isCreator, fromMe, sender }) => {
     } catch (error) {
         console.error("❌ AntiDelete Command Error:", error);
         return await conn.sendMessage(from, { 
-            text: "⚠️ *𝙰𝚗 𝚎𝚛𝚛𝚘𝚛 𝚘𝚌𝚌𝚞𝚛𝚛𝚎𝚍 𝚠𝚑𝚒𝚕𝚎 𝚙𝚛𝚘𝚌𝚎𝚜𝚜𝚒𝚗𝚐 𝚢𝚘𝚞𝚛 𝚛𝚎𝚚𝚞𝚎𝚜𝚝.*\n\n> © Powered by Sila Tech", 
+            text: "⚠️ *𝙷𝚒𝚝𝚒𝚕𝚊𝚏𝚞 𝚒𝚖𝚎𝚝𝚘𝚔𝚎𝚊 𝚠𝚊𝚔𝚊𝚝𝚒 𝚠𝚊 𝚔𝚞𝚜𝚒𝚗𝚍𝚊.*\n\n> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡", 
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fkontak });
     }
