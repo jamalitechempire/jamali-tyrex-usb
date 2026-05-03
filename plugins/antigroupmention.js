@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // ==================== DATABASE ====================
-const dbPath = path.join(__dirname, '../data/antigrpmention_settings.json');
+const dbPath = path.join(__dirname, '../data/antigroupmention_settings.json');
 const dbFolder = path.join(__dirname, '../data');
 if (!fs.existsSync(dbFolder)) fs.mkdirSync(dbFolder, { recursive: true });
 if (!fs.existsSync(dbPath)) fs.writeFileSync(dbPath, '{}');
@@ -21,7 +21,7 @@ function writeDB(data) {
     try {
         fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
     } catch (err) {
-        console.error('❌ Error writing anti-grpmention DB:', err);
+        console.error('❌ Error writing anti-groupmention DB:', err);
     }
 }
 
@@ -68,7 +68,7 @@ cmd({ on: "body" }, async (client, message, chat, { from, sender, isGroup, isAdm
         try {
             await client.sendMessage(from, { delete: message.key });
         } catch (e) {
-            console.error('Failed to delete grpmention message:', e);
+            console.error('Failed to delete groupmention message:', e);
         }
 
         // 2. Take action
@@ -93,7 +93,7 @@ cmd({ on: "body" }, async (client, message, chat, { from, sender, isGroup, isAdm
         }
         // if mode === 'delete' -> no extra message, just deleted
     } catch (err) {
-        console.error('Anti-GrpMention handler error:', err);
+        console.error('Anti-GroupMention handler error:', err);
     }
 });
 
@@ -131,7 +131,7 @@ async (client, message, m, { isGroup, isAdmins, isOwner, from, sender, args, rep
 
         if (!action || action === 'status') {
             const settings = db[from];
-            statusText = `📌 *Anti Group Mention Settings*\n\n⚙️ Status: ${settings.enabled ? "✅ ENABLED" : "❌ DISABLED"}\n🔧 Mode: *${settings.mode}*\n\n📝 *Commands:*\n.antigrpmention on\n.antigrpmention off\n.antigrpmention set delete  (just delete)\n.antigrpmention set warn    (delete + warn)\n.antigrpmention set kick    (delete + kick)`;
+            statusText = `📌 *Anti Group Mention Settings*\n\n⚙️ Status: ${settings.enabled ? "✅ ENABLED" : "❌ DISABLED"}\n🔧 Mode: *${settings.mode}*\n\n📝 *Commands:*\n.antigroupmention on\n.antigroupmention off\n.antigroupmention set delete  (just delete)\n.antigroupmention set warn    (delete + warn)\n.antigrpmention set kick    (delete + kick)`;
             extra = `Detects: @everyone , @all`;
             reaction = "📊";
         } 
@@ -181,7 +181,7 @@ async (client, message, m, { isGroup, isAdmins, isOwner, from, sender, args, rep
         } catch (e) {}
 
     } catch (err) {
-        console.error("AntiGrpMention command error:", err);
+        console.error("AntiGroupMention command error:", err);
         await client.sendMessage(from, {
             text: `⚠️ Error: ${err.message}`,
             contextInfo: getContextInfo(sender)
