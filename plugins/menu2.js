@@ -1,4 +1,4 @@
-const { cmd } = require('../command');
+ const { cmd } = require('../command');
 const config = require('../config');
 
 cmd({
@@ -12,11 +12,11 @@ async (conn, mek, m, { from, sender, reply, pushName, isOwner }) => {
     try {
         const prefix = config.PREFIX || '.';
         
-        const menuText = `┏━❑ 𝐒𝐈𝐋𝐀-𝐌𝐃 𝐌𝐄𝐍𝐔 ━━━━━━━━━
+        const menuText = `╭┄┄┄🌸🌹 *TYREX MD MENU* 🌹🌸┄┄┄⊷
 ┃ 👋 Hello ${pushName || sender.split('@')[0]}
-┃ 🤖 Bot: SILA-MD
+┃ 🤖 Bot: TYREX MD
 ┃ 📌 Prefix: ${prefix}
-┗━━━━━━━━━━━━━━━━━━━━
+╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷
 
 *📋 MAIN MENU*
 ┃ ${prefix}alive - Check bot status
@@ -39,9 +39,8 @@ async (conn, mek, m, { from, sender, reply, pushName, isOwner }) => {
 ┃ ${prefix}fact - Random fact
 
 ${isOwner ? '*👑 OWNER MENU*\n┃ ${prefix}bc - Broadcast\n┃ ${prefix}setmenu - Set menu\n┃ ${prefix}restart - Restart bot\n' : ''}
-> © 𝐒𝐈𝐋𝐀-𝐌𝐃 | Choose category below`;
+> ® 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 | Choose category below`;
 
-        // Create category buttons
         const buttons = [
             { 
                 buttonId: `${prefix}alive`, 
@@ -65,7 +64,6 @@ ${isOwner ? '*👑 OWNER MENU*\n┃ ${prefix}bc - Broadcast\n┃ ${prefix}setmen
             }
         ];
         
-        // Create sections for list menu (dropdown)
         const sections = [
             {
                 title: '📋 MAIN MENU',
@@ -94,9 +92,7 @@ ${isOwner ? '*👑 OWNER MENU*\n┃ ${prefix}bc - Broadcast\n┃ ${prefix}setmen
             }
         ];
         
-        // Try to send interactive buttons
         try {
-            // Method 1: Simple buttons
             await conn.sendMessage(from, {
                 text: menuText,
                 footer: '⬇️ Click buttons below ⬇️',
@@ -108,18 +104,16 @@ ${isOwner ? '*👑 OWNER MENU*\n┃ ${prefix}bc - Broadcast\n┃ ${prefix}setmen
             console.log("Simple buttons failed, trying list message:", err1);
             
             try {
-                // Method 2: List message (dropdown)
                 await conn.sendMessage(from, {
                     text: menuText,
                     footer: '📌 Select category from list',
-                    title: 'SILA-MD MENU',
+                    title: 'TYREX MD MENU',
                     buttonText: '📋 MENU',
                     sections: sections
                 }, { quoted: mek });
                 
             } catch (err2) {
                 console.log("List message failed, sending normal text:", err2);
-                // Method 3: Normal text
                 await conn.sendMessage(from, { text: menuText }, { quoted: mek });
             }
         }
