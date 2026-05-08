@@ -1,17 +1,4 @@
-const { cmd } = require('../command');
-
-// FakevCard
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
+ const { cmd } = require('../command');
 
 const getContextInfo = (m) => {
     return {
@@ -19,8 +6,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
@@ -37,40 +24,26 @@ cmd({
 },
 async(conn, mek, m, {from, l, isGroup, sender, isAdmins, isBotAdmins, reply}) => {
 try{
-    if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ This command is only for groups`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isGroup) return reply("This command is only for groups\n\n> ® Powered by Tyrex Tech");
     
-    if (!isAdmins && !isBotAdmins) return await conn.sendMessage(from, {
-        text: `❌ You need to be an admin to use this command`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isAdmins && !isBotAdmins) return reply("You need to be an admin to use this command\n\n> ® Powered by Tyrex Tech");
     
     const groupMetadata = await conn.groupMetadata(from);
     const response = await conn.groupInviteCode(from);
     const link = `https://chat.whatsapp.com/${response}`;
     
     await conn.sendMessage(from, {
-        text: `┏━❑ GROUP LINK ━━━━━━━━━
-┃ 📌 *Group:* ${groupMetadata.subject}
-┃ 🔗 *Link:* ${link}
-┃ 👥 *Members:* ${groupMetadata.participants.length}
-┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
-┗━━━━━━━━━━━━━━━━━━━━`,
+        text: `╭┄┄┄🌸🌹 *GROUP LINK* 🌹🌸┄┄┄⊷\n┃\n┃ 📌 *Group:* ${groupMetadata.subject}\n┃ 🔗 *Link:* ${link}\n┃ 👥 *Members:* ${groupMetadata.participants.length}\n┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
 
 } catch (e) {
-    await conn.sendMessage(from, {
-        text: `❌ Failed to get group link`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply("Failed to get group link\n\n> ® Powered by Tyrex Tech");
     l(e);
 }
 });
 
-// ============ REVOKE COMMAND (IMEREKEBISHWA KAMA PROMOTE/DEMOTE) ============
+// ============ REVOKE COMMAND ============
 cmd({
     pattern: "revoke",
     alias: ["resetlink", "newlink", "revokelink"],
@@ -81,29 +54,15 @@ cmd({
 },
 async(conn, mek, m, {from, l, isGroup, sender, isAdmins, reply}) => {
 try{
-    if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ This command is only for groups`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isGroup) return reply("This command is only for groups\n\n> ® Powered by Tyrex Tech");
     
-    if (!isAdmins) return await conn.sendMessage(from, {
-        text: `❌ You need to be an admin to revoke group link`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isAdmins) return reply("You need to be an admin to revoke group link\n\n> ® Powered by Tyrex Tech");
     
-    // TOA CHECK YA BOT ADMIN (SAWA KAMA PROMOTE/DEMOTE)
-    // if (!isBotAdmins) return await conn.sendMessage(from, {
-    //     text: `❌ Bot needs to be admin to revoke group link`,
-    //     contextInfo: getContextInfo({ sender: sender })
-    // }, { quoted: fkontak });
-    
-    // Send processing message
     await conn.sendMessage(from, {
         text: `⏳ Revoking group link...`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
     
-    // Revoke the old link and generate new one
     await conn.groupRevokeInvite(from);
     const newCode = await conn.groupInviteCode(from);
     const newLink = `https://chat.whatsapp.com/${newCode}`;
@@ -111,22 +70,13 @@ try{
     const groupMetadata = await conn.groupMetadata(from);
     
     await conn.sendMessage(from, {
-        text: `┏━❑ LINK REVOKED ━━━━━━━━━
-┃ ✅ Group link has been reset successfully
-┃ 📌 *Group:* ${groupMetadata.subject}
-┃ 🔗 *New Link:* ${newLink}
-┃ 👥 *Members:* ${groupMetadata.participants.length}
-┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}
-┗━━━━━━━━━━━━━━━━━━━━`,
+        text: `╭┄┄┄🌸🌹 *LINK REVOKED* 🌹🌸┄┄┄⊷\n┃\n┃ ✅ Group link has been reset successfully\n┃ 📌 *Group:* ${groupMetadata.subject}\n┃ 🔗 *New Link:* ${newLink}\n┃ 👥 *Members:* ${groupMetadata.participants.length}\n┃ ⏰ *Created:* ${new Date(groupMetadata.creation * 1000).toLocaleDateString()}\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
 
 } catch (e) {
     console.log('REVOKE ERROR:', e);
-    await conn.sendMessage(from, {
-        text: `❌ Failed to revoke group link. Error: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Failed to revoke group link. Error: ${e.message}\n\n> ® Powered by Tyrex Tech`);
     l(e);
 }
 });
