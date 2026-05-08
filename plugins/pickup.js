@@ -1,27 +1,14 @@
 const axios = require('axios');
 const { cmd } = require('../command');
 
-// FakevCard sawa na zilizopita
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
-
 const getContextInfo = (m) => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         }
     };
@@ -39,26 +26,20 @@ cmd({
 async (conn, mek, m, { from, reply, sender }) => {
     try {
         const { data } = await axios.get('https://apis.davidcyriltech.my.id/pickupline');
-        
+
         if (!data.success) {
-            return await conn.sendMessage(from, { 
-                text: "❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚐𝚎𝚝 𝚊 𝚙𝚒𝚌𝚔𝚞𝚙 𝚕𝚒𝚗𝚎. 𝚃𝚛𝚢 𝚊𝚐𝚊𝚒𝚗!\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            return reply("Failed to get a pickup line. Try again!\n\n> ® Powered by Tyrex Tech");
         }
-        
-        const message = `💝 *𝙿𝚒𝚌𝚔𝚞𝚙 𝙻𝚒𝚗𝚎* 💝\n\n"${data.pickupline}"\n\n_𝚄𝚜𝚎 𝚠𝚒𝚜𝚎𝚕𝚢!_\n\n> © Powered by Sila Tech`;
-        
+
+        const message = `💝 *Pickup Line* 💝\n\n"${data.pickupline}"\n\n_Use wisely!_\n\n> ® Powered by Tyrex Tech`;
+
         await conn.sendMessage(from, { 
             text: message,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-        
+        }, { quoted: mek });
+
     } catch (error) {
         console.error('Pickup Error:', error);
-        await conn.sendMessage(from, { 
-            text: "❌ 𝙼𝚢 𝚌𝚑𝚊𝚛𝚖 𝚒𝚜𝚗'𝚝 𝚠𝚘𝚛𝚔𝚒𝚗𝚐 𝚛𝚒𝚐𝚑𝚝 𝚗𝚘𝚠. 𝚃𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛!\n\n> © Powered by Sila Tech", 
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        reply("My charm isn't working right now. Try again later!\n\n> ® Powered by Tyrex Tech");
     }
 });
