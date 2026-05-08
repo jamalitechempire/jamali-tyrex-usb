@@ -30,7 +30,7 @@ const DEFAULT_SETTINGS = {
     timezone: 'Africa/Dar_es_Salaam',
     
     // Bot settings
-    botName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
+    botName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
     botVersion: '1.0.0',
     
     // Menu settings
