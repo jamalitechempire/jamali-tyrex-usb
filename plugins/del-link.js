@@ -1,35 +1,22 @@
-const { cmd } = require('../command');
+ const { cmd } = require('../command');
 const config = require('../config');
 
-// FakevCard sawa na zilizopita
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
-
-const getContextInfo = (m, ownerName = "𝐒𝐈𝐋𝐀 𝐌𝐃", formattedOwnerNumber = "255789661031") => {
+const getContextInfo = (m, ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", formattedOwnerNumber = "255628378557") => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
         externalAdReply: {
-            title: `👑 𝙱𝙾𝚃 𝙾𝚆𝙽𝙴𝚁: ${ownerName}`,
-            body: `📞 wa.me/${formattedOwnerNumber}`,
+            title: `👑 BOT OWNER: ${ownerName}`,
+            body: `wa.me/${formattedOwnerNumber}`,
             mediaType: 1,
             previewType: 0,
-            thumbnailUrl: 'https://files.catbox.moe/98k75b.jpeg',
+            thumbnailUrl: 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg',
             sourceUrl: `https://wa.me/${formattedOwnerNumber}`,
             renderLargerThumbnail: false,
         }
@@ -73,12 +60,11 @@ cmd({
         if (containsLink && config.DELETE_LINKS === 'true') {
             await conn.sendMessage(from, { delete: m.key });
             
-            // Optional: Send warning to group
             await conn.sendMessage(from, { 
-                text: `🚫 @${sender.split("@")[0]} *𝙻𝚒𝚗𝚔𝚜 𝚊𝚛𝚎 𝚗𝚘𝚝 𝚊𝚕𝚕𝚘𝚠𝚎𝚍 𝚒𝚗 𝚝𝚑𝚒𝚜 𝚐𝚛𝚘𝚞𝚙!*`,
+                text: `🚫 @${sender.split("@")[0]} Links are not allowed in this group!`,
                 mentions: [sender],
-                contextInfo: getContextInfo({ sender: sender }, "𝐒𝐈𝐋𝐀 𝐌𝐃", "255789661031")
-            }, { quoted: fkontak });
+                contextInfo: getContextInfo({ sender: sender }, "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", "255628378557")
+            }, { quoted: mek });
         }
     } catch (error) {
         console.error(error);
@@ -94,24 +80,17 @@ cmd({
     react: "🔗",
     filename: __filename
 },
-async (conn, mek, m, { from, args, isGroup, isAdmins, isOwner, sender }) => {
+async (conn, mek, m, { from, args, isGroup, isAdmins, isOwner, sender, reply }) => {
     try {
-        const ownerName = "𝐒𝐈𝐋𝐀 𝐌𝐃";
-        const formattedOwnerNumber = "255789661031";
+        const ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃";
+        const formattedOwnerNumber = "255628378557";
         
         if (!isGroup) {
-            return await conn.sendMessage(from, { 
-                text: "❌ 𝚃𝚑𝚒𝚜 𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚒𝚜 𝚘𝚗𝚕𝚢 𝚏𝚘𝚛 𝚐𝚛𝚘𝚞𝚙𝚜\n\n> © Powered by Sila Tech", 
-                contextInfo: getContextInfo({ sender: sender }, ownerName, formattedOwnerNumber)
-            }, { quoted: fkontak });
+            return reply("This command is only for groups\n\n> ® Powered by Tyrex Tech");
         }
         
         if (!isAdmins && !isOwner) {
-            return await conn.sendMessage(from, { 
-                text: "🚫 *𝙰𝚍𝚖𝚒𝚗-𝚘𝚗𝚕𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍!*\n\n> © Powered by Sila Tech", 
-                mentions: [sender],
-                contextInfo: getContextInfo({ sender: sender }, ownerName, formattedOwnerNumber)
-            }, { quoted: fkontak });
+            return reply("Admin-only command!\n\n> ® Powered by Tyrex Tech");
         }
 
         const action = args[0]?.toLowerCase();
@@ -120,46 +99,34 @@ async (conn, mek, m, { from, args, isGroup, isAdmins, isOwner, sender }) => {
 
         if (action === "on") {
             config.DELETE_LINKS = "true";
-            statusText = "✅ *𝙰𝚞𝚝𝚘 𝙻𝚒𝚗𝚔 𝙳𝚎𝚕𝚎𝚝𝚒𝚘𝚗 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝙴𝙽𝙰𝙱𝙻𝙴𝙳*";
+            statusText = "Auto Link Deletion has been ENABLED";
             reaction = "✅";
         } 
         else if (action === "off") {
             config.DELETE_LINKS = "false";
-            statusText = "❌ *𝙰𝚞𝚝𝚘 𝙻𝚒𝚗𝚔 𝙳𝚎𝚕𝚎𝚝𝚒𝚘𝚗 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝙳𝙸𝚂𝙰𝙱𝙻𝙴𝙳*";
+            statusText = "Auto Link Deletion has been DISABLED";
             reaction = "❌";
         } 
         else {
-            const currentStatus = config.DELETE_LINKS === "true" ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌";
+            const currentStatus = config.DELETE_LINKS === "true" ? "Enabled ✅" : "Disabled ❌";
             
             return await conn.sendMessage(from, { 
-                text: `╭━━〔 🔗 *𝙰𝚄𝚃𝙾 𝙻𝙸𝙽𝙺 𝙳𝙴𝙻𝙴𝚃𝙴* 〕━━┈⊷
-┃
-┃ 📜 *𝚄𝚜𝚊𝚐𝚎:*
-┃ ➸ .dellink on  - 𝙴𝚗𝚊𝚋𝚕𝚎 𝚏𝚎𝚊𝚝𝚞𝚛𝚎
-┃ ➸ .dellink off - 𝙳𝚒𝚜𝚊𝚋𝚕𝚎 𝚏𝚎𝚊𝚝𝚞𝚛𝚎
-┃
-┃ 💡 *𝙲𝚞𝚛𝚛𝚎𝚗𝚝 𝚂𝚝𝚊𝚝𝚞𝚜:* ${currentStatus}
-┃
-╰──────────────┈⊷
-> © Powered by Sila Tech`, 
+                text: `╭┄┄┄🌸🌹 *AUTO LINK DELETE* 🌹🌸┄┄┄⊷\n┃\n┃ 📜 *Usage:*\n┃ ➸ .dellink on  - Enable feature\n┃ ➸ .dellink off - Disable feature\n┃\n┃ 💡 *Current Status:* ${currentStatus}\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`, 
                 contextInfo: getContextInfo({ sender: sender }, ownerName, formattedOwnerNumber)
-            }, { quoted: fkontak });
+            }, { quoted: mek });
         }
 
         await conn.sendMessage(from, { 
-            text: `${statusText}\n\n> © Powered by Sila Tech`, 
+            text: `${statusText}\n\n> ® Powered by Tyrex Tech`, 
             contextInfo: getContextInfo({ sender: sender }, ownerName, formattedOwnerNumber)
-        }, { quoted: fkontak });
+        }, { quoted: mek });
 
         await conn.sendMessage(from, {
             react: { text: reaction, key: mek.key }
         });
 
     } catch (error) {
-        console.error("❌ Dellink command error:", error);
-        await conn.sendMessage(from, { 
-            text: `⚠️ 𝙴𝚛𝚛𝚘𝚛: ${error.message}\n\n> © Powered by Sila Tech`, 
-            contextInfo: getContextInfo({ sender: sender }, "𝐒𝐈𝐋𝐀 𝐌𝐃", "255789661031")
-        }, { quoted: fkontak });
+        console.error("Dellink command error:", error);
+        reply(`Error: ${error.message}\n\n> ® Powered by Tyrex Tech`);
     }
 });
