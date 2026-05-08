@@ -1,7 +1,7 @@
 const { cmd } = require('../command');
 const axios = require('axios');
 
-// Define combined fakevCard 
+// TYREX MD fakevCard 
 const fakevCard = {
   key: {
     fromMe: false,
@@ -10,8 +10,8 @@ const fakevCard = {
   },
   message: {
     contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
+      displayName: "© 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃",
+      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐓𝐘𝐑𝐄𝐗-𝐓𝐄𝐂𝐇;\nTEL;type=CELL;type=VOICE;waid=255700000000:+255700000000\nEND:VCARD`
     }
   }
 };
@@ -22,8 +22,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: `𝐓𝐘𝐑𝐄𝐗 𝐌𝐃`,
             serverMessageId: 143,
         },
     };
@@ -31,7 +31,7 @@ const getContextInfo = (m) => {
 
 cmd({
     pattern: "ai",
-    alias: ["gpt", "ask", "think", "silai", "brainy", "chat"],
+    alias: ["gpt", "ask", "think", "tyrexai", "brainy", "chat"],
     react: "🤖",
     desc: "Ask AI anything",
     category: "ai",
@@ -42,7 +42,7 @@ try{
     
     if (!q || !q.trim()) {
         return await conn.sendMessage(from, {
-            text: `❌ 𝙿𝚕𝚎𝚊𝚜𝚎 𝚊𝚜𝚔 𝚊 𝚚𝚞𝚎𝚜𝚝𝚒𝚘𝚗\n\n𝙴𝚡𝚖𝚕: .𝚊𝚒 𝚆𝚑𝚊𝚝 𝚒𝚜 𝚙𝚢𝚝𝚑𝚘𝚗?`,
+            text: `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ 🤖 *AI CHAT*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ ❌ *Please ask a question*\n┃\n┃ 📝 *Example:* \n┃ *.ai What is python?*\n┃ *.gpt Who is Elon Musk?*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`,
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fakevCard });
     }
@@ -67,21 +67,21 @@ try{
     await conn.sendPresenceUpdate('paused', from);
 
     await conn.sendMessage(from, {
-        text: `┏━❑ 𝐀𝐈 𝐆𝐏𝐓 ━━━━━━━━━\n┃ 🤖 𝑨𝒏𝒔𝒘𝒆𝒓:\n┃\n┃ ${aiResponse}\n┗━━━━━━━━━━━━━━━━━━━━`,
+        text: `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ 🤖 *AI RESPONSE*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ ${aiResponse}\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`,
         contextInfo: getContextInfo({ sender: sender })
     }, { quoted: fakevCard });
 
 } catch (e) {
     await conn.sendPresenceUpdate('paused', from);
     
-    let errorMsg = '❌ 𝙰𝙸 𝚖𝚊𝚕𝚏𝚞𝚗𝚌𝚝𝚒𝚘𝚗𝚒𝚗𝚐';
+    let errorMsg = `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ❌ *AI ERROR*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ 🔧 *AI malfunctioning*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`;
     
     if (e.response?.status === 429) {
-        errorMsg = '❌ 𝚁𝚊𝚝𝚎 𝚕𝚒𝚖𝚒𝚝𝚎𝚍 𝚝𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛';
+        errorMsg = `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ❌ *RATE LIMITED*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ ⏳ *Too many requests*\n┃ *Please try again later*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`;
     } else if (e.response?.status === 500) {
-        errorMsg = '❌ 𝙰𝙸 𝚜𝚎𝚛𝚟𝚎𝚛 𝚎𝚛𝚛𝚘𝚛';
+        errorMsg = `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ❌ *SERVER ERROR*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ 🔌 *AI server error*\n┃ *Please try again later*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`;
     } else if (e.code === 'ECONNABORTED') {
-        errorMsg = '❌ 𝚁𝚎𝚚𝚞𝚎𝚜𝚝 𝚝𝚒𝚖𝚎𝚘𝚞𝚝';
+        errorMsg = `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ❌ *TIMEOUT*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ ⏰ *Request timeout*\n┃ *Please try again*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`;
     }
 
     await conn.sendMessage(from, {
