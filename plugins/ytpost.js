@@ -2,34 +2,22 @@ const { cmd } = require('../command');
 const axios = require('axios');
 const config = require('../config');
 
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
-
-const getContextInfo = (m, ownerName = "𝐒𝐈𝐋𝐀 𝐌𝐃", formattedOwnerNumber = "255789661031") => {
+const getContextInfo = (m, ownerName = "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃", formattedOwnerNumber = "255628378557") => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
         externalAdReply: {
-            title: `👑 𝙱𝙾𝚃 𝙾𝚆𝙽𝙴𝚁: ${ownerName}`,
-            body: `📞 wa.me/${formattedOwnerNumber}`,
+            title: `👑 BOT OWNER: ${ownerName}`,
+            body: `wa.me/${formattedOwnerNumber}`,
             mediaType: 1,
             previewType: 0,
-            thumbnailUrl: 'https://files.catbox.moe/98k75b.jpeg',
+            thumbnailUrl: 'https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg',
             sourceUrl: `https://wa.me/${formattedOwnerNumber}`,
             renderLargerThumbnail: false,
         }
@@ -44,35 +32,35 @@ cmd({
     react: "🎥",
     filename: __filename
 },
-async (conn, mek, m, { from, q, sender }) => {
+async (conn, mek, m, { from, q, sender, reply }) => {
     try {
-        if (!q) return await conn.sendMessage(from, { text: "𝙴𝚡𝚊𝚖𝚙𝚕𝚎: .ytpost <𝚞𝚛𝚕>", contextInfo: getContextInfo({ sender: sender }) }, { quoted: fkontak });
+        if (!q) return reply("Example: .ytpost <url>\n\n> ® Powered by Tyrex Tech");
 
         const apiUrl = `https://api.siputzx.my.id/api/d/ytpost?url=${encodeURIComponent(q)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data.status || !data.data) {
             await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
-            return await conn.sendMessage(from, { text: "❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚏𝚎𝚝𝚌𝚑 𝚙𝚘𝚜𝚝.", contextInfo: getContextInfo({ sender: sender }) }, { quoted: fkontak });
+            return reply("Failed to fetch post.\n\n> ® Powered by Tyrex Tech");
         }
 
         const post = data.data;
-        let caption = `📢 *𝚈𝚃 𝙲𝚘𝚖𝚖𝚞𝚗𝚒𝚝𝚢 𝙿𝚘𝚜𝚝*\n\n${post.content}\n\n> © Powered by Sila Tech`;
+        let caption = `📢 *YT Community Post*\n\n${post.content}\n\n> ® Powered by Tyrex Tech`;
 
         if (post.images?.length > 0) {
             for (const img of post.images) {
-                await conn.sendMessage(from, { image: { url: img }, caption, contextInfo: getContextInfo({ sender: sender }) }, { quoted: fkontak });
+                await conn.sendMessage(from, { image: { url: img }, caption, contextInfo: getContextInfo({ sender: sender }) }, { quoted: mek });
                 caption = "";
             }
         } else {
-            await conn.sendMessage(from, { text: caption, contextInfo: getContextInfo({ sender: sender }) }, { quoted: fkontak });
+            await conn.sendMessage(from, { text: caption, contextInfo: getContextInfo({ sender: sender }) }, { quoted: mek });
         }
 
         await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
-        
+
     } catch (e) {
         console.error("ytpost Error:", e);
         await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
-        await conn.sendMessage(from, { text: "❌ 𝙴𝚛𝚛𝚘𝚛 𝚏𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚙𝚘𝚜𝚝.", contextInfo: getContextInfo({ sender: sender }) }, { quoted: fkontak });
+        reply("Error fetching post.\n\n> ® Powered by Tyrex Tech");
     }
 });
