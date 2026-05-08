@@ -1,18 +1,5 @@
-const { cmd } = require("../command");
+ const { cmd } = require("../command");
 const fetch = require("node-fetch");
-
-// FakevCard sawa na zilizopita
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
 
 const getContextInfo = (m) => {
     return {
@@ -20,8 +7,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         }
     };
@@ -42,17 +29,11 @@ cmd({
   sender
 }) => {
   if (!args[0]) {
-    return await conn.sendMessage(from, { 
-      text: "❌ 𝚆𝚑𝚎𝚛𝚎 𝚒𝚜 𝚝𝚑𝚎 𝙶𝚒𝚝𝙷𝚞𝚋 𝚕𝚒𝚗𝚔?\n\n𝙴𝚡𝚊𝚖𝚙𝚕𝚎:\n.gitclone https://github.com/username/repository\n\n> © Powered by Sila Tech", 
-      contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    return reply("Where is the GitHub link?\n\nExample:\n.gitclone https://github.com/username/repository\n\n> ® Powered by Tyrex Tech");
   }
 
   if (!/^(https:\/\/)?github\.com\/.+/.test(args[0])) {
-    return await conn.sendMessage(from, { 
-      text: "⚠️ 𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝙶𝚒𝚝𝙷𝚞𝚋 𝚕𝚒𝚗𝚔. 𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚊 𝚟𝚊𝚕𝚒𝚍 𝙶𝚒𝚝𝙷𝚞𝚋 𝚛𝚎𝚙𝚘𝚜𝚒𝚝𝚘𝚛𝚢 𝚄𝚁𝙻.\n\n> © Powered by Sila Tech", 
-      contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    return reply("Invalid GitHub link. Please provide a valid GitHub repository URL.\n\n> ® Powered by Tyrex Tech");
   }
 
   try {
@@ -66,7 +47,6 @@ cmd({
     const [, username, repo] = match;
     const zipUrl = `https://api.github.com/repos/${username}/${repo}/zipball`;
 
-    // Check if repository exists
     const response = await fetch(zipUrl, { method: "HEAD" });
     if (!response.ok) {
       throw new Error("Repository not found.");
@@ -75,26 +55,21 @@ cmd({
     const contentDisposition = response.headers.get("content-disposition");
     const fileName = contentDisposition ? contentDisposition.match(/filename=(.*)/)[1] : `${repo}.zip`;
 
-    // Notify user of the download
     await conn.sendMessage(from, { 
-      text: `📥 *𝙳𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚒𝚗𝚐 𝚛𝚎𝚙𝚘𝚜𝚒𝚝𝚘𝚛𝚢...*\n\n*𝚁𝚎𝚙𝚘:* ${username}/${repo}\n*𝙵𝚒𝚕𝚎:* ${fileName}\n\n> © Powered by Sila Tech`, 
+      text: `📥 *Downloading repository...*\n\n*Repo:* ${username}/${repo}\n*File:* ${fileName}\n\n> ® Powered by Tyrex Tech`, 
       contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: m });
 
-    // Send the zip file to the user
     await conn.sendMessage(from, {
       document: { url: zipUrl },
       fileName: fileName,
       mimetype: 'application/zip',
-      caption: `📦 *${repo}*\n\n> © Powered by Sila Tech`,
+      caption: `📦 *${repo}*\n\n> ® Powered by Tyrex Tech`,
       contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: m });
  
   } catch (error) {
     console.error("Error:", error);
-    await conn.sendMessage(from, { 
-      text: "❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚍𝚘𝚠𝚗𝚕𝚘𝚊𝚍 𝚝𝚑𝚎 𝚛𝚎𝚙𝚘𝚜𝚒𝚝𝚘𝚛𝚢. 𝙿𝚕𝚎𝚊𝚜𝚎 𝚝𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛.\n\n> © Powered by Sila Tech", 
-      contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply("Failed to download the repository. Please try again later.\n\n> ® Powered by Tyrex Tech");
   }
 });
