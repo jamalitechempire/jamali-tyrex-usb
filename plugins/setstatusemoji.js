@@ -2,18 +2,14 @@ const { cmd } = require('../command');
 const fs = require('fs');
 const path = require('path');
 
-// Path za settings
 const SETTINGS_DIR = path.join(__dirname, '../data');
 const EMOJI_SETTINGS_FILE = path.join(SETTINGS_DIR, 'statusemoji.json');
 
-// Hakikisha folder ipo
 if (!fs.existsSync(SETTINGS_DIR)) {
     fs.mkdirSync(SETTINGS_DIR, { recursive: true });
 }
 
-// Default emoji settings
 const DEFAULT_EMOJI = {
-    // Status categories
     online: '🟢',
     offline: '⚫',
     typing: '✍️',
@@ -23,22 +19,16 @@ const DEFAULT_EMOJI = {
     sent: '📤',
     pending: '⏳',
     failed: '❌',
-    
-    // Bot status
     botOnline: '🤖',
     botOffline: '💤',
     botProcessing: '⚙️',
     botSuccess: '✅',
     botError: '❌',
     botWarning: '⚠️',
-    
-    // Message status
     messageSent: '📨',
     messageReceived: '📩',
     messageRead: '👀',
     messageDeleted: '🗑️',
-    
-    // Group status
     groupOpen: '🔓',
     groupClose: '🔒',
     groupMute: '🔇',
@@ -49,15 +39,11 @@ const DEFAULT_EMOJI = {
     groupRemove: '➖',
     groupJoin: '🚪',
     groupLeave: '👋',
-    
-    // Command status
     commandSuccess: '✅',
     commandError: '❌',
     commandProcessing: '⏳',
     commandInvalid: '⚠️',
     commandNotFound: '❓',
-    
-    // Media status
     image: '📸',
     video: '🎥',
     audio: '🎵',
@@ -66,38 +52,28 @@ const DEFAULT_EMOJI = {
     contact: '📇',
     location: '📍',
     poll: '📊',
-    
-    // User status
     userAdmin: '👑',
     userMember: '👤',
     userOwner: '👑',
     userBot: '🤖',
     userVerified: '✅',
     userBlocked: '🚫',
-    
-    // Time status
     morning: '🌅',
     afternoon: '☀️',
     evening: '🌆',
     night: '🌙',
     midnight: '🌃',
-    
-    // Weather status
     sunny: '☀️',
     cloudy: '☁️',
     rainy: '☔',
     stormy: '⛈️',
     snowy: '❄️',
-    
-    // Mood status
     happy: '😊',
     sad: '😢',
     angry: '😠',
     love: '❤️',
     cool: '😎',
     sleepy: '😴',
-    
-    // Custom status
     custom1: '✨',
     custom2: '🌟',
     custom3: '💫',
@@ -105,7 +81,6 @@ const DEFAULT_EMOJI = {
     custom5: '⚡'
 };
 
-// Function ya kusoma emoji settings
 function readEmojiSettings() {
     try {
         if (fs.existsSync(EMOJI_SETTINGS_FILE)) {
@@ -119,7 +94,6 @@ function readEmojiSettings() {
     }
 }
 
-// Function ya kuandika emoji settings
 function writeEmojiSettings(data) {
     try {
         fs.writeFileSync(EMOJI_SETTINGS_FILE, JSON.stringify(data, null, 2));
@@ -130,23 +104,9 @@ function writeEmojiSettings(data) {
     }
 }
 
-// Function ya kureset emoji settings
 function resetEmojiSettings() {
     return writeEmojiSettings(DEFAULT_EMOJI);
 }
-
-// FakevCard
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝐒𝐈𝐋𝐀 𝐌𝐃"
-    }
-};
 
 const getContextInfo = (m) => {
     return {
@@ -154,14 +114,13 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
 };
 
-// ============ SETSTATUSEMOJI COMMAND ============
 cmd({
     pattern: "setstatusemoji",
     alias: ["setemoji", "statusemoji", "emojisettings", "emoji"],
@@ -172,93 +131,29 @@ cmd({
 },
 async(conn, mek, m, {from, l, sender, isOwner, args, reply}) => {
 try{
-    if (!isOwner) return await conn.sendMessage(from, {
-        text: `❌ This command is only for bot owner`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
-    
+    if (!isOwner) return reply("This command is only for bot owner\n\n> ® Powered by Tyrex Tech");
+
     let emojiSettings = readEmojiSettings();
-    
-    // No arguments - show current settings
+
     if (!args[0]) {
-        let settingsText = `┏━❑ STATUS EMOJI SETTINGS ━━━━━━━━━
-┃ 
-┃ *🟢 ONLINE STATUS:*
-┃ Online: ${emojiSettings.online} | Offline: ${emojiSettings.offline}
-┃ Typing: ${emojiSettings.typing} | Recording: ${emojiSettings.recording}
-┃ 
-┃ *📨 MESSAGE STATUS:*
-┃ Sent: ${emojiSettings.sent} | Delivered: ${emojiSettings.delivered}
-┃ Read: ${emojiSettings.read} | Failed: ${emojiSettings.failed}
-┃ 
-┃ *🤖 BOT STATUS:*
-┃ Online: ${emojiSettings.botOnline} | Offline: ${emojiSettings.botOffline}
-┃ Processing: ${emojiSettings.botProcessing}
-┃ Success: ${emojiSettings.botSuccess} | Error: ${emojiSettings.botError}
-┃ 
-┃ *👥 GROUP STATUS:*
-┃ Open: ${emojiSettings.groupOpen} | Close: ${emojiSettings.groupClose}
-┃ Mute: ${emojiSettings.groupMute} | Unmute: ${emojiSettings.groupUnmute}
-┃ Promote: ${emojiSettings.groupPromote} | Demote: ${emojiSettings.groupDemote}
-┃ 
-┃ *📁 MEDIA STATUS:*
-┃ Image: ${emojiSettings.image} | Video: ${emojiSettings.video}
-┃ Audio: ${emojiSettings.audio} | Document: ${emojiSettings.document}
-┃ Sticker: ${emojiSettings.sticker} | Location: ${emojiSettings.location}
-┃ 
-┃ *👤 USER STATUS:*
-┃ Admin: ${emojiSettings.userAdmin} | Member: ${emojiSettings.userMember}
-┃ Owner: ${emojiSettings.userOwner} | Bot: ${emojiSettings.userBot}
-┃ 
-┃ *✨ CUSTOM EMOJIS:*
-┃ Custom1: ${emojiSettings.custom1} | Custom2: ${emojiSettings.custom2}
-┃ Custom3: ${emojiSettings.custom3} | Custom4: ${emojiSettings.custom4}
-┃ 
-┃ *📝 AVAILABLE COMMANDS:*
-┃ 
-┃ *View Categories:*
-┃ • .setstatusemoji list online
-┃ • .setstatusemoji list message
-┃ • .setstatusemoji list bot
-┃ • .setstatusemoji list group
-┃ • .setstatusemoji list media
-┃ • .setstatusemoji list user
-┃ • .setstatusemoji list custom
-┃ 
-┃ *Set Emoji:*
-┃ • .setstatusemoji set [type] [emoji]
-┃   Example: .setstatusemoji set online 🔵
-┃ 
-┃ *Reset:*
-┃ • .setstatusemoji reset
-┃ • .setstatusemoji reset [category]
-┃ 
-┃ *Search:*
-┃ • .setstatusemoji search [keyword]
-┃ 
-┗━━━━━━━━━━━━━━━━━━━━`;
+        let settingsText = `╭┄┄┄🌸🌹 *STATUS EMOJI SETTINGS* 🌹🌸┄┄┄⊷\n┃\n┃ *🟢 ONLINE STATUS:*\n┃ Online: ${emojiSettings.online} | Offline: ${emojiSettings.offline}\n┃ Typing: ${emojiSettings.typing} | Recording: ${emojiSettings.recording}\n┃\n┃ *📨 MESSAGE STATUS:*\n┃ Sent: ${emojiSettings.sent} | Delivered: ${emojiSettings.delivered}\n┃ Read: ${emojiSettings.read} | Failed: ${emojiSettings.failed}\n┃\n┃ *🤖 BOT STATUS:*\n┃ Online: ${emojiSettings.botOnline} | Offline: ${emojiSettings.botOffline}\n┃ Processing: ${emojiSettings.botProcessing}\n┃ Success: ${emojiSettings.botSuccess} | Error: ${emojiSettings.botError}\n┃\n┃ *👥 GROUP STATUS:*\n┃ Open: ${emojiSettings.groupOpen} | Close: ${emojiSettings.groupClose}\n┃ Mute: ${emojiSettings.groupMute} | Unmute: ${emojiSettings.groupUnmute}\n┃ Promote: ${emojiSettings.groupPromote} | Demote: ${emojiSettings.groupDemote}\n┃\n┃ *📁 MEDIA STATUS:*\n┃ Image: ${emojiSettings.image} | Video: ${emojiSettings.video}\n┃ Audio: ${emojiSettings.audio} | Document: ${emojiSettings.document}\n┃ Sticker: ${emojiSettings.sticker} | Location: ${emojiSettings.location}\n┃\n┃ *👤 USER STATUS:*\n┃ Admin: ${emojiSettings.userAdmin} | Member: ${emojiSettings.userMember}\n┃ Owner: ${emojiSettings.userOwner} | Bot: ${emojiSettings.userBot}\n┃\n┃ *✨ CUSTOM EMOJIS:*\n┃ Custom1: ${emojiSettings.custom1} | Custom2: ${emojiSettings.custom2}\n┃ Custom3: ${emojiSettings.custom3} | Custom4: ${emojiSettings.custom4}\n┃\n┃ *📝 AVAILABLE COMMANDS:*\n┃\n┃ *View Categories:*\n┃ • .setstatusemoji list online\n┃ • .setstatusemoji list message\n┃ • .setstatusemoji list bot\n┃ • .setstatusemoji list group\n┃ • .setstatusemoji list media\n┃ • .setstatusemoji list user\n┃ • .setstatusemoji list custom\n┃\n┃ *Set Emoji:*\n┃ • .setstatusemoji set [type] [emoji]\n┃   Example: .setstatusemoji set online 🔵\n┃\n┃ *Reset:*\n┃ • .setstatusemoji reset\n┃ • .setstatusemoji reset [category]\n┃\n┃ *Search:*\n┃ • .setstatusemoji search [keyword]\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`;
 
         await conn.sendMessage(from, {
             text: settingsText,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        }, { quoted: mek });
         return;
     }
-    
-    // Handle different commands
+
     switch (args[0].toLowerCase()) {
-        
-        // ===== LIST COMMANDS =====
+
         case 'list':
             if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please specify category: online, message, bot, group, media, user, custom`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Please specify category: online, message, bot, group, media, user, custom\n\n> ® Powered by Tyrex Tech");
             }
-            
-            let listText = `┏━❑ ${args[1].toUpperCase()} EMOJIS ━━━━━━━━━\n┃\n`;
-            
+
+            let listText = `╭┄┄┄🌸🌹 *${args[1].toUpperCase()} EMOJIS* 🌹🌸┄┄┄⊷\n┃\n`;
+
             switch (args[1].toLowerCase()) {
                 case 'online':
                     listText += `┃ Online: ${emojiSettings.online}\n`;
@@ -266,7 +161,7 @@ try{
                     listText += `┃ Typing: ${emojiSettings.typing}\n`;
                     listText += `┃ Recording: ${emojiSettings.recording}\n`;
                     break;
-                    
+
                 case 'message':
                     listText += `┃ Sent: ${emojiSettings.sent}\n`;
                     listText += `┃ Delivered: ${emojiSettings.delivered}\n`;
@@ -274,7 +169,7 @@ try{
                     listText += `┃ Pending: ${emojiSettings.pending}\n`;
                     listText += `┃ Failed: ${emojiSettings.failed}\n`;
                     break;
-                    
+
                 case 'bot':
                     listText += `┃ Online: ${emojiSettings.botOnline}\n`;
                     listText += `┃ Offline: ${emojiSettings.botOffline}\n`;
@@ -283,7 +178,7 @@ try{
                     listText += `┃ Error: ${emojiSettings.botError}\n`;
                     listText += `┃ Warning: ${emojiSettings.botWarning}\n`;
                     break;
-                    
+
                 case 'group':
                     listText += `┃ Open: ${emojiSettings.groupOpen}\n`;
                     listText += `┃ Close: ${emojiSettings.groupClose}\n`;
@@ -296,7 +191,7 @@ try{
                     listText += `┃ Join: ${emojiSettings.groupJoin}\n`;
                     listText += `┃ Leave: ${emojiSettings.groupLeave}\n`;
                     break;
-                    
+
                 case 'media':
                     listText += `┃ Image: ${emojiSettings.image}\n`;
                     listText += `┃ Video: ${emojiSettings.video}\n`;
@@ -307,7 +202,7 @@ try{
                     listText += `┃ Location: ${emojiSettings.location}\n`;
                     listText += `┃ Poll: ${emojiSettings.poll}\n`;
                     break;
-                    
+
                 case 'user':
                     listText += `┃ Admin: ${emojiSettings.userAdmin}\n`;
                     listText += `┃ Member: ${emojiSettings.userMember}\n`;
@@ -316,7 +211,7 @@ try{
                     listText += `┃ Verified: ${emojiSettings.userVerified}\n`;
                     listText += `┃ Blocked: ${emojiSettings.userBlocked}\n`;
                     break;
-                    
+
                 case 'custom':
                     listText += `┃ Custom1: ${emojiSettings.custom1}\n`;
                     listText += `┃ Custom2: ${emojiSettings.custom2}\n`;
@@ -324,68 +219,47 @@ try{
                     listText += `┃ Custom4: ${emojiSettings.custom4}\n`;
                     listText += `┃ Custom5: ${emojiSettings.custom5}\n`;
                     break;
-                    
+
                 default:
-                    return await conn.sendMessage(from, {
-                        text: `❌ Invalid category`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fkontak });
+                    return reply("Invalid category\n\n> ® Powered by Tyrex Tech");
             }
-            
-            listText += `┃\n┗━━━━━━━━━━━━━━━━━━━━`;
-            
+
+            listText += `┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`;
+
             await conn.sendMessage(from, {
                 text: listText,
                 contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             break;
-            
-        // ===== SET EMOJI COMMAND =====
+
         case 'set':
             if (!args[1] || !args[2]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setstatusemoji set [type] [emoji]\n\nExample: .setstatusemoji set online 🟢`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use: .setstatusemoji set [type] [emoji]\n\nExample: .setstatusemoji set online 🟢\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             const type = args[1].toLowerCase();
             const emoji = args[2];
-            
-            // Check if emoji exists in settings
+
             if (emojiSettings.hasOwnProperty(type)) {
                 const oldEmoji = emojiSettings[type];
                 emojiSettings[type] = emoji;
                 writeEmojiSettings(emojiSettings);
-                
+
                 await conn.sendMessage(from, {
-                    text: `┏━❑ EMOJI UPDATED ━━━━━━━━━
-┃ ✅ *${type}* emoji changed
-┃ ┣ Old: ${oldEmoji}
-┃ ┗ New: ${emoji}
-┗━━━━━━━━━━━━━━━━━━━━`,
+                    text: `╭┄┄┄🌸🌹 *EMOJI UPDATED* 🌹🌸┄┄┄⊷\n┃ ✅ *${type}* emoji changed\n┃ ┣ Old: ${oldEmoji}\n┃ ┗ New: ${emoji}\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
                     contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                }, { quoted: mek });
             } else {
-                // Show available types
                 let types = Object.keys(emojiSettings).join(', ');
-                await conn.sendMessage(from, {
-                    text: `❌ Invalid type: ${type}\n\nAvailable types:\n${types}`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply(`Invalid type: ${type}\n\nAvailable types:\n${types}\n\n> ® Powered by Tyrex Tech`);
             }
             break;
-            
-        // ===== RESET COMMANDS =====
+
         case 'reset':
             if (!args[1]) {
                 resetEmojiSettings();
-                await conn.sendMessage(from, {
-                    text: `✅ All emoji settings reset to default`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ All emoji settings reset to default\n\n> ® Powered by Tyrex Tech");
             } else {
-                // Reset specific category
                 const category = args[1].toLowerCase();
                 const categoryEmojis = {
                     online: ['online', 'offline', 'typing', 'recording'],
@@ -396,95 +270,72 @@ try{
                     user: ['userAdmin', 'userMember', 'userOwner', 'userBot', 'userVerified', 'userBlocked'],
                     custom: ['custom1', 'custom2', 'custom3', 'custom4', 'custom5']
                 };
-                
+
                 if (categoryEmojis[category]) {
                     categoryEmojis[category].forEach(key => {
                         emojiSettings[key] = DEFAULT_EMOJI[key];
                     });
                     writeEmojiSettings(emojiSettings);
-                    
-                    await conn.sendMessage(from, {
-                        text: `✅ ${category} emojis reset to default`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fkontak });
+                    reply(`✅ ${category} emojis reset to default\n\n> ® Powered by Tyrex Tech`);
                 } else {
-                    await conn.sendMessage(from, {
-                        text: `❌ Invalid category. Use: online, message, bot, group, media, user, custom`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fkontak });
+                    reply("Invalid category. Use: online, message, bot, group, media, user, custom\n\n> ® Powered by Tyrex Tech");
                 }
             }
             break;
-            
-        // ===== SEARCH COMMAND =====
+
         case 'search':
             if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setstatusemoji search [keyword]`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use: .setstatusemoji search [keyword]\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             const keyword = args[1].toLowerCase();
             let results = [];
-            
+
             for (let [key, value] of Object.entries(emojiSettings)) {
                 if (key.toLowerCase().includes(keyword) || value.includes(keyword)) {
                     results.push({ key, value });
                 }
             }
-            
+
             if (results.length > 0) {
-                let searchText = `┏━❑ SEARCH RESULTS FOR "${keyword}" ━━━━━━━━━\n┃\n`;
+                let searchText = `╭┄┄┄🌸🌹 *SEARCH RESULTS FOR "${keyword}"* 🌹🌸┄┄┄⊷\n┃\n`;
                 results.forEach((r, i) => {
                     searchText += `┃ ${i+1}. ${r.key}: ${r.value}\n`;
                 });
-                searchText += `┃\n┃ Total: ${results.length}\n┗━━━━━━━━━━━━━━━━━━━━`;
-                
+                searchText += `┃\n┃ Total: ${results.length}\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`;
+
                 await conn.sendMessage(from, {
                     text: searchText,
                     contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                }, { quoted: mek });
             } else {
-                await conn.sendMessage(from, {
-                    text: `❌ No results found for "${keyword}"`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply(`No results found for "${keyword}"\n\n> ® Powered by Tyrex Tech`);
             }
             break;
-            
-        // ===== EXPORT COMMAND =====
+
         case 'export':
             const exportData = JSON.stringify(emojiSettings, null, 2);
             await conn.sendMessage(from, {
-                text: `┏━❑ EXPORT EMOJI SETTINGS ━━━━━━━━━\n┃\n┃ \`\`\`${exportData}\`\`\`\n┃\n┗━━━━━━━━━━━━━━━━━━━━`,
+                text: `╭┄┄┄🌸🌹 *EXPORT EMOJI SETTINGS* 🌹🌸┄┄┄⊷\n┃\n┃ \`\`\`${exportData}\`\`\`\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
                 contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             break;
-            
-        // ===== IMPORT COMMAND =====
+
         case 'import':
             try {
                 const imported = JSON.parse(args.slice(1).join(' '));
                 if (typeof imported === 'object') {
                     emojiSettings = { ...emojiSettings, ...imported };
                     writeEmojiSettings(emojiSettings);
-                    await conn.sendMessage(from, {
-                        text: `✅ Emoji settings imported successfully`,
-                        contextInfo: getContextInfo({ sender: sender })
-                    }, { quoted: fkontak });
+                    reply("✅ Emoji settings imported successfully\n\n> ® Powered by Tyrex Tech");
                 }
             } catch (e) {
-                await conn.sendMessage(from, {
-                    text: `❌ Invalid JSON format`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("Invalid JSON format\n\n> ® Powered by Tyrex Tech");
             }
             break;
-            
-        // ===== PREVIEW COMMAND =====
+
         case 'preview':
-            let previewText = `┏━❑ EMOJI PREVIEW ━━━━━━━━━\n┃\n`;
+            let previewText = `╭┄┄┄🌸🌹 *EMOJI PREVIEW* 🌹🌸┄┄┄⊷\n┃\n`;
             previewText += `┃ ${emojiSettings.botOnline} Bot Online\n`;
             previewText += `┃ ${emojiSettings.botProcessing} Processing\n`;
             previewText += `┃ ${emojiSettings.botSuccess} Success\n`;
@@ -498,32 +349,25 @@ try{
             previewText += `┃ ${emojiSettings.userAdmin} Admin\n`;
             previewText += `┃ ${emojiSettings.userMember} Member\n`;
             previewText += `┃ ${emojiSettings.custom1} Custom 1\n`;
-            previewText += `┃\n┗━━━━━━━━━━━━━━━━━━━━`;
-            
+            previewText += `┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`;
+
             await conn.sendMessage(from, {
                 text: previewText,
                 contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             break;
-            
+
         default:
-            await conn.sendMessage(from, {
-                text: `❌ Unknown command. Use .setstatusemoji for help`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply("Unknown command. Use .setstatusemoji for help\n\n> ® Powered by Tyrex Tech");
     }
 
 } catch (e) {
     console.log('SETSTATUSEMOJI ERROR:', e);
-    await conn.sendMessage(from, {
-        text: `❌ Error: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Error: ${e.message}\n\n> ® Powered by Tyrex Tech`);
     l(e);
 }
 });
 
-// ============ FUNCTION YA KUPATA EMOJI ============
 async function getStatusEmoji(type) {
     try {
         const settings = readEmojiSettings();
@@ -533,12 +377,10 @@ async function getStatusEmoji(type) {
     }
 }
 
-// ============ FUNCTION YA KUPATA ALL EMOJIS ============
 async function getAllEmojis() {
     return readEmojiSettings();
 }
 
-// Export functions
 module.exports = {
     getStatusEmoji,
     getAllEmojis,
