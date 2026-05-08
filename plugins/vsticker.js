@@ -12,27 +12,14 @@ const { videoToWebp } = require('../lib/video-utils');
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 const config = require("../config");
 
-// FakevCard sawa na zilizopita
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
-
 const getContextInfo = (m) => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         }
     };
@@ -50,30 +37,21 @@ cmd(
   async (conn, mek, m, { quoted, args, reply, from, sender }) => {
     try {
       if (!mek.quoted) {
-        return await conn.sendMessage(from, { 
-          text: '*𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊 𝚟𝚒𝚍𝚎𝚘 𝚘𝚛 𝙶𝙸𝙵 𝚝𝚘 𝚌𝚘𝚗𝚟𝚎𝚛𝚝 𝚒𝚝 𝚝𝚘 𝚊 𝚜𝚝𝚒𝚌𝚔𝚎𝚛!*\n\n> © Powered by Sila Tech', 
-          contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        return reply('*Reply to a video or GIF to convert it to a sticker!*\n\n> ® Powered by Tyrex Tech');
       }
 
       const mime = mek.quoted.mtype;
       if (!['videoMessage', 'imageMessage'].includes(mime)) {
-        return await conn.sendMessage(from, { 
-          text: '*𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊 𝚟𝚊𝚕𝚒𝚍 𝚟𝚒𝚍𝚎𝚘 𝚘𝚛 𝙶𝙸𝙵.*\n\n> © Powered by Sila Tech', 
-          contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        return reply('*Please reply to a valid video or GIF.*\n\n> ® Powered by Tyrex Tech');
       }
 
-      // Download the media file
       const media = await mek.quoted.download();
 
-      // Convert the video to a WebP buffer
       const webpBuffer = await videoToWebp(media);
 
-      // Generate sticker metadata
       const sticker = new Sticker(webpBuffer, {
-        pack: config.STICKER_NAME || '𝚂𝙸𝙻𝙰 𝙼𝙳',
-        author: '𝚂𝙸𝙻𝙰 𝙼𝙳', 
+        pack: config.STICKER_NAME || '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
+        author: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃', 
         type: StickerTypes.FULL,
         categories: ['🤩', '🎉'],
         id: '12345',
@@ -81,19 +59,15 @@ cmd(
         background: 'transparent',
       });
 
-      // Convert sticker to buffer and send
       const stickerBuffer = await sticker.toBuffer();
       return conn.sendMessage(mek.chat, { 
         sticker: stickerBuffer,
         contextInfo: getContextInfo({ sender: sender })
-      }, { quoted: fkontak });
-      
+      }, { quoted: mek });
+
     } catch (error) {
       console.error(error);
-      await conn.sendMessage(from, { 
-        text: `❌ 𝙰𝚗 𝚎𝚛𝚛𝚘𝚛 𝚘𝚌𝚌𝚞𝚛𝚛𝚎𝚍: ${error.message}\n\n> © Powered by Sila Tech`, 
-        contextInfo: getContextInfo({ sender: sender })
-      }, { quoted: fkontak });
+      reply(`❌ An error occurred: ${error.message}\n\n> ® Powered by Tyrex Tech`);
     }
   }
 );
