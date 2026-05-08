@@ -1,18 +1,5 @@
-const { cmd } = require('../command');
+ const { cmd } = require('../command');
 const fs = require('fs');
-
-// FakevCard
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝐒𝐈𝐋𝐀 𝐌𝐃"
-    }
-};
 
 const getContextInfo = (m) => {
     return {
@@ -20,14 +7,14 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
 };
 
-// ============ GSTATUS COMMAND (Fixed version) ============
+// ============ GSTATUS COMMAND ============
 cmd({
     pattern: "gstatus",
     alias: ["groupstatus", "gs", "statusgc", "gcstatus"],
@@ -38,17 +25,10 @@ cmd({
 },
 async(conn, mek, m, {from, l, prefix, quoted, isGroup, sender, isAdmins, isBotAdmins, reply, args}) => {
 try{
-    if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ This command can only be used in group chats`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isGroup) return reply("This command can only be used in group chats\n\n> ® Powered by Tyrex Tech");
     
-    if (!isAdmins) return await conn.sendMessage(from, {
-        text: `❌ You need to be an admin to post group status`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    if (!isAdmins) return reply("You need to be an admin to post group status\n\n> ® Powered by Tyrex Tech");
     
-    // Get group metadata
     const groupMetadata = await conn.groupMetadata(from);
     const groupName = groupMetadata.subject;
     
@@ -62,7 +42,7 @@ try{
 👥 *Group:* ${groupName}
 ⏰ *Time:* ${new Date().toLocaleTimeString()}
 ━━━━━━━━━━━━━
-> 𝐒𝐈𝐋𝐀 𝐌𝐃`;
+> 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃`;
 
     if (!/image|video|audio/.test(mime) && !caption) {
         return await conn.sendMessage(from, {
@@ -78,27 +58,22 @@ Post status that appears on group profile (like story)
 
 *Note:* This posts to group status/story, not group chat`,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        }, { quoted: mek });
     }
     
-    // Send processing message
     await conn.sendMessage(from, {
         text: `⏳ Posting to group status/story...`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
     
-    // Prepare status text
     const statusText = caption || defaultCaption;
     
     try {
-        // Method 1: Using sendPresenceUpdate
         await conn.sendPresenceUpdate('composing', from);
         
-        // Handle different media types for status
         if (/image/.test(mime)) {
             const buffer = await conn.downloadMediaMessage(quotedMsg);
             
-            // Post as image status using group update
             await conn.sendMessage(from, {
                 image: buffer,
                 caption: statusText,
@@ -115,12 +90,11 @@ Post status that appears on group profile (like story)
                         renderLargerThumbnail: true
                     }
                 }
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             
         } else if (/video/.test(mime)) {
             const buffer = await conn.downloadMediaMessage(quotedMsg);
             
-            // Post as video status
             await conn.sendMessage(from, {
                 video: buffer,
                 caption: statusText,
@@ -136,12 +110,11 @@ Post status that appears on group profile (like story)
                         renderLargerThumbnail: true
                     }
                 }
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             
         } else if (/audio/.test(mime)) {
             const buffer = await conn.downloadMediaMessage(quotedMsg);
             
-            // Post as audio status
             await conn.sendMessage(from, {
                 audio: buffer,
                 mimetype: 'audio/mp4',
@@ -156,10 +129,9 @@ Post status that appears on group profile (like story)
                         mediaType: 1
                     }
                 }
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             
         } else if (caption) {
-            // Post text only status
             await conn.sendMessage(from, {
                 text: statusText,
                 contextInfo: {
@@ -172,25 +144,18 @@ Post status that appears on group profile (like story)
                         mediaType: 1
                     }
                 }
-            }, { quoted: fkontak });
+            }, { quoted: mek });
         }
         
-        // Send confirmation to group chat
         await conn.sendMessage(from, {
-            text: `┏━❑ GSTATUS COMPLETE ━━━━━━━━━
-┃ ✅ Status posted successfully
-┃ 📌 Check group profile to view
-┗━━━━━━━━━━━━━━━━━━━━
-> 𝐒𝐈𝐋𝐀 𝐌𝐃`,
+            text: `╭┄┄┄🌸🌹 *GSTATUS COMPLETE* 🌹🌸┄┄┄⊷\n┃ ✅ Status posted successfully\n┃ 📌 Check group profile to view\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃`,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        }, { quoted: mek });
         
     } catch (statusError) {
         console.log('Status error:', statusError);
         
-        // Method 2: Alternative using broadcast
         try {
-            // Create a broadcast message
             await conn.sendMessage("status@broadcast", {
                 text: `📢 *${groupName}*\n\n${statusText}`,
                 contextInfo: {
@@ -203,7 +168,7 @@ Post status that appears on group profile (like story)
             await conn.sendMessage(from, {
                 text: `✅ Status posted as broadcast`,
                 contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            }, { quoted: mek });
             
         } catch (broadcastError) {
             throw statusError;
@@ -212,15 +177,12 @@ Post status that appears on group profile (like story)
 
 } catch (e) {
     console.log('GSTATUS ERROR:', e);
-    await conn.sendMessage(from, {
-        text: `❌ Failed to post group status: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Failed to post group status: ${e.message}\n\n> ® Powered by Tyrex Tech`);
     l(e);
 }
 });
 
-// ============ SIMPLE WORKING VERSION ============
+// ============ GCSTORY COMMAND ============
 cmd({
     pattern: "gcstory",
     alias: ["groupstory", "gstory"],
@@ -228,7 +190,7 @@ cmd({
     desc: "Post to group story/status (working version)",
     category: "group"
 },
-async(conn, mek, m, {from, quoted, isGroup, sender, isAdmins, args}) => {
+async(conn, mek, m, {from, quoted, isGroup, sender, isAdmins, args, reply}) => {
 try{
     if (!isGroup) return;
     if (!isAdmins) return;
@@ -238,20 +200,15 @@ try{
     const caption = args.join(' ') || 'Group status update';
     
     if (!/image|video/.test(mime) && !caption) {
-        return await conn.sendMessage(from, {
-            text: `Reply to image/video with .gcstory`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        return reply("Reply to image/video with .gcstory\n\n> ® Powered by Tyrex Tech");
     }
     
-    // Get group name
     const groupMetadata = await conn.groupMetadata(from);
     const groupName = groupMetadata.subject;
     
     if (/image/.test(mime)) {
         const buffer = await conn.downloadMediaMessage(quotedMsg);
         
-        // Send as status using external ad reply
         await conn.sendMessage(from, {
             image: buffer,
             caption: caption,
@@ -268,7 +225,7 @@ try{
                     renderLargerThumbnail: true
                 }
             }
-        }, { quoted: fkontak });
+        }, { quoted: mek });
         
     } else if (/video/.test(mime)) {
         const buffer = await conn.downloadMediaMessage(quotedMsg);
@@ -288,7 +245,7 @@ try{
                     renderLargerThumbnail: true
                 }
             }
-        }, { quoted: fkontak });
+        }, { quoted: mek });
         
     } else if (caption) {
         await conn.sendMessage(from, {
@@ -298,24 +255,21 @@ try{
                 forwardingScore: 999,
                 isForwarded: true
             }
-        }, { quoted: fkontak });
+        }, { quoted: mek });
     }
     
     await conn.sendMessage(from, {
         text: `✅ Posted successfully`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
 
 } catch (e) {
     console.log(e);
-    await conn.sendMessage(from, {
-        text: `❌ Error: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Error: ${e.message}\n\n> ® Powered by Tyrex Tech`);
 }
 });
 
-// ============ STATUS BROADCAST VERSION ============
+// ============ STATUS BROADCAST COMMAND ============
 cmd({
     pattern: "status",
     alias: ["mystatus", "poststatus"],
@@ -323,17 +277,14 @@ cmd({
     desc: "Post to your personal status",
     category: "group"
 },
-async(conn, mek, m, {from, quoted, sender, args}) => {
+async(conn, mek, m, {from, quoted, sender, args, reply}) => {
 try{
     const quotedMsg = m.quoted || m;
     const mime = (quotedMsg.msg || quotedMsg).mimetype || '';
     const caption = args.join(' ') || 'My status update';
     
     if (!/image|video/.test(mime) && !caption) {
-        return await conn.sendMessage(from, {
-            text: `Reply to image/video with .status`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        return reply("Reply to image/video with .status\n\n> ® Powered by Tyrex Tech");
     }
     
     if (/image/.test(mime)) {
@@ -357,13 +308,10 @@ try{
     await conn.sendMessage(from, {
         text: `✅ Posted to your status`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    }, { quoted: mek });
 
 } catch (e) {
     console.log(e);
-    await conn.sendMessage(from, {
-        text: `❌ Error: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Error: ${e.message}\n\n> ® Powered by Tyrex Tech`);
 }
 });
