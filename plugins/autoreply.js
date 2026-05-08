@@ -3,7 +3,6 @@ const path = require('path');
 const config = require('../config');
 const { cmd , commands } = require('../command');
 
-// FakevCard sawa na zilizopita
 const fkontak = {
     "key": {
         "participant": '0@s.whatsapp.net',
@@ -12,7 +11,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
+        "conversation": "𝐓𝐘𝐑𝐄𝐗"
     }
 };
 
@@ -22,8 +21,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
@@ -37,9 +36,8 @@ async (conn, mek, m, { from, body, isOwner, sender }) => {
     try {
         const filePath = path.join(__dirname, '../assets/autoreply.json');
         
-        // Check if file exists
         if (!fs.existsSync(filePath)) {
-            console.error("❌ Auto Reply: autoreply.json file not found!");
+            console.error("Auto Reply: autoreply.json file not found!");
             return;
         }
         
@@ -49,7 +47,6 @@ async (conn, mek, m, { from, body, isOwner, sender }) => {
             if (body.toLowerCase() === text.toLowerCase()) {
                 
                 if (config.AUTO_REPLY === 'true' || config.AUTO_REPLY === true) {
-                    //if (isOwner) return;  
                     
                     await conn.sendMessage(from, { 
                         text: data[text],
@@ -59,7 +56,7 @@ async (conn, mek, m, { from, body, isOwner, sender }) => {
             }
         }
     } catch (error) {
-        console.error("❌ Auto Reply Error:", error);
+        console.error("Auto Reply Error:", error);
     }
 });
 
@@ -74,10 +71,9 @@ cmd({
 },
 async (conn, mek, m, { from, sender, args, isOwner, reply }) => {
     try {
-        // Owner-only access
         if (!isOwner) {
             return await conn.sendMessage(from, { 
-                text: "🚫 *𝚃𝚑𝚒𝚜 𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚒𝚜 𝚘𝚗𝚕𝚢 𝚊𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎 𝚝𝚘 𝚝𝚑𝚎 𝚋𝚘𝚝 𝚘𝚠𝚗𝚎𝚛.*\n\n> © Powered by Sila Tech", 
+                text: "This command is only available to the bot owner.\n\n> ® Powered by Tyrex Tech", 
                 contextInfo: getContextInfo({ sender: sender })
             }, { quoted: fkontak });
         }
@@ -88,44 +84,41 @@ async (conn, mek, m, { from, sender, args, isOwner, reply }) => {
 
         if (action === "on" || action === "enable") {
             config.AUTO_REPLY = true;
-            statusText = "✅ *𝙰𝚞𝚝𝚘 𝚁𝚎𝚙𝚕𝚢 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝙴𝙽𝙰𝙱𝙻𝙴𝙳*";
+            statusText = "Auto Reply has been ENABLED";
             reaction = "✅";
         } 
         else if (action === "off" || action === "disable") {
             config.AUTO_REPLY = false;
-            statusText = "❌ *𝙰𝚞𝚝𝚘 𝚁𝚎𝚙𝚕𝚢 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝙳𝙸𝚂𝙰𝙱𝙻𝙴𝙳*";
+            statusText = "Auto Reply has been DISABLED";
             reaction = "❌";
         } 
         else {
-            // Show current status
-            const currentStatus = (config.AUTO_REPLY === 'true' || config.AUTO_REPLY === true) ? "𝙴𝚗𝚊𝚋𝚕𝚎𝚍 ✅" : "𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍 ❌";
+            const currentStatus = (config.AUTO_REPLY === 'true' || config.AUTO_REPLY === true) ? "Enabled ✅" : "Disabled ❌";
             
             return await conn.sendMessage(from, { 
-                text: `📊 *𝙰𝚞𝚝𝚘 𝚁𝚎𝚙𝚕𝚢 𝚂𝚝𝚊𝚝𝚞𝚜*\n\n` +
-                      `• 𝙲𝚞𝚛𝚛𝚎𝚗𝚝 𝚂𝚝𝚊𝚝𝚞𝚜: ${currentStatus}\n\n` +
-                      `*𝚄𝚜𝚊𝚐𝚎:*\n` +
-                      `• .autoreply on  - 𝙴𝚗𝚊𝚋𝚕𝚎 𝚊𝚞𝚝𝚘 𝚛𝚎𝚙𝚕𝚢\n` +
-                      `• .autoreply off - 𝙳𝚒𝚜𝚊𝚋𝚕𝚎 𝚊𝚞𝚝𝚘 𝚛𝚎𝚙𝚕𝚢\n\n` +
-                      `> © Powered by Sila Tech`, 
+                text: `Auto Reply Status\n\n` +
+                      `Current Status: ${currentStatus}\n\n` +
+                      `Usage:\n` +
+                      `.autoreply on  - Enable auto reply\n` +
+                      `.autoreply off - Disable auto reply\n\n` +
+                      `> ® Powered by Tyrex Tech`, 
                 contextInfo: getContextInfo({ sender: sender })
             }, { quoted: fkontak });
         }
 
-        // Send status message
         await conn.sendMessage(from, { 
-            text: `${statusText}\n\n> © Powered by Sila Tech`, 
+            text: `${statusText}\n\n> ® Powered by Tyrex Tech`, 
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fkontak });
 
-        // React to original command
         await conn.sendMessage(from, {
             react: { text: reaction, key: mek.key }
         });
 
     } catch (error) {
-        console.error("❌ Auto Reply Command Error:", error);
+        console.error("Auto Reply Command Error:", error);
         await conn.sendMessage(from, { 
-            text: `⚠️ 𝙴𝚛𝚛𝚘𝚛: ${error.message}\n\n> © Powered by Sila Tech`, 
+            text: `Error: ${error.message}\n\n> ® Powered by Tyrex Tech`, 
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fkontak });
     }
