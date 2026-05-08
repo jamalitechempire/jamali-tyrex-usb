@@ -1,7 +1,7 @@
 const { cmd } = require('../command');
 const { fetchGif, gifToSticker } = require('../lib/sticker-utils');
 
-// FakevCard sawa na zilizopita
+// FakevCard ya TYREX MD
 const fkontak = {
     "key": {
         "participant": '0@s.whatsapp.net',
@@ -10,7 +10,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
+        "conversation": "𝐓𝐘𝐑𝐄𝐗"
     }
 };
 
@@ -20,8 +20,8 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         }
     };
@@ -38,7 +38,7 @@ cmd({
     try {
         if (!args[0]) {
             return await conn.sendMessage(from, { 
-                text: "*𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚎𝚡𝚝!*\n\n> © Powered by Sila Tech", 
+                text: `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ✨ *ATTP TEXT TO STICKER*\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃ *Please provide text!*\n┃\n┃ 📝 *Example:*\n┃ *.attp Hello*\n┃ *.attp TYREX*\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`, 
                 contextInfo: getContextInfo({ sender: sender })
             }, { quoted: fkontak });
         }
@@ -53,7 +53,7 @@ cmd({
         
     } catch (error) {
         await conn.sendMessage(from, { 
-            text: `❌ ${error.message}\n\n> © Powered by Sila Tech`, 
+            text: `╭┄┄┄🌸🌹 *𝐓𝐘𝐑𝐄𝐗 𝐌𝐃* 🌹🌸┄┄┄⊷\n┃\n┃ ❌ *Error:* ${error.message}\n┃▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n┃\n┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐓𝐲𝐫𝐞𝐱 𝐓𝐞𝐜𝐡`, 
             contextInfo: getContextInfo({ sender: sender })
         }, { quoted: fkontak });
     }
