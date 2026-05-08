@@ -1,8 +1,8 @@
 {
-  "name": "SILA-MD",
-  "description": "WhatsApp bot made by Sila Md",
-  "logo": "https://files.catbox.moe/36vahk.png",
-  "keywords": ["SILA-MD"],
+  "name": "TYREX-MD",
+  "description": "WhatsApp bot made by Tyrex Tech",
+  "logo": "https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg",
+  "keywords": ["TYREX-MD"],
   "success_url": "/",
 
     "stack": "container",
@@ -16,7 +16,7 @@
     "STICKER_NAME": {
       "description": "type your sticker pack name.",
       "required": true,
-      "value": "SILA-MD"
+      "value": "TYREX-MD"
     }, 
 
     "CUSTOM_STATUS_EMOJIS": {
@@ -84,27 +84,27 @@
     "AUTO_STATUS_MSG": {
       "description": "Type custom message on status reply",
       "required": true,
-      "value": ".*𝐒𝐈𝐋𝐀-𝐌𝐃 𝐕𝐈𝐄𝐖𝐄𝐃✅*"
+      "value": "*𝐓𝐘𝐑𝐄𝐗-𝐌𝐃 𝐕𝐈𝐄𝐖𝐄𝐃✅*"
    
      }, 
     
     "OWNER_NAME": {
       "description": "Type Bot Owner Name.",
       "required": false,
-      "value": "SILA-MD"
+      "value": "TYREX-MD"
 }, 
 
     "OWNER_NUMBER": {
       "description": "put the owner number for bot.",
       "required": false,
-      "value": "255789661031"
+      "value": "255628378557"
 
     }, 
 
     "BOT_NAME": {
       "description": "Type here the bot name.",
       "required": true,
-      "value": "SILA-MD"
+      "value": "TYREX-MD"
 
       }, 
 
@@ -137,13 +137,13 @@
     "MENU_IMAGE_URL": {
       "description": "add url for mention reply and menu if want.",
       "required": true,
-      "value": "https://files.catbox.moe/i4aqjo.png"
+      "value": "https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg"
     },
     
      "DESCRIPTION": {
       "description": "add caption for menu and other",
       "required": true,
-      "value": "*© 𝐒𝐈𝐋𝐀-𝐌𝐃*"
+      "value": "*© 𝐓𝐘𝐑𝐄𝐗-𝐌𝐃*"
     },
 
       "DELETE_LINKS": {
@@ -204,4 +204,3 @@
      ],
   "stack": "heroku-24"
 }
-  
