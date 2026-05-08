@@ -1,150 +1,142 @@
-<!----------------------------------------------------------------------------->
-<!--------------------- TYREX MD | RAINBOW EDITION ---------------------------->
-<!----------------------------------------------------------------------------->
+<p align="center">
+  <a href="https://github.com/bugvirustechtyrex-bit/usb">
+    <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" alt="TYREX MD Banner" width="100%"/>
+  </a>
+</p>
+
+<h1 align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=35&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=500&lines=⚡+TYREX+MD+⚡;WhatsApp+Bot+Master;Auto+Recovery;Fast+%26+Reliable" alt="Typing SVG"/>
+</h1>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=FF0000&center=true&vCenter=true&width=700&height=90&lines=🔥+TYREX+MD+🔥" alt="Red">
+  <b>🚀 Next‑gen WhatsApp automation bot with multi‑pairing, self‑restart, and easy deployment.</b>
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=00FF00&center=true&vCenter=true&width=700&height=90&lines=💚+TYREX+MD+💚" alt="Green">
+  <img src="https://img.shields.io/badge/Version-2.0.0-blue?style=for-the-badge&logo=github">
+  <img src="https://img.shields.io/badge/Node.js-20.x-green?style=for-the-badge&logo=node.js">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensource">
+  <img src="https://img.shields.io/badge/WhatsApp-Multi_Device-25D366?style=for-the-badge&logo=whatsapp">
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=0000FF&center=true&vCenter=true&width=700&height=90&lines=💙+TYREX+MD+💙" alt="Blue">
-</p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=FFFF00&center=true&vCenter=true&width=700&height=90&lines=💛+TYREX+MD+💛" alt="Yellow">
-</p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=FF00FF&center=true&vCenter=true&width=700&height=90&lines=💜+TYREX+MD+💜" alt="Purple">
-</p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=900&size=45&duration=2000&pause=500&color=00FFFF&center=true&vCenter=true&width=700&height=90&lines=🩵+TYREX+MD+🩵" alt="Cyan">
-</p>
-
-<p align="center">
-  <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" width="380" style="border-radius: 30px; box-shadow: 0 0 40px hotpink;">
-</p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Righteous&size=28&duration=3000&pause=800&color=F70000&center=true&vCenter=true&width=800&height=50&lines=🌈+THE+RAINBOW+WHATSAPP+BOT+🌈;💥+AUTO-HEALING+%7C+24%2F7+%7C+MULTI-DEVICE+💥" alt="Rainbow Text">
+  <img src="https://img.shields.io/github/stars/bugvirustechtyrex-bit/usb?style=for-the-badge&logo=github&color=gold">
+  <img src="https://img.shields.io/github/forks/bugvirustechtyrex-bit/usb?style=for-the-badge&logo=github&color=orange">
+  <img src="https://img.shields.io/github/watchers/bugvirustechtyrex-bit/usb?style=for-the-badge&logo=github&color=blue">
 </p>
 
 ---
 
-## 🎨 **Rainbow Features**
+## 🌟 **Features You'll Love**
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=FF1493&center=true&vCenter=true&width=600&height=40&lines=⚡+True+Multi‑Device" alt="Feature1">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=00CED1&center=true&vCenter=true&width=600&height=40&lines=🔄+Auto‑Healing+(Self‑Restart)" alt="Feature2">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=FFD700&center=true&vCenter=true&width=600&height=40&lines=🛡️+Advanced+Anti‑Spam" alt="Feature3">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=32CD32&center=true&vCenter=true&width=600&height=40&lines=💾+Permanent+Session+Storage" alt="Feature4">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=BA55D3&center=true&vCenter=true&width=600&height=40&lines=👑+Owner‑Only+Mode" alt="Feature5">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=20&duration=2000&pause=300&color=FF4500&center=true&vCenter=true&width=600&height=40&lines=📦+60%2B+Commands" alt="Feature6">
-</p>
+| Feature | Description |
+|---------|-------------|
+| ⚡ **Multi‑Device** | Works with WhatsApp multi‑device beta |
+| 🔄 **Auto‑Restart** | Automatically reconnects on crash |
+| 🎨 **Customizable** | Change prefix, bot name, and more |
+| 🔒 **Anti‑Delete** | Restore deleted messages (GC/DM) |
+| 🛡️ **Anti‑Link** | Auto‑delete/kick/warn for links |
+| 🔇 **Anti‑Group Mention** | Block @everyone / @all mentions |
+| 💬 **Group Management** | Welcome, goodbye, promote, demote |
+| 📊 **Advanced Commands** | Ping, alive, info, menu, and more |
+| 🔐 **Owner Only** | Full control over your bot |
+| 📂 **Session Storage** | Saves creds for persistent login |
 
 ---
 
-## 🚀 **Rainbow Quick Start**
+## 🔗 **Quick Access**
 
 <p align="center">
   <a href="https://tyrex-md-pair-a82329420b47.herokuapp.com/">
-    <img src="https://img.shields.io/badge/🔑_GET_PAIR_CODE-FF4757?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=black">
+    <img src="https://img.shields.io/badge/📱_GET_PAIR_CODE-FF6B6B?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Pair Code">
   </a>
   <a href="https://dashboard.heroku.com/new?template=https://github.com/bugvirustechtyrex-bit/usb">
-    <img src="https://img.shields.io/badge/☁️_DEPLOY_HEROKU-6762A6?style=for-the-badge&logo=heroku&logoColor=white&labelColor=black">
+    <img src="https://img.shields.io/badge/🚀_DEPLOY_HEROKU-430098?style=for-the-badge&logo=heroku&logoColor=white" alt="Heroku Deploy">
   </a>
   <a href="https://github.com/bugvirustechtyrex-bit/usb/archive/refs/heads/main.zip">
-    <img src="https://img.shields.io/badge/📦_DOWNLOAD_ZIP-2EA44F?style=for-the-badge&logo=github&logoColor=white&labelColor=black">
+    <img src="https://img.shields.io/badge/📦_DOWNLOAD_ZIP-2EA44F?style=for-the-badge&logo=github&logoColor=white" alt="Download ZIP">
   </a>
 </p>
 
+---
+
+## 📢 **Connect & Support**
+
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Righteous&size=18&duration=2000&pause=200&color=FF69B4&center=true&vCenter=true&width=400&height=30&lines=1.+Pair+→+2.+Deploy+→+3.+Enjoy!">
+  <a href="https://whatsapp.com/channel/0029VbCnY1l7j6gG5sjhUL42">
+    <img src="https://img.shields.io/badge/💬_WHATSAPP_CHANNEL-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp Channel">
+  </a>
+  <a href="https://github.com/bugvirustechtyrex-bit/usb">
+    <img src="https://img.shields.io/badge/🐙_GITHUB_REPO-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo">
+  </a>
 </p>
 
 ---
 
-## 📱 **Rainbow Demo**
+## 🚀 **How to Get Started**
+
+1. **Get Pair Code** – Click the *GET PAIR CODE* button, scan the QR or enter your number. You'll receive a `SESSION_ID`.
+2. **Deploy (Heroku)** – Click *DEPLOY HEROKU*, paste your `SESSION_ID` in the `Config Vars`, and deploy.
+3. **Run Locally / VPS** – Download the ZIP, extract, run `npm install` and `npm start`.
+
+> 💡 Need help? Join our WhatsApp channel for updates and support.
+
+---
+
+## 🛠️ **Deploy on Other Platforms**
 
 <p align="center">
-  <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" width="300" style="border-radius: 28px; box-shadow: 0 0 30px red, 0 0 30px blue, 0 0 30px green; filter: hue-rotate(90deg);">
+  <a href="https://railway.app/new">
+    <img src="https://img.shields.io/badge/Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white">
+  </a>
+  <a href="https://render.com">
+    <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white">
+  </a>
+  <a href="https://www.heroku.com/">
+    <img src="https://img.shields.io/badge/Heroku-6762A6?style=for-the-badge&logo=heroku&logoColor=white">
+  </a>
+</p>
+
+*(For Railway/Render, upload the ZIP and set the `SESSION_ID` environment variable.)*
+
+---
+
+## 📸 **Bot Preview**
+
+<p align="center">
+  <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" width="300" style="border-radius: 20px;">
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Monospace&size=25&duration=3000&pause=500&color=FFFFFF&background=FF00FF00&center=true&vCenter=true&width=500&height=50&lines=🌈+Always+Online+🌈;⚡+Rainbow+Fast+⚡">
+  <i>Lightweight, Powerful, and Always Online.</i>
 </p>
 
 ---
 
-## 🛠️ **Deploy to Rainbow Clouds**
+## 👨‍💻 **Developer**
 
 <p align="center">
-  <a href="https://dashboard.heroku.com/new?template=https://github.com/bugvirustechtyrex-bit/usb"><img src="https://img.shields.io/badge/Heroku-6762A6?style=for-the-badge&logo=heroku&logoColor=white&labelColor=black"></a>
-  <a href="https://railway.app/new"><img src="https://img.shields.io/badge/Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white&labelColor=black"></a>
-  <a href="https://render.com"><img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white&labelColor=black"></a>
-  <a href="https://replit.com/"><img src="https://img.shields.io/badge/Replit-FF6C37?style=for-the-badge&logo=replit&logoColor=white&labelColor=black"></a>
-</p>
-
----
-
-## 📖 **Rainbow Commands**
-
-<details>
-<summary><b>📂 Click for colorful command list</b></summary>
-
-| Category | Rainbowed Commands |
-|:--------:|:-------------------|
-| **Main** | `.menu` `.alive` `.ping` `.owner` `.about` |
-| **Groups** | `.promote` `.demote` `.kick` `.add` |
-| **Anti** | `.antilink` `.antidelete` `.antigrpmention` |
-| **Downloads** | `.ytdl` `.fb` `.insta` `.tiktok` |
-| **Fun** | `.meme` `.quote` `.joke` |
-| **Owner** | `.restart` `.ban` `.setname` |
-
-</details>
-
----
-
-## 👑 **Rainbow Creator**
-
-<p align="center">
-  <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" width="120" style="border-radius: 50%; box-shadow: 0 0 40px gold, 0 0 40px cyan;">
+  <img src="https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg" width="100" style="border-radius: 50%;">
 </p>
 
 <p align="center">
   <b>꧁༒☬ 𝐓𝐘𝐑𝐄𝐗_𝐊𝐒𝐇 𝐓𝐄𝐂𝐇 ☬༒꧂</b><br>
-  <i>Rainbow Bot Developer | Colorful Coder</i>
-</p>
-
-<p align="center">
-  <a href="https://whatsapp.com/channel/0029VbCnY1l7j6gG5sjhUL42">
-    <img src="https://img.shields.io/badge/💬_WHATSAPP_CHANNEL-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=black">
-  </a>
-  <a href="https://github.com/bugvirustechtyrex-bit/usb">
-    <img src="https://img.shields.io/badge/🐙_GITHUB_REPO-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=black">
-  </a>
+  <i>WhatsApp Bot Expert | Open Source Enthusiast</i>
 </p>
 
 ---
 
-## ⭐ **Rainbow Support**
+## ⭐ **Show Your Support**
+
+If you like this project, please **star** ⭐ the repository and **fork** 🔱 it.  
+Your support keeps the project alive!
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Righteous&size=22&duration=2500&pause=300&color=FF1493&center=true&vCenter=true&width=500&height=40&lines=⭐+Star+this+repo+⭐;🍴+Fork+and+contribute+🍴">
+  <img src="https://komarev.com/ghpvc/?username=bugvirustechtyrex-bit&style=for-the-badge&color=brightgreen" alt="Visitors">
 </p>
 
 ---
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer"/>
-</p>
-
-<p align="center">
-  <b>© 2025 TYREX MD – Rainbow Edition 🌈</b><br>
-  <i>“Code in color, run with power.”</i>
+  <b>© 2025 TYREX MD – Made with ❤️ for the WhatsApp community</b>
 </p>
