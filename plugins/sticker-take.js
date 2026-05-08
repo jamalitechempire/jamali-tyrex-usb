@@ -7,27 +7,14 @@ const { exec } = require('child_process');
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 const Config = require('../config');
 
-// FakevCard sawa na zilizopita
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝚂𝙸𝙻𝙰"
-    }
-};
-
 const getContextInfo = (m) => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         }
     };
@@ -46,17 +33,11 @@ cmd(
     async (conn, mek, m, { quoted, args, q, reply, from, sender }) => {
         try {
             if (!mek.quoted) {
-                return await conn.sendMessage(from, { 
-                    text: "*𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗𝚢 𝚜𝚝𝚒𝚌𝚔𝚎𝚛.*\n\n> © Powered by Sila Tech", 
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("*Reply to any sticker.*\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             if (!q) {
-                return await conn.sendMessage(from, { 
-                    text: "*𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚊 𝚙𝚊𝚌𝚔 𝚗𝚊𝚖𝚎 𝚞𝚜𝚒𝚗𝚐 .take <packname>*\n\n> © Powered by Sila Tech", 
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("*Please provide a pack name using .take <packname>*\n\n> ® Powered by Tyrex Tech");
             }
 
             let mime = mek.quoted.mtype;
@@ -76,19 +57,13 @@ cmd(
                 return conn.sendMessage(mek.chat, { 
                     sticker: buffer,
                     contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                }, { quoted: mek });
             } else {
-                return await conn.sendMessage(from, { 
-                    text: "*𝚄𝚑𝚑, 𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.*\n\n> © Powered by Sila Tech", 
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("*Uhh, Please reply to an image.*\n\n> ® Powered by Tyrex Tech");
             }
         } catch (error) {
             console.error("Take command error:", error);
-            await conn.sendMessage(from, { 
-                text: `❌ 𝙴𝚛𝚛𝚘𝚛: ${error.message}\n\n> © Powered by Sila Tech`, 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`❌ Error: ${error.message}\n\n> ® Powered by Tyrex Tech`);
         }
     }
 );
@@ -106,15 +81,12 @@ cmd(
     async (conn, mek, m, { quoted, args, q, reply, from, sender }) => {
         try {
             if (!mek.quoted) {
-                return await conn.sendMessage(from, { 
-                    text: "*𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗𝚢 𝙸𝚖𝚊𝚐𝚎 𝚘𝚛 𝚅𝚒𝚍𝚎𝚘.*\n\n> © Powered by Sila Tech", 
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("*Reply to any Image or Video.*\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             let mime = mek.quoted.mtype;
-            let pack = Config.STICKER_NAME || "𝚂𝙸𝙻𝙰 𝙼𝙳";
-            
+            let pack = Config.STICKER_NAME || "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃";
+
             if (mime === "imageMessage" || mime === "stickerMessage") {
                 let media = await mek.quoted.download();
                 let sticker = new Sticker(media, {
@@ -129,19 +101,13 @@ cmd(
                 return conn.sendMessage(mek.chat, { 
                     sticker: buffer,
                     contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                }, { quoted: mek });
             } else {
-                return await conn.sendMessage(from, { 
-                    text: "*𝚄𝚑𝚑, 𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.*\n\n> © Powered by Sila Tech", 
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("*Uhh, Please reply to an image.*\n\n> ® Powered by Tyrex Tech");
             }
         } catch (error) {
             console.error("Sticker command error:", error);
-            await conn.sendMessage(from, { 
-                text: `❌ 𝙴𝚛𝚛𝚘𝚛: ${error.message}\n\n> © Powered by Sila Tech`, 
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`❌ Error: ${error.message}\n\n> ® Powered by Tyrex Tech`);
         }
     }
 );
