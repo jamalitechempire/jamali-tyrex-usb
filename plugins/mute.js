@@ -1,28 +1,13 @@
 const { cmd } = require('../command');
 
-// Define combined fakevCard 
-const fakevCard = {
-  key: {
-    fromMe: false,
-    participant: "0@s.whatsapp.net",
-    remoteJid: "status@broadcast"
-  },
-  message: {
-    contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
-    }
-  }
-};
-
 const getContextInfo = (m) => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
@@ -38,37 +23,22 @@ cmd({
 },
 async(conn, mek, m, {from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
-    if (!isGroup) return await conn.sendMessage(from, {
-        text: `❌ 𝚃𝚑𝚒𝚜 𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚒𝚜 𝚘𝚗𝚕𝚢 𝚏𝚘𝚛 𝚐𝚛𝚘𝚞𝚙𝚜\n\n> © Powered by Sila Tech`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fakevCard });
-    
-    if (!isAdmins) return await conn.sendMessage(from, {
-        text: `❌ 𝚈𝚘𝚞 𝚗𝚎𝚎𝚍 𝚝𝚘 𝚋𝚎 𝚊𝚗 𝚊𝚍𝚖𝚒𝚗 𝚝𝚘 𝚖𝚞𝚝𝚎\n\n> © Powered by Sila Tech`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fakevCard });
-    
+    if (!isGroup) return reply("This command is only for groups\n\n> ® Powered by Tyrex Tech");
+
+    if (!isAdmins) return reply("You need to be an admin to mute\n\n> ® Powered by Tyrex Tech");
+
     await conn.groupSettingUpdate(from, 'announcement');
-    
+
     await conn.sendMessage(from, {
-        text: `┏━❑ 𝐆𝐑𝐎𝐔𝐏 𝐌𝐔𝐓𝐄𝐃 ━━━━━━━━━
-┃ ✅ 𝙶𝚛𝚘𝚞𝚙 𝚑𝚊𝚜 𝚋𝚎𝚎𝚗 𝚖𝚞𝚝𝚎𝚍
-┗━━━━━━━━━━━━━━━━━━━━
-> © Powered by Sila Tech`,
+        text: `╭┄┄┄🌸🌹 *GROUP MUTED* 🌹🌸┄┄┄⊷\n┃ ✅ Group has been muted\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fakevCard });
+    }, { quoted: mek });
 
 } catch (e) {
     if (e.message.includes('403') || e.message.includes('permission')) {
-        await conn.sendMessage(from, {
-            text: `❌ 𝙱𝚘𝚝 𝚗𝚎𝚎𝚍𝚜 𝚝𝚘 𝚋𝚎 𝚊𝚍𝚖𝚒𝚗 𝚏𝚒𝚛𝚜𝚝\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fakevCard });
+        reply("Bot needs to be admin first\n\n> ® Powered by Tyrex Tech");
     } else {
-        await conn.sendMessage(from, {
-            text: `❌ 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝚏𝚊𝚒𝚕𝚎𝚍\n\n> © Powered by Sila Tech`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fakevCard });
+        reply("Command failed\n\n> ® Powered by Tyrex Tech");
     }
     l(e);
 }
