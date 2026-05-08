@@ -1,29 +1,14 @@
 const { cmd } = require('../command');
 const axios = require('axios');
 
-// Define combined fakevCard 
-const fakevCard = {
-  key: {
-    fromMe: false,
-    participant: "0@s.whatsapp.net",
-    remoteJid: "status@broadcast"
-  },
-  message: {
-    contactMessage: {
-      displayName: "© 𝐒𝐈𝐋𝐀-𝐌𝐃",
-      vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐒𝐈𝐋𝐀 𝐌𝐃 𝐁𝐎𝐓\nORG:𝐒𝐈𝐋𝐀-𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=255789661031:+255789661031\nEND:VCARD`
-    }
-  }
-};
-
 const getContextInfo = (m) => {
     return {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '© 𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
@@ -39,29 +24,23 @@ cmd({
 },
 async(conn, mek, m, {from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
-    
+
     if (!q || !q.trim()) {
-        return await conn.sendMessage(from, {
-            text: `❌ 𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝚊 𝚍𝚘𝚖𝚊𝚒𝚗\n\n𝙴𝚡𝚊𝚖𝚙𝚕𝚎: .𝚜𝚞𝚋𝚍𝚘𝚖𝚊𝚒𝚗𝚜 𝚐𝚖𝚊𝚒𝚕.𝚌𝚘𝚖`,
-            contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fakevCard });
+        return reply("Please provide a domain\n\nExample: .subdomains gmail.com");
     }
 
-    // Show typing indicator
     await conn.sendPresenceUpdate('composing', from);
 
-    // Call Subdomains API
     const response = await axios.get(`https://api.siputzx.my.id/api/tools/subdomains?domain=${encodeURIComponent(q.trim())}`);
-    
+
     if (!response.data) {
         throw new Error('No response from API');
     }
 
     let result = response.data.subdomains || response.data.data || response.data;
 
-    // Format subdomains
     let formattedResult = '';
-    
+
     if (Array.isArray(result)) {
         if (result.length === 0) {
             formattedResult = 'No subdomains found';
@@ -77,7 +56,6 @@ try{
         formattedResult = String(result);
     }
 
-    // Truncate if too long
     if (formattedResult.length > 4096) {
         formattedResult = formattedResult.substring(0, 4090) + '...';
     }
@@ -85,27 +63,24 @@ try{
     await conn.sendPresenceUpdate('paused', from);
 
     await conn.sendMessage(from, {
-        text: `┏━❑ 𝐒𝐔𝐁𝐃𝐎𝐌𝐀𝐈𝐍𝐒 ━━━━━━━━\n┃ 🔍 𝑫𝒐𝒎𝒂𝒊𝒏: ${q.trim()}\n┃\n┃ ${formattedResult}\n┗━━━━━━━━━━━━━━━━━━━━`,
+        text: `╭┄┄┄🌸🌹 *SUBDOMAINS* 🌹🌸┄┄┄⊷\n┃ 🔍 Domain: ${q.trim()}\n┃\n┃ ${formattedResult}\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`,
         contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fakevCard });
+    }, { quoted: mek });
 
 } catch (e) {
     await conn.sendPresenceUpdate('paused', from);
-    
-    let errorMsg = '❌ 𝙴𝚛𝚛𝚘𝚛 𝚏𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚜𝚞𝚋𝚍𝚘𝚖𝚊𝚒𝚗𝚜';
-    
+
+    let errorMsg = 'Error fetching subdomains';
+
     if (e.response?.status === 429) {
-        errorMsg = '❌ 𝚁𝚊𝚝𝚎 𝚕𝚒𝚖𝚒𝚝𝚎𝚍 𝚝𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛';
+        errorMsg = 'Rate limited try again later';
     } else if (e.response?.status === 500) {
-        errorMsg = '❌ 𝙰𝙿𝙸 𝚜𝚎𝚛𝚟𝚎𝚛 𝚎𝚛𝚛𝚘𝚛';
+        errorMsg = 'API server error';
     } else if (e.code === 'ECONNABORTED') {
-        errorMsg = '❌ 𝚁𝚎𝚚𝚞𝚎𝚜𝚝 𝚝𝚒𝚖𝚎𝚘𝚞𝚝';
+        errorMsg = 'Request timeout';
     }
 
-    await conn.sendMessage(from, {
-        text: errorMsg,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fakevCard });
+    reply(errorMsg);
     l(e);
 }
 });
