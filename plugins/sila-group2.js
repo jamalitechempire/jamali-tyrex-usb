@@ -9,7 +9,7 @@ const fkontak = {
         "id": "Halo"
     },
     "message": {
-        "conversation": "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃
+        "conversation": "𝐓𝐘𝐑𝐄𝐗 𝐌𝐃"
     }
 };
 
