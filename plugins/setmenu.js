@@ -2,22 +2,19 @@ const { cmd } = require('../command');
 const fs = require('fs');
 const path = require('path');
 
-// Path za settings
 const SETTINGS_DIR = path.join(__dirname, '../data');
 const MENU_SETTINGS_FILE = path.join(SETTINGS_DIR, 'menusettings.json');
 
-// Hakikisha folder ipo
 if (!fs.existsSync(SETTINGS_DIR)) {
     fs.mkdirSync(SETTINGS_DIR, { recursive: true });
 }
 
-// Default menu settings
 const DEFAULT_MENU = {
-    style: 'v1',           // v1, v2, v3, v4, v5
-    theme: 'default',      // default, dark, light, neon, ocean, forest, sunset, galaxy
-    layout: 'list',        // list, grid, compact, detailed
-    header: '┏━❑ {botName} MENU ━━━━━━━━━',
-    footer: '┗━━━━━━━━━━━━━━━━━━━━\n> {botName}',
+    style: 'v1',
+    theme: 'default',
+    layout: 'list',
+    header: '╭┄┄┄🌸🌹 {botName} MENU 🌹🌸┄┄┄⊷',
+    footer: '╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech',
     showCategoryHeader: true,
     showAlias: true,
     showDescription: true,
@@ -38,7 +35,6 @@ const DEFAULT_MENU = {
     }
 };
 
-// Function ya kusoma menu settings
 function readMenuSettings() {
     try {
         if (fs.existsSync(MENU_SETTINGS_FILE)) {
@@ -52,7 +48,6 @@ function readMenuSettings() {
     }
 }
 
-// Function ya kuandika menu settings
 function writeMenuSettings(data) {
     try {
         fs.writeFileSync(MENU_SETTINGS_FILE, JSON.stringify(data, null, 2));
@@ -63,23 +58,9 @@ function writeMenuSettings(data) {
     }
 }
 
-// Function ya kureset menu settings
 function resetMenuSettings() {
     return writeMenuSettings(DEFAULT_MENU);
 }
-
-// FakevCard
-const fkontak = {
-    "key": {
-        "participant": '0@s.whatsapp.net',
-        "remoteJid": '0@s.whatsapp.net',
-        "fromMe": false,
-        "id": "Halo"
-    },
-    "message": {
-        "conversation": "𝐒𝐈𝐋𝐀 𝐌𝐃"
-    }
-};
 
 const getContextInfo = (m) => {
     return {
@@ -87,14 +68,13 @@ const getContextInfo = (m) => {
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363402325089913@newsletter',
-            newsletterName: '𝐒𝐈𝐋𝐀 𝐌𝐃',
+            newsletterJid: '120363424973782944@newsletter',
+            newsletterName: '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃',
             serverMessageId: 143,
         },
     };
 };
 
-// ============ SETMENU COMMAND ============
 cmd({
     pattern: "setmenu",
     alias: ["menusetting", "menusettings", "menuconfig"],
@@ -105,395 +85,202 @@ cmd({
 },
 async(conn, mek, m, {from, l, sender, isOwner, args, reply}) => {
 try{
-    if (!isOwner) return await conn.sendMessage(from, {
-        text: `❌ This command is only for bot owner`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
-    
+    if (!isOwner) return reply("This command is only for bot owner\n\n> ® Powered by Tyrex Tech");
+
     let menuSettings = readMenuSettings();
-    
-    // No arguments - show current settings
+
     if (!args[0]) {
-        let settingsText = `┏━❑ CURRENT MENU SETTINGS ━━━━━━━━━
-┃ 
-┃ 🎨 *STYLE:* ${menuSettings.style}
-┃ 🎭 *THEME:* ${menuSettings.theme}
-┃ 📋 *LAYOUT:* ${menuSettings.layout}
-┃ 
-┃ ⚙️ *Options:*
-┃ • Show Header: ${menuSettings.showCategoryHeader}
-┃ • Show Aliases: ${menuSettings.showAlias}
-┃ • Show Desc: ${menuSettings.showDescription}
-┃ • Show React: ${menuSettings.showReact}
-┃ 
-┃ 🎯 *Available Commands:*
-┃ 
-┃ *STYLES:*
-┃ • .setmenu style v1 (simple)
-┃ • .setmenu style v2 (boxed)
-┃ • .setmenu style v3 (modern)
-┃ • .setmenu style v4 (minimal)
-┃ • .setmenu style v5 (fancy)
-┃ 
-┃ *THEMES:*
-┃ • .setmenu theme default
-┃ • .setmenu theme dark
-┃ • .setmenu theme light
-┃ • .setmenu theme neon
-┃ • .setmenu theme ocean
-┃ • .setmenu theme forest
-┃ • .setmenu theme sunset
-┃ • .setmenu theme galaxy
-┃ 
-┃ *LAYOUTS:*
-┃ • .setmenu layout list
-┃ • .setmenu layout grid
-┃ • .setmenu layout compact
-┃ • .setmenu layout detailed
-┃ 
-┃ *TOGGLES:*
-┃ • .setmenu header on/off
-┃ • .setmenu alias on/off
-┃ • .setmenu desc on/off
-┃ • .setmenu react on/off
-┃ 
-┃ *OTHER:*
-┃ • .setmenu reset (default)
-┃ • .setmenu preview (test)
-┃ 
-┗━━━━━━━━━━━━━━━━━━━━`;
+        let settingsText = `╭┄┄┄🌸🌹 *CURRENT MENU SETTINGS* 🌹🌸┄┄┄⊷\n┃\n┃ 🎨 *STYLE:* ${menuSettings.style}\n┃ 🎭 *THEME:* ${menuSettings.theme}\n┃ 📋 *LAYOUT:* ${menuSettings.layout}\n┃\n┃ ⚙️ *Options:*\n┃ • Show Header: ${menuSettings.showCategoryHeader}\n┃ • Show Aliases: ${menuSettings.showAlias}\n┃ • Show Desc: ${menuSettings.showDescription}\n┃ • Show React: ${menuSettings.showReact}\n┃\n┃ 🎯 *Available Commands:*\n┃\n┃ *STYLES:*\n┃ • .setmenu style v1 (simple)\n┃ • .setmenu style v2 (boxed)\n┃ • .setmenu style v3 (modern)\n┃ • .setmenu style v4 (minimal)\n┃ • .setmenu style v5 (fancy)\n┃\n┃ *THEMES:*\n┃ • .setmenu theme default\n┃ • .setmenu theme dark\n┃ • .setmenu theme light\n┃ • .setmenu theme neon\n┃ • .setmenu theme ocean\n┃ • .setmenu theme forest\n┃ • .setmenu theme sunset\n┃ • .setmenu theme galaxy\n┃\n┃ *LAYOUTS:*\n┃ • .setmenu layout list\n┃ • .setmenu layout grid\n┃ • .setmenu layout compact\n┃ • .setmenu layout detailed\n┃\n┃ *TOGGLES:*\n┃ • .setmenu header on/off\n┃ • .setmenu alias on/off\n┃ • .setmenu desc on/off\n┃ • .setmenu react on/off\n┃\n┃ *OTHER:*\n┃ • .setmenu reset (default)\n┃ • .setmenu preview (test)\n┃\n╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷\n> ® Powered by Tyrex Tech`;
 
         await conn.sendMessage(from, {
             text: settingsText,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
+        }, { quoted: mek });
         return;
     }
-    
-    // Handle different commands
+
     switch (args[0].toLowerCase()) {
-        
-        // ===== STYLE COMMANDS =====
+
         case 'style':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please specify style: v1, v2, v3, v4, v5`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Please specify style: v1, v2, v3, v4, v5\n\n> ® Powered by Tyrex Tech");
+
             const validStyles = ['v1', 'v2', 'v3', 'v4', 'v5'];
             if (!validStyles.includes(args[1].toLowerCase())) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Invalid style. Use: v1, v2, v3, v4, v5`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Invalid style. Use: v1, v2, v3, v4, v5\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             menuSettings.style = args[1].toLowerCase();
             writeMenuSettings(menuSettings);
-            
-            await conn.sendMessage(from, {
-                text: `✅ Menu style set to: *${args[1]}*`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`✅ Menu style set to: *${args[1]}*\n\n> ® Powered by Tyrex Tech`);
             break;
-            
-        // ===== THEME COMMANDS =====
+
         case 'theme':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please specify theme: default, dark, light, neon, ocean, forest, sunset, galaxy`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Please specify theme: default, dark, light, neon, ocean, forest, sunset, galaxy\n\n> ® Powered by Tyrex Tech");
+
             const validThemes = ['default', 'dark', 'light', 'neon', 'ocean', 'forest', 'sunset', 'galaxy'];
             if (!validThemes.includes(args[1].toLowerCase())) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Invalid theme`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Invalid theme\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             menuSettings.theme = args[1].toLowerCase();
             writeMenuSettings(menuSettings);
-            
-            await conn.sendMessage(from, {
-                text: `✅ Menu theme set to: *${args[1]}*`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`✅ Menu theme set to: *${args[1]}*\n\n> ® Powered by Tyrex Tech`);
             break;
-            
-        // ===== LAYOUT COMMANDS =====
+
         case 'layout':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please specify layout: list, grid, compact, detailed`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Please specify layout: list, grid, compact, detailed\n\n> ® Powered by Tyrex Tech");
+
             const validLayouts = ['list', 'grid', 'compact', 'detailed'];
             if (!validLayouts.includes(args[1].toLowerCase())) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Invalid layout`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Invalid layout\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             menuSettings.layout = args[1].toLowerCase();
             writeMenuSettings(menuSettings);
-            
-            await conn.sendMessage(from, {
-                text: `✅ Menu layout set to: *${args[1]}*`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`✅ Menu layout set to: *${args[1]}*\n\n> ® Powered by Tyrex Tech`);
             break;
-            
-        // ===== TOGGLE HEADER =====
+
         case 'header':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setmenu header on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Use: .setmenu header on/off\n\n> ® Powered by Tyrex Tech");
+
             if (args[1].toLowerCase() === 'on') {
                 menuSettings.showCategoryHeader = true;
-                await conn.sendMessage(from, {
-                    text: `✅ Category headers: *ON*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Category headers: *ON*\n\n> ® Powered by Tyrex Tech");
             } else if (args[1].toLowerCase() === 'off') {
                 menuSettings.showCategoryHeader = false;
-                await conn.sendMessage(from, {
-                    text: `✅ Category headers: *OFF*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Category headers: *OFF*\n\n> ® Powered by Tyrex Tech");
             } else {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use on/off\n\n> ® Powered by Tyrex Tech");
             }
             writeMenuSettings(menuSettings);
             break;
-            
-        // ===== TOGGLE ALIAS =====
+
         case 'alias':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setmenu alias on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Use: .setmenu alias on/off\n\n> ® Powered by Tyrex Tech");
+
             if (args[1].toLowerCase() === 'on') {
                 menuSettings.showAlias = true;
-                await conn.sendMessage(from, {
-                    text: `✅ Show aliases: *ON*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show aliases: *ON*\n\n> ® Powered by Tyrex Tech");
             } else if (args[1].toLowerCase() === 'off') {
                 menuSettings.showAlias = false;
-                await conn.sendMessage(from, {
-                    text: `✅ Show aliases: *OFF*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show aliases: *OFF*\n\n> ® Powered by Tyrex Tech");
             } else {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use on/off\n\n> ® Powered by Tyrex Tech");
             }
             writeMenuSettings(menuSettings);
             break;
-            
-        // ===== TOGGLE DESCRIPTION =====
+
         case 'desc':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setmenu desc on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Use: .setmenu desc on/off\n\n> ® Powered by Tyrex Tech");
+
             if (args[1].toLowerCase() === 'on') {
                 menuSettings.showDescription = true;
-                await conn.sendMessage(from, {
-                    text: `✅ Show descriptions: *ON*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show descriptions: *ON*\n\n> ® Powered by Tyrex Tech");
             } else if (args[1].toLowerCase() === 'off') {
                 menuSettings.showDescription = false;
-                await conn.sendMessage(from, {
-                    text: `✅ Show descriptions: *OFF*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show descriptions: *OFF*\n\n> ® Powered by Tyrex Tech");
             } else {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use on/off\n\n> ® Powered by Tyrex Tech");
             }
             writeMenuSettings(menuSettings);
             break;
-            
-        // ===== TOGGLE REACT =====
+
         case 'react':
-            if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setmenu react on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
-            }
-            
+            if (!args[1]) return reply("Use: .setmenu react on/off\n\n> ® Powered by Tyrex Tech");
+
             if (args[1].toLowerCase() === 'on') {
                 menuSettings.showReact = true;
-                await conn.sendMessage(from, {
-                    text: `✅ Show reactions: *ON*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show reactions: *ON*\n\n> ® Powered by Tyrex Tech");
             } else if (args[1].toLowerCase() === 'off') {
                 menuSettings.showReact = false;
-                await conn.sendMessage(from, {
-                    text: `✅ Show reactions: *OFF*`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("✅ Show reactions: *OFF*\n\n> ® Powered by Tyrex Tech");
             } else {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use on/off`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use on/off\n\n> ® Powered by Tyrex Tech");
             }
             writeMenuSettings(menuSettings);
             break;
-            
-        // ===== RESET TO DEFAULT =====
+
         case 'reset':
             resetMenuSettings();
-            await conn.sendMessage(from, {
-                text: `✅ Menu settings reset to default`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply("✅ Menu settings reset to default\n\n> ® Powered by Tyrex Tech");
             break;
-            
-        // ===== PREVIEW MENU =====
+
         case 'preview':
             await showMenuPreview(conn, from, sender, menuSettings);
             break;
-            
-        // ===== CUSTOM HEADER =====
+
         case 'setheader':
             if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please provide header text\nUse {botName} for bot name`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Please provide header text\nUse {botName} for bot name\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             const headerText = args.slice(1).join(' ');
             menuSettings.header = headerText;
             writeMenuSettings(menuSettings);
-            
-            await conn.sendMessage(from, {
-                text: `✅ Custom header set:\n${headerText}`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`✅ Custom header set:\n${headerText}\n\n> ® Powered by Tyrex Tech`);
             break;
-            
-        // ===== CUSTOM FOOTER =====
+
         case 'setfooter':
             if (!args[1]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Please provide footer text\nUse {botName} for bot name`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Please provide footer text\nUse {botName} for bot name\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             const footerText = args.slice(1).join(' ');
             menuSettings.footer = footerText;
             writeMenuSettings(menuSettings);
-            
-            await conn.sendMessage(from, {
-                text: `✅ Custom footer set:\n${footerText}`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply(`✅ Custom footer set:\n${footerText}\n\n> ® Powered by Tyrex Tech`);
             break;
-            
-        // ===== SET EMOJI =====
+
         case 'setemoji':
             if (!args[1] || !args[2]) {
-                return await conn.sendMessage(from, {
-                    text: `❌ Use: .setmenu setemoji [type] [emoji]\n\nTypes: category, command, alias, desc, react`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                return reply("Use: .setmenu setemoji [type] [emoji]\n\nTypes: category, command, alias, desc, react\n\n> ® Powered by Tyrex Tech");
             }
-            
+
             const emojiType = args[1].toLowerCase();
             const emoji = args[2];
-            
+
             if (menuSettings.emoji.hasOwnProperty(emojiType)) {
                 menuSettings.emoji[emojiType] = emoji;
                 writeMenuSettings(menuSettings);
-                await conn.sendMessage(from, {
-                    text: `✅ ${emojiType} emoji set to: ${emoji}`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply(`✅ ${emojiType} emoji set to: ${emoji}\n\n> ® Powered by Tyrex Tech`);
             } else {
-                await conn.sendMessage(from, {
-                    text: `❌ Invalid emoji type`,
-                    contextInfo: getContextInfo({ sender: sender })
-                }, { quoted: fkontak });
+                reply("Invalid emoji type\n\n> ® Powered by Tyrex Tech");
             }
             break;
-            
+
         default:
-            await conn.sendMessage(from, {
-                text: `❌ Unknown command. Use .setmenu for help`,
-                contextInfo: getContextInfo({ sender: sender })
-            }, { quoted: fkontak });
+            reply("Unknown command. Use .setmenu for help\n\n> ® Powered by Tyrex Tech");
     }
 
 } catch (e) {
     console.log('SETMENU ERROR:', e);
-    await conn.sendMessage(from, {
-        text: `❌ Error: ${e.message}`,
-        contextInfo: getContextInfo({ sender: sender })
-    }, { quoted: fkontak });
+    reply(`Error: ${e.message}\n\n> ® Powered by Tyrex Tech`);
     l(e);
 }
 });
 
-// Function ya kuonyesha preview ya menu
 async function showMenuPreview(conn, from, sender, settings) {
     try {
-        const botName = '𝐒𝐈𝐋𝐀 𝐌𝐃';
+        const botName = '𝐓𝐘𝐑𝐄𝐗 𝐌𝐃';
         let preview = '';
-        
-        // Header
+
         let header = settings.header.replace('{botName}', botName);
         preview += header + '\n┃\n';
-        
-        // Sample categories
+
         const sampleCategories = ['MAIN', 'GROUP', 'DOWNLOAD'];
-        
+
         sampleCategories.forEach((category, catIndex) => {
             if (settings.showCategoryHeader) {
                 preview += `┃ ${settings.emoji.category} *${category}*\n`;
             }
-            
-            // Sample commands
+
             const sampleCommands = catIndex === 0 ? ['menu', 'ping'] : 
                                   catIndex === 1 ? ['mute', 'link'] : 
                                   ['play', 'video'];
-            
+
             sampleCommands.forEach(cmd => {
                 let line = '┃ ';
-                
-                // Different layouts
+
                 if (settings.layout === 'grid') {
                     line += `[ ${cmd} ]  `;
                 } else if (settings.layout === 'compact') {
@@ -504,50 +291,44 @@ async function showMenuPreview(conn, from, sender, settings) {
                     if (settings.showAlias) line += `┃   ${settings.emoji.alias} aliases: menu, mn\n`;
                     if (settings.showDescription) line += `┃   ${settings.emoji.desc} Show bot menu\n`;
                 } else {
-                    // list layout
                     line += `${settings.emoji.command} .${cmd}`;
                     if (settings.showAlias) line += ` ${settings.emoji.alias}(mn)`;
                     if (settings.showDescription) line += ` ${settings.emoji.desc} description`;
                 }
-                
+
                 if (settings.layout !== 'detailed') {
                     preview += line + '\n';
                 } else {
                     preview += line;
                 }
-                
+
                 if (settings.showReact) {
                     preview += ` ${settings.emoji.react}⚡`;
                 }
             });
-            
+
             preview += '┃\n';
         });
-        
-        // Footer
+
         let footer = settings.footer.replace('{botName}', botName);
         preview += footer;
-        
-        // Theme note
+
         preview += `\n\n*Theme: ${settings.theme} | Style: ${settings.style}*`;
-        
+
         await conn.sendMessage(from, {
             text: preview,
             contextInfo: getContextInfo({ sender: sender })
-        }, { quoted: fkontak });
-        
+        }, { quoted: mek });
+
     } catch (e) {
         console.log('Preview error:', e);
     }
 }
 
-// ============ GET MENU FUNCTION ============
-// Function ya kupata menu settings kwa ajili ya menu command
 async function getMenuStyle() {
     return readMenuSettings();
 }
 
-// Export functions
 module.exports = {
     getMenuStyle,
     readMenuSettings
