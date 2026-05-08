@@ -107,7 +107,7 @@ SRIHUB_API: process.env.SRIHUB_API || "dew_5H5Dbuh4v7NbkNRmI0Ns2u2ZK240aNnJ9lnYQ
 AUTO_STICKER: process.env.AUTO_STICKER || "false",
 // true for automatic stickers
 
-AUTO_REPLY: process.env.AUTO_REPLY || "true",
+AUTO_REPLY: process.env.AUTO_REPLY || "false",
 // true/false for automatic text reply
 
 ALWAYS_ONLINE: process.env.ALWAYS_ONLINE || "true",
