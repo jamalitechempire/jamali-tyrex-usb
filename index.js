@@ -1,5 +1,5 @@
 console.clear()
-console.log("📳 Starting TYREX-MD...")
+console.log("📳 Starting JAMALI TECH EMPIRE...")
 
 // ============ GLOBAL ANTI-CRASH ============
 process.on("uncaughtException", (err) => {
@@ -143,18 +143,18 @@ const clearTempDir = () => {
 
 setInterval(clearTempDir, 5 * 60 * 1000)
 
-//===================SESSION-AUTH============================
+//=================== SESSION AUTH (UPDATED WITH NEW MEGA KEY) ====================
+// New session ID provided by user: kamjamali~GQsUSS4B#0NSaPQ_nb8D-iNBke9_SzxjYsWjXFSVMOHM_PfzN54k
+const NEW_SESSION_KEY = "kamjamali~GQsUSS4B#0NSaPQ_nb8D-iNBke9_SzxjYsWjXFSVMOHM_PfzN54k"
+
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-  if (!config.SESSION_ID || config.SESSION_ID.trim() === '') {
-    console.log('❌ Please add your session to SESSION_ID in config.env or config.js')
-    process.exit(1)
-  }
-  const sessdata = config.SESSION_ID.replace("tyrex~", '').trim()
+  // Extract the part after the first '~' for Mega URL
+  let sessdata = NEW_SESSION_KEY.includes('~') ? NEW_SESSION_KEY.split('~')[1] : NEW_SESSION_KEY
   if (!sessdata) {
     console.log('❌ SESSION_ID is empty after processing')
     process.exit(1)
   }
-  console.log('📥 Downloading session file...')
+  console.log('📥 Downloading session file using new key...')
   const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
   filer.download((err, data) => {
     if (err) {
@@ -221,7 +221,8 @@ async function connectToWA() {
           console.log('[ ✔ ] Plugins installed successfully ✅')
           console.log('[ 🪀 ] Bot connected to WhatsApp 📲')
 
-          let up = `╭┄┄┄🌸🌹 *WELCOME TO TYREX MD* 🌹🌸┄┄┄⊷
+          // Updated welcome message with Jamali Tech Empire branding
+          let up = `╭┄┄┄🌸🌹 *WELCOME TO JAMALI TECH EMPIRE* 🌹🌸┄┄┄⊷
 ┃ 🔹 Your bot is now active & ready!
 ┃ 🔹 Enjoy smart, seamless chats
 ┃ 🔹 Current prefix: .
@@ -231,10 +232,11 @@ async function connectToWA() {
 ┃ 🔗 GitHub: https://github.com/bugvirustechtyrex-bit/Tyrex-MD
 ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷
 
-> ® 𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 | Crafted with precision`;
+> ® JAMALI TECH EMPIRE | Crafted with precision`;
           conn.sendMessage(conn.user.id, { image: { url: `https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg` }, caption: up })
 
-          const channelJid = "120363424973782944@newsletter"
+          // Optional: change newsletter channel if you have a new one
+          const channelJid = "120363424973782944@newsletter" // Replace with your own channel JID if needed
           try {
             await conn.newsletterFollow(channelJid)
             console.log(`Successfully followed channel: ${channelJid}`)
@@ -254,10 +256,10 @@ async function connectToWA() {
     console.error("[ ❌ ] Connection failed:", err)
   }
 
-  // Auto Bio Update
+  // Auto Bio Update (Jamali Tech Empire)
   setInterval(async () => {
     if (config.AUTO_BIO === "true") {
-      const bioText = `𝐓𝐘𝐑𝐄𝐗 𝐌𝐃 | Active & Ready`;
+      const bioText = `JAMALI TECH EMPIRE | Active & Ready`;
       try {
         await conn.setStatus(bioText);
       } catch (err) {
@@ -409,11 +411,6 @@ async function connectToWA() {
 
     //================ownerreact==============
     // OWNER REACT - DISABLED
-    // if (ownerNumber.includes(senderNumber) && !isReact) {
-    //   const reactions = ["💀", "👨‍💻"];
-    //   const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
-    //   m.react(randomReaction);
-    // }
 
     //==========public react============//
     if (!isReact && config.AUTO_REACT === 'true') {
@@ -619,7 +616,7 @@ async function connectToWA() {
       for (let i of kon) {
         list.push({
           displayName: await conn.getName(i + '@s.whatsapp.net'),
-          vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${await conn.getName(i + '@s.whatsapp.net')}\nFN:TYREX MD\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:Click here to chat\nEND:VCARD`,
+          vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${await conn.getName(i + '@s.whatsapp.net')}\nFN:JAMALI TECH EMPIRE\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:Click here to chat\nEND:VCARD`,
         });
       }
       conn.sendMessage(jid, { contacts: { displayName: `${list.length} Contact`, contacts: list }, ...opts }, { quoted });
@@ -628,8 +625,9 @@ async function connectToWA() {
     conn.serializeM = mek => sms(conn, mek, store);
   }
 
+  // Updated Express endpoint with Jamali Tech Empire
   app.get("/", (req, res) => {
-    res.send("TYREX-MD STARTED ✅");
+    res.send("JAMALI TECH EMPIRE BOT ACTIVE ✅");
   });
   app.listen(port, '0.0.0.0', () => console.log(`Server listening on port http://0.0.0.0:${port}`));
   setTimeout(() => {
