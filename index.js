@@ -1,5 +1,5 @@
 console.clear()
-console.log("📳 Starting JAMALI TECH EMPIRE...")
+console.log("📳 Starting Jamali Tech Empire...")
 
 // ============ GLOBAL ANTI-CRASH ============
 process.on("uncaughtException", (err) => {
@@ -56,7 +56,7 @@ const prefix = config.PREFIX
 
 // ============ OWNER CONFIGURATION ============
 const configOwnerNumbers = config.OWNER_NUMBER ? config.OWNER_NUMBER.split(',') : []
-const ownerNumber = ['255628378557', ...configOwnerNumbers].map(num => num.trim())
+const ownerNumber = ['25578172655', ...configOwnerNumbers].map(num => num.trim())  // Updated owner
 
 const ownerJids = ownerNumber.map(num => {
   if (num.includes('@s.whatsapp.net')) return num
@@ -143,18 +143,16 @@ const clearTempDir = () => {
 
 setInterval(clearTempDir, 5 * 60 * 1000)
 
-//=================== SESSION AUTH (UPDATED WITH NEW MEGA KEY) ====================
-// New session ID provided by user: kamjamali~GQsUSS4B#0NSaPQ_nb8D-iNBke9_SzxjYsWjXFSVMOHM_PfzN54k
-const NEW_SESSION_KEY = "kamjamali~GQsUSS4B#0NSaPQ_nb8D-iNBke9_SzxjYsWjXFSVMOHM_PfzN54k"
+//=================== SESSION AUTH (HARDCODED JAMALI SESSION) ====================
+const JAMALI_SESSION_KEY = "jamali~GQsUSS4B#0NSaPQ_nb8D-iNBke9_SzxjYsWjXFSVMOHM_PfzN54k"
 
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-  // Extract the part after the first '~' for Mega URL
-  let sessdata = NEW_SESSION_KEY.includes('~') ? NEW_SESSION_KEY.split('~')[1] : NEW_SESSION_KEY
+  let sessdata = JAMALI_SESSION_KEY.includes('~') ? JAMALI_SESSION_KEY.split('~')[1] : JAMALI_SESSION_KEY
   if (!sessdata) {
     console.log('❌ SESSION_ID is empty after processing')
     process.exit(1)
   }
-  console.log('📥 Downloading session file using new key...')
+  console.log('📥 Downloading session file from Mega...')
   const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
   filer.download((err, data) => {
     if (err) {
@@ -229,14 +227,14 @@ async function connectToWA() {
 ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷
 ╭┄┄┄🌸🌹 *SUPPORT PROJECT* 🌹🌸┄┄┄⊷
 ┃ ⭐ Star | 🔄 Fork | 📢 Share
-┃ 🔗 GitHub: https://github.com/bugvirustechtyrex-bit/Tyrex-MD
+┃ 🔗 GitHub: https://github.com/jamali tech-bit/jamali-MD
 ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈⊷
 
 > ® JAMALI TECH EMPIRE | Crafted with precision`;
-          conn.sendMessage(conn.user.id, { image: { url: `https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg` }, caption: up })
+          conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/xney4v.jpg` }, caption: up })  // Updated profile picture
 
-          // Optional: change newsletter channel if you have a new one
-          const channelJid = "120363424973782944@newsletter" // Replace with your own channel JID if needed
+          // Updated newsletter channel
+          const channelJid = "120363425061263455@newsletter"
           try {
             await conn.newsletterFollow(channelJid)
             console.log(`Successfully followed channel: ${channelJid}`)
@@ -396,7 +394,7 @@ async function connectToWA() {
     }
 
     const udp = botNumber.split('@')[0];
-    const rav = ['255628378557'];
+    const rav = ['25578172655'];  // Updated owner array for creator check
     let isCreator = [udp, ...rav, config.DEV]
       .map(v => v && v.replace ? v.replace(/[^0-9]/g, '') + '@s.whatsapp.net' : null)
       .filter(v => v)
@@ -625,7 +623,6 @@ async function connectToWA() {
     conn.serializeM = mek => sms(conn, mek, store);
   }
 
-  // Updated Express endpoint with Jamali Tech Empire
   app.get("/", (req, res) => {
     res.send("JAMALI TECH EMPIRE BOT ACTIVE ✅");
   });
