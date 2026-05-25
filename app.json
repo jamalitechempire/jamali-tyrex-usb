@@ -1,206 +1,122 @@
 {
-  "name": "TYREX-MD",
-  "description": "WhatsApp bot made by Tyrex Tech",
-  "logo": "https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg",
-  "keywords": ["TYREX-MD"],
+  "name": "JAMALI TECH MD",
+  "description": "Premium WhatsApp Bot - Multi-Device Support with AI Features",
+  "logo": "https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg",
+  "keywords": ["JAMALI-TECH", "JAMALI-TECH-MD", "WHATSAPP-BOT", "PREMIUM-BOT", "BAILEYS"],
   "success_url": "/",
-
-    "stack": "container",
+  "stack": "container",
   "env": {
     "SESSION_ID": {
-      "description": "Put the session-id here.",
-      "required": true,
+      "description": "Your WhatsApp Bot Session ID - Leave empty to generate new one",
+      "required": false,
       "value": ""
-    },  
-    
-    "STICKER_NAME": {
-      "description": "type your sticker pack name.",
-      "required": true,
-      "value": "TYREX-MD"
-    }, 
-
-    "CUSTOM_STATUS_EMOJIS": {
-      "description": "feed in emoji of your desire.",
-      "required": true,
-      "value": "🎭"
-    }, 
+    },
     "PREFIX": {
-      "description": "paste your bot prefix note! Don't apply null prefix.",
+      "description": "Bot command prefix (default: .)",
       "required": false,
       "value": "."
     },
-    
+    "OWNER_NUMBER": {
+      "description": "Bot Owner WhatsApp Number",
+      "required": false,
+      "value": "255784062158"
+    },
+    "OWNER_NAME": {
+      "description": "Bot Owner Name",
+      "required": false,
+      "value": "JAMALI TECH EMPIRE"
+    },
+    "BOT_NAME": {
+      "description": "Your Bot Name",
+      "required": false,
+      "value": "JAMALI TECH MD"
+    },
+    "MONGODB_URI": {
+      "description": "MongoDB Connection URI for session storage",
+      "required": true,
+      "value": "mongodb+srv://dinu60970_db_user:RfGn7kG6A5jLe2px@cluster0.4yb6fvp.mongodb.net/"
+    },
+    "PAIRING_CODE_NAME": {
+      "description": "Pairing code name for device pairing",
+      "required": false,
+      "value": "JAMALITZ"
+    },
+    "CHANNEL_LINK": {
+      "description": "Your WhatsApp Channel Link",
+      "required": false,
+      "value": "https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h"
+    },
+    "AUTO_VIEW_STATUS": {
+      "description": "Auto view status messages (true/false)",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_LIKE_STATUS": {
+      "description": "Auto like status messages (true/false)",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_RECORDING": {
+      "description": "Auto recording presence (true/false)",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_TYPING": {
+      "description": "Auto typing presence (true/false)",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_REACT": {
+      "description": "Auto react to messages (true/false)",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_REACT_EMOJIS": {
+      "description": "Emojis to use for auto react (comma separated)",
+      "required": false,
+      "value": "❤️,🔥,💎,✨,👑,💫,🌟,⭐"
+    },
+    "ANTI_LINK": {
+      "description": "Remove links from groups automatically",
+      "required": false,
+      "value": "true"
+    },
+    "ANTI_BAD_WORD": {
+      "description": "Delete bad words from groups automatically",
+      "required": false,
+      "value": "true"
+    },
     "MODE": {
-      "description": "select your bot work type public-private-inbox-group.",
+      "description": "Bot mode: public/private/inbox/group",
       "required": false,
       "value": "public"
-      
     },
-    
-    
     "ALWAYS_ONLINE": {
-      "description": "Make it true if want always online.",
+      "description": "Keep bot always online",
       "required": false,
-      "value": "true"  
-    },    
-  
-    "AUTO_VOICE": {
-      "description": "Make it true if want automatic voice reply .",
-      "required": true,
-      "value": "false"
-    }, 
-
-    "AUTO_REPLY": {
-      "description": "Make it true if you want automatic reply.",
-      "required": true,
       "value": "true"
-    }, 
-
-    "AUTO_STICKER": {
-      "description": "Make it true if you want automatic sticker.",
-      "required": true,
-      "value": "false"
-    }, 
-
-
-    "AUTO_STATUS_SEEN": {
-      "description": "Make it true for automatic status seen.",
-      "required": true,
-      "value": "true"
-    }, 
-
-    "AUTO_STATUS_REACT": {
-      "description": "make it true for automatic status reaction or like.",
-      "required": true,
-      "value": "true"
-    }, 
-
-    "AUTO_STATUS_REPLY": {
-      "description": "Make it true for auto reply msg on status seen.",
-      "required": true,
-      "value": "false"
-    }, 
-
-    "AUTO_STATUS_MSG": {
-      "description": "Type custom message on status reply",
-      "required": true,
-      "value": "*𝐓𝐘𝐑𝐄𝐗-𝐌𝐃 𝐕𝐈𝐄𝐖𝐄𝐃✅*"
-   
-     }, 
-    
-    "OWNER_NAME": {
-      "description": "Type Bot Owner Name.",
-      "required": false,
-      "value": "TYREX-MD"
-}, 
-
-    "OWNER_NUMBER": {
-      "description": "put the owner number for bot.",
-      "required": false,
-      "value": "255628378557"
-
-    }, 
-
-    "BOT_NAME": {
-      "description": "Type here the bot name.",
-      "required": true,
-      "value": "TYREX-MD"
-
-      }, 
-
-    "ANTI_LINK": {
-      "description": "Make it true if you want bot auto remove group link.",
-      "required": true,
-      "value": "false"
-      
     },
-
-     "ANTI_LINK_KICK": {
-      "description": "Make it true if you want bot auto remove group link.",
-      "required": true,
-      "value": "false"
-      
-    },
-    
-    "ANTI_BAD": {
-      "description": "Make it true if you want bot auto delete bad words.",
-      "required": true,
-      "value": "false"
-    },
-
-   "MENTION_REPLY": {
-      "description": "make it true if want mention reply if someone menetion you.",
-      "required": true,
-      "value": "false"
-    },
-    
     "MENU_IMAGE_URL": {
-      "description": "add url for mention reply and menu if want.",
-      "required": true,
-      "value": "https://i.ibb.co/2YRqb2Md/upload-1777244568390-9cc80c1a-jpg.jpg"
-    },
-    
-     "DESCRIPTION": {
-      "description": "add caption for menu and other",
-      "required": true,
-      "value": "*© 𝐓𝐘𝐑𝐄𝐗-𝐌𝐃*"
-    },
-
-      "DELETE_LINKS": {
-      "description": "remove links from group automatically without removing member",
+      "description": "Image URL for menu and welcome messages",
       "required": false,
-      "value": "false"
+      "value": "https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg"
     },
-    
-    "AUTO_RECORDING": {
-      "description": "Make it true if you want auto recoding.",
-      "required": true,
-      "value": "false"
-    },
-
-    "AUTO_TYPING": {
-      "description": "Make it true if you want auto typing.",
+    "DESCRIPTION": {
+      "description": "Caption for menu and other messages",
       "required": false,
-      "value": "true"
-    },
-
-    "AUTO_REACT": {
-      "description": "Make it true if you want react on every message.",
-      "required": true,
-      "value": "false"
-    },
-    
-    "CUSTOM_REACT": {
-      "description": "Make it true if you want custom reactions.",
-      "required": true,
-      "value": "false"
-      
-    }, 
-    
-    "CUSTOM_REACT_EMOJIS": {
-      "description": "put here custom react react emojis.",
-      "required": true,
-      "value": "💝,💖,💗,❤️‍🩹,❤️,🧡,💛,💚,💙,💜,🤎,🖤,🤍"
-    }, 
-    
-    "ANTI_DEL_PATH": {
-      "description": "change it to -same- if you want to resend deleted message in same chat",
-      "required": true,
-      "value": "inbox"
-    }, 
-
-    "READ_MESSAGE": {
-      "description": "Make it true if you want bot read your all sms just now.",
-      "required": false,
-      "value": "false"
+      "value": "*♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*"
     }
-
-},
-
-     "buildpacks": [
-        {
-            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
-        }
-     ],
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    }
+  ],
   "stack": "heroku-24"
 }
